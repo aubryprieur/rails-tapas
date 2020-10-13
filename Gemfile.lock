@@ -58,6 +58,8 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    autoprefixer-rails (10.0.1.0)
+      execjs
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.4.8)
@@ -84,7 +86,10 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     erubi (1.9.0)
+    execjs (2.7.0)
     ffi (1.13.1)
+    font-awesome-sass (4.7.0)
+      sass (>= 3.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.5)
@@ -172,6 +177,11 @@ GEM
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
     rubyzip (2.3.0)
+    sass (3.7.4)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -185,6 +195,9 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    simple_form (5.0.3)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -230,11 +243,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
   database_cleaner (~> 1.8, >= 1.8.5)
   devise (~> 4.7, >= 4.7.3)
+  font-awesome-sass (~> 4.6, >= 4.6.2)
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
@@ -243,6 +258,7 @@ DEPENDENCIES
   rspec-rails (~> 4.0, >= 4.0.1)
   sass-rails (>= 6)
   selenium-webdriver
+  simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
