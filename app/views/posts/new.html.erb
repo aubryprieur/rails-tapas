@@ -1,0 +1,6 @@
+<%= form_for @post do |f| %>
+  <%= f.date_field :deadline %>
+  <%= f.text_area :title %>
+  <%= f.text_area :description %>
+  <%= f.submit 'Save' %>
+<% end %>
