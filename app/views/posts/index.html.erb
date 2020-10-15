@@ -1,1 +1,16 @@
-<h1>Liste des appels d'offres</h1>
+<div class="container">
+  <h1>Liste des appels d'offres</h1>
+    <div class="row">
+      <% @posts.each do|post|%>
+        <div class="col-sm-4 card border-secondary mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Commanditaire : <%= post.title %></h2>
+            <p class="card-text">Description : <%= post.description %></p>
+          </div>
+          <div class="card-footer bg-transparent border-dark">Date limite: <%= post.deadline %></div>
+        </div>
+      <% end %>
+    </div>
+</div>
+
+
