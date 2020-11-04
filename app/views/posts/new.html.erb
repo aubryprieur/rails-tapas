@@ -1,6 +1,7 @@
-<%= form_for @post do |f| %>
-  <%= f.date_field :deadline %>
-  <%= f.text_area :title %>
-  <%= f.text_area :description %>
-  <%= f.submit 'Save' %>
+<%= simple_form_for @post do |f| %>
+  <%= f.input :deadline, as: :date %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :photo, as: :file %>
+  <%= f.button :submit, value: 'enregistrer' %>
 <% end %>
