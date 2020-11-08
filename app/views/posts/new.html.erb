@@ -1,22 +1,4 @@
 <div class="container">
   <h1>Créer un nouvel appel d'offres</h1>
-  <%= form_for @post, class: "form-horizontal" do |f| %>
-    <div class="form-group">
-      <%= f.label :Titre , class: "col-sm-2 control-label" %>
-      <%= f.text_field :title %>
-    </div>
-    <div class="form-group">
-      <%= f.label :Description , class: "col-sm-2 control-label" %>
-      <%= f.text_area :description %>
-    </div>
-    <div class="form-group">
-      <%= f.label :"Date limite de réponse" , class: "col-sm-2 control-label" %>
-      <%= f.date_field :deadline %>
-    </div>
-    <div class="form-group">
-      <%= f.label :"Documents à joindre", class: "col-sm-2 control-label" %>
-      <%= f.file_field :photo %>
-    </div>
-    <%= f.submit 'Enregistrer', class: "btn btn-primary" %>
-  <% end %>
+  <%= render 'form' %>
 </div>
