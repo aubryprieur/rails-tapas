@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'navigate' do
   before do
-    @user = User.create(email: "test@test.com", password: "azerty", password_confirmation: "azerty", first_name: "Jon", last_name: "Snow")
+    @user = FactoryBot.create(:user)
     login_as(@user, :scope => :user)
   end
 
@@ -20,8 +20,9 @@ describe 'navigate' do
     end
 
     it 'has a list of posts' do
-      post1 = Post.create(deadline: Date.today, title: "Appel d'offres 1", description: "Description1", user_id: @user.id)
-      post2 = Post.create(deadline: Date.today, title: "Appel d'offres 2", description: "Description 2", user_id: @user.id)
+      post1 = FactoryBot.create(:post)
+      post2 = FactoryBot.create(:second_post)
+
       visit posts_path
       expect(page).to have_content(/Description1|Description 2|Appel d'offres 1|Appel d'offres 2/)
     end
@@ -41,7 +42,7 @@ describe 'navigate' do
       fill_in 'post[title]', with: "Un titre"
       fill_in 'post[description]', with: "Une description"
 
-      click_on "Save"
+      click_on "Enregistrer"
 
       expect(page).to have_content("Un titre")
     end
@@ -50,7 +51,7 @@ describe 'navigate' do
       fill_in 'post[deadline]', with: Date.today
       fill_in 'post[title]', with: "User title"
       fill_in 'post[description]', with: "User description"
-      click_on "Save"
+      click_on "Enregistrer"
 
       expect(User.last.posts.last.title).to eq("User title")
     end

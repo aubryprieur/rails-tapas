@@ -1,7 +1,7 @@
 RSpec.describe User, type: :model do
   describe "creation" do
     before do
-      @user = User.create(email: "test@test.com", first_name: "aubry", last_name: "prieur", password: "azerty", password_confirmation: "azerty")
+      @user = FactoryBot.create(:user)
     end
 
     it "Can be created" do
