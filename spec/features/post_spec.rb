@@ -72,5 +72,26 @@ describe 'navigate' do
       expect(page).to have_content("Description 2")
     end
   end
+
+  describe 'new' do
+    it 'has a link from the homepage' do
+      visit root_path
+
+      click_link("new_post")
+      expect(page.status_code).to eq(200)
+    end
+  end
+
+  describe 'show' do
+    before do
+      post = FactoryBot.create(:post)
+      visit post_path(post[:id])
+    end
+
+    it 'has a link from the show-page to index' do
+      click_link("index_page")
+      expect(page.status_code).to eq(200)
+    end
+  end
 end
 

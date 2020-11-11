@@ -8,9 +8,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+    <script src="https://kit.fontawesome.com/6ff4afb2b5.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
+    <%  if notice %>
+      <div class="flash flash-success alert alert-dismissible fade show" role="alert">
+        <span><strong>Yay!</strong> 🎉 <%= notice %> </span>
+        <a data-dismiss="alert" aria-label="Close">
+          <i class="fas fa-times"> </i>
+        </a>
+      </div>
+    <%  elsif alert %>
+      <div class="flash flash-danger alert alert-dismissible fade show" role="alert">
+        <span><strong>Oops!</strong> 😱 <%= alert %> </span>
+        <a data-dismiss="alert" aria-label="Close">
+         <span><i class="fas fa-times"> </i></span>
+        </a>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
