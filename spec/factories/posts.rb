@@ -6,7 +6,7 @@ FactoryBot.define do
     user
   end
 
-    factory :second_post, class: "Post" do
+  factory :second_post, class: "Post" do
     deadline {Date.today}
     title {"Appel d'offres 2"}
     description {"Description 2"}

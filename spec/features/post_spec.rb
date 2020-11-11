@@ -55,8 +55,22 @@ describe 'navigate' do
 
       expect(User.last.posts.last.title).to eq("User title")
     end
+  end
+  describe 'edit' do
+    before do
+      post = FactoryBot.create(:post)
+      visit post_path(post[:id])
+    end
 
+    it 'can be reached by clicking edit on index page' do
+      click_on 'Edit'
+      expect(page.status_code).to eq(200)
+    end
 
+    it 'can be edited' do
+      post2 = FactoryBot.create(:second_post)
+      expect(page).to have_content("Description 2")
+    end
   end
 end
 
