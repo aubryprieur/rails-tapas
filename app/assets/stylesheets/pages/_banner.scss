@@ -1,4 +1,5 @@
 .banner {
+  display: flex;
   background-size: cover;
   height: calc(100vh - 70px);
   background-position: center;
@@ -22,3 +23,14 @@
 .banner h1 span {
   box-shadow: inset 1px -10px white, inset 1px -14px #057AFF;
 }
+
+.container {
+  flex: 1 1 auto;
+}
+
+.banner-img {
+  flex: 1 1 auto;
+  height: 100%;
+}
+
+
