@@ -1,0 +1,30 @@
+nav {
+  margin-top: 20px;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav li a {
+  display: block;
+  padding: 8px;
+  font-family: Lato;
+  color: #06111c;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+nav li a:hover {
+  border-bottom: 5px solid #057AFF;
+  padding-top: 2px;
+}
+
+

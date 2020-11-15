@@ -1,11 +1,11 @@
 <%= form_for @post, class: "form-horizontal" do |f| %>
   <div class="form-group">
     <%= f.label :"Titre :" , class: "col-sm-2 control-label" %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, placeholder: "Ajouter le titre l'appel d'offres" %>
   </div>
   <div class="form-group">
-    <%= f.label :"Description :" , class: "col-sm-2 control-label" %>
-    <%= f.text_area :description %>
+    <%= f.label :"Description :", class: "col-sm-2 control-label" %>
+    <%= f.text_area :description, placeholder: "Ajouter sa description"  %>
   </div>
   <div class="form-group">
     <%= f.label :"Date limite de réponse :" , class: "col-sm-2 control-label" %>

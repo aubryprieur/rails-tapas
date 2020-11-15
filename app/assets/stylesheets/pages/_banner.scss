@@ -1,0 +1,24 @@
+.banner {
+  background-size: cover;
+  height: calc(100vh - 70px);
+  background-position: center;
+  padding: 150px 0;
+}
+
+.banner h1 {
+  font-family: Merriweather;
+  margin: 0;
+  color: #06111c;
+  font-size: 70px;
+  line-height: 96px;
+}
+
+.banner p {
+  font-size: 20px;
+  color: #06111c;
+  opacity: .7;
+}
+
+.banner h1 span {
+  box-shadow: inset 1px -10px white, inset 1px -14px #057AFF;
+}
