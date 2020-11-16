@@ -1,0 +1,33 @@
+.cards {
+  display : grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
+
+@media(max-width: 992px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wrapper {
+  background-color: #F9F9F9;
+}
+
+.list-posts h1 {
+  font-family: Merriweather;
+  margin: 0;
+  color: #06111c;
+  font-size: 70px;
+  line-height: 96px;
+}
+
+.list-posts h1 span {
+  box-shadow: inset 1px -10px white, inset 1px -14px #057AFF;
+}

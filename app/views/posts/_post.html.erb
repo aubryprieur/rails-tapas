@@ -1,8 +1,14 @@
-<div class="col-sm-4 card border-secondary mb-3">
-  <div class="card-body">
+<div class="card-ao">
+  <div class="container-card">
+    <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
     <h2 class="card-title"><%= post.title %></h2>
-    <p class="card-text"><%= post.description %></p>
+    <% if post.description? %>
+      <p class="card-description"><%= truncate(post.description, length:100) %></p>
+    <% else %>
+      <p class="card-description">Pas de description.</p>
+    <% end %>
   </div>
-  <div class="card-footer bg-transparent border-dark">Date limite: <%= post.deadline %></div>
-  <%= link_to "Voir l'annonce", post_path(post)%>
+  <div class="container-link">
+    <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
+  </div>
 </div>
