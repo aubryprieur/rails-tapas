@@ -1,6 +1,10 @@
-<div class="card">
-  <h2 class="card-title"><%= post.title %></h2>
-  <p class="card-description"><%= post.description %></p>
-  <p class="card-date">Date limite: <%= post.deadline %></p>
-  <%= link_to "Voir l'annonce", post_path(post)%>
+<div class="card-ao">
+  <div class="container-card">
+    <p class="card-date"><%= post.deadline %></p>
+    <h2 class="card-title"><%= post.title %></h2>
+    <p class="card-description"><%= post.description %></p>
+  </div>
+  <div class="container-link">
+    <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
+  </div>
 </div>

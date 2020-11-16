@@ -1,6 +1,43 @@
-.card {
-  height: 300px;
-  width: 350px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  margin: 10px;
+.card-ao {
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.container-card {
+}
+
+.container-link {
+  text-align: center;
+}
+
+.card-title {
+  font-family: Lato;
+  font-size: 16px;
+  color: #0d0d0d;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.card-description {
+  color: darken(#404040, 1%);
+  margin-bottom: 2.5rem;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.card-date {
+  font-size: 10px;
+  text-align: right;
+  color: #057AFF;
+  font-weight: bold;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #06111c;
+    border-bottom: 5px solid #057AFF;
+    cursor: pointer;
 }
