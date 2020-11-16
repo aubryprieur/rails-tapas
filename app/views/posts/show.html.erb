@@ -1,19 +1,21 @@
 <div class="container">
   <h2><%= @post.title %></h2>
   <p><%= @post.description %></p>
-  <p>Date limite de réponse : <%= @post.deadline %></p>
+  <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>
   <% if @post.photo.attached? %>
   <ul>
     <li>  <%= link_to "Télécharger le dossier 1", rails_blob_path(@post.photo, disposition: "attachment"), download: '' if @post.photo.attached? %></li>
     <li>  <%= link_to "Télécharger le dossier 2", @post.photo, download: '' if @post.photo.attached? %></li>
   </ul>
   <% end %>
-
-
-
-<div>
-  <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-primary" %>
-  <%= link_to "Liste des AO", posts_path, id: "index_page", class: "btn btn-primary" %>
+  <nav>
+    <ul>
+      <li>
+        <%= link_to 'MODIFIER', edit_post_path(@post), class: "nav-link" %>
+      </li>
+      <li>
+        <%= link_to "LISTE DES AO", posts_path, id: "index_page", class: "nav-link" %>
+      </li>
+    </ul>
+  </nav>
 </div>
-</div>
-
