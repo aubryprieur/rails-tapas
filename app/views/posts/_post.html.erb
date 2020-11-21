@@ -1,6 +1,7 @@
 <div class="card-ao">
   <div class="container-card">
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
+    <h2 class="card-title"><%= post.client %></h2>
     <h2 class="card-title"><%= post.title %></h2>
     <% if post.description? %>
       <p class="card-description"><%= truncate(post.description, length:100) %></p>
@@ -8,6 +9,11 @@
       <p class="card-description">Pas de description.</p>
     <% end %>
   </div>
+  <% if post.photo.attached?  %>
+    <%= link_to post.photo, download: '', class: "card-attachment " do %>
+      <i class="fas fa-paperclip"></i>
+    <% end %>
+  <% end %>
   <div class="container-link">
     <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
   </div>

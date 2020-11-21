@@ -32,15 +32,22 @@
 }
 
 .card-date {
-  font-size: 10px;
+  font-size: 12px;
   text-align: right;
   color: #057AFF;
   font-weight: bold;
 }
 
 .card-link {
-    text-decoration: none;
-    color: #06111c;
-    border-bottom: 5px solid #057AFF;
-    cursor: pointer;
+  text-decoration: none;
+  color: #06111c;
+  border-bottom: 5px solid #057AFF;
+  cursor: pointer;
+}
+
+.card-attachment {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: darken(#404040, 1%);
 }
