@@ -1,10 +1,11 @@
 <div class="container">
+  <h2><%= @post.client %></h2>
   <h2><%= @post.title %></h2>
   <p><%= @post.description %></p>
   <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>
   <% if @post.photo.attached? %>
   <ul>
-    <li>  <%= link_to "Télécharger le dossier 1", rails_blob_path(@post.photo, disposition: "attachment"), download: '' if @post.photo.attached? %></li>
+<!--     <li>  <%= link_to "Télécharger le dossier 1", rails_blob_path(@post.photo, disposition: "attachment"), download: '' if @post.photo.attached? %></li> -->
     <li>  <%= link_to "Télécharger le dossier 2", @post.photo, download: '' if @post.photo.attached? %></li>
   </ul>
   <% end %>
