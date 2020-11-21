@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
     @posts = Post.order('deadline DESC')
@@ -34,6 +34,14 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post.delete
+    if @post.destroy
+      redirect_to posts_path, notice: "Appel d'offres supprimé"
+    else
+      render :new
+    end
+  end
 
   private
 

@@ -39,8 +39,9 @@ describe 'navigate' do
 
     it 'can be created from new form page' do
       fill_in 'post[deadline]', with: Date.today
+      fill_in 'post[client]', with: "Un client"
       fill_in 'post[title]', with: "Un titre"
-      fill_in 'post[description]', with: "Une description"
+      fill_in 'post[rich_body]', with: "Une description"
 
       click_on "Enregistrer"
 
@@ -49,8 +50,9 @@ describe 'navigate' do
 
     it 'will have a user associated it' do
       fill_in 'post[deadline]', with: Date.today
+      fill_in 'post[client]', with: "Un client"
       fill_in 'post[title]', with: "User title"
-      fill_in 'post[description]', with: "User description"
+      fill_in 'post[rich_body]', with: "User description"
       click_on "Enregistrer"
 
       expect(User.last.posts.last.title).to eq("User title")
