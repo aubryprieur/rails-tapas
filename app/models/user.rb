@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts
+  has_many :favorites
+  has_many :favorite_posts, through: :favorites, source: :favorited, source_type: 'Post'
 
   validates_presence_of :first_name, :last_name
 end

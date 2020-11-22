@@ -14,7 +14,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     if @post.save
-      redirect_to @post, notice: "L'appel d'offres vient d'être créé!"
+      redirect_to @post, notice: "L'appel d'offres vient d'être créé! "
     else
       render :new
     end
@@ -28,7 +28,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to @post, notice: "L'appel d'offres a été modifié"
+      redirect_to @post, notice: "L'appel d'offres a été modifié "
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
   def destroy
     @post.delete
     if @post.destroy
-      redirect_to posts_path, notice: "Appel d'offres supprimé"
+      redirect_to posts_path, notice: "Appel d'offres supprimé "
     else
       render :new
     end
