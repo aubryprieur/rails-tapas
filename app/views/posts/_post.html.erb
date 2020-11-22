@@ -4,6 +4,17 @@
     <% if (Time.now - post.created_at <= 7.day) %>
       <i class="far fa-bell project-new"></i>
     <% end %>
+    <div class="card-favorite">
+      <% unless current_user.favorite_posts.exists?(id: post.id) %>
+        <%= link_to favorite_posts_path(post_id: post), method: :post do %>
+          <i class="far fa-bookmark" style="color: #087AFE"></i>
+        <% end %>
+      <% else %>
+        <%= link_to favorite_post_path(post), method: :delete do %>
+          <i class="fas fa-bookmark" style="color: #087AFE"></i>
+        <% end %>
+      <% end %>
+    </div>
     <h2 class="card-title"><%= post.client %></h2>
     <h2 class="card-title"><%= post.title %></h2>
     <% if post.rich_body.present? %>
