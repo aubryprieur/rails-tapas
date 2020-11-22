@@ -1,6 +1,9 @@
 <div class="card-ao">
   <div class="container-card">
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
+    <% if (Time.now - post.created_at <= 7.day) %>
+      <i class="far fa-bell project-new"></i>
+    <% end %>
     <h2 class="card-title"><%= post.client %></h2>
     <h2 class="card-title"><%= post.title %></h2>
     <% if post.rich_body.present? %>
@@ -18,3 +21,4 @@
     <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
   </div>
 </div>
+
