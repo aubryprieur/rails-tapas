@@ -49,5 +49,14 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
-  color: darken(#404040, 1%);
+  color: grey;
+}
+
+.project-new {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+  padding: 3px;
+  margin-bottom: 5px;
 }
