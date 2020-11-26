@@ -8,6 +8,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    authorize @post
   end
 
   def create
@@ -24,9 +25,11 @@ class PostsController < ApplicationController
   end
 
   def edit
+    authorize @post
   end
 
   def update
+    authorize @post
     if @post.update(post_params)
       redirect_to @post, notice: "L'appel d'offres a été modifié "
     else
@@ -35,6 +38,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    authorize @post
     @post.delete
     if @post.destroy
       redirect_to posts_path, notice: "Appel d'offres supprimé "
