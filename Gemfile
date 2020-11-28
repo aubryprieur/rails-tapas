@@ -34,6 +34,7 @@ gem 'font-awesome-sass', '~> 4.6', '>= 4.6.2'
 gem 'simple_form'
 gem "administrate"
 gem 'pundit', '~> 2.1'
+gem "letter_opener", :group => :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
