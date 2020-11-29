@@ -35,6 +35,7 @@ gem 'simple_form'
 gem "administrate"
 gem 'pundit', '~> 2.1'
 gem "letter_opener", :group => :development
+gem 'sendgrid-ruby'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
