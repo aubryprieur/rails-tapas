@@ -52,19 +52,16 @@
   color: grey;
 }
 
-.project-new {
+.logos_new_favorite {
   position: absolute;
   top: 10px;
   left: 10px;
+  display: flex;
+}
+
+.project-new {
   color: grey;
   padding: 3px;
   margin-bottom: 5px;
 }
-
-.card-favorite {
-  position: absolute;
-  top: 10px;
-  left: 30px;
-}
-
 
