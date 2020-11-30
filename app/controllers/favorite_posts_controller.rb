@@ -3,7 +3,7 @@ class FavoritePostsController < ApplicationController
   before_action :favorites
 
   def index
-    @posts = current_user.favorite_posts
+    @posts = current_user.favorite_posts.where('deadline >= ?', Date.today).order('deadline ASC')
   end
 
   def create
