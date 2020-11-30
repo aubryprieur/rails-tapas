@@ -1,19 +1,21 @@
 <div class="card-ao">
   <div class="container-card">
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
-    <% if (Time.now - post.created_at <= 7.day) %>
-      <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
-    <% end %>
-    <div class="card-favorite">
-      <% unless current_user.favorite_posts.exists?(id: post.id) %>
-        <%= link_to favorite_posts_path(post_id: post), method: :post do %>
-          <i class="far fa-bookmark" style="color: #087AFE"></i>
-        <% end %>
-      <% else %>
-        <%= link_to favorite_post_path(post), method: :delete do %>
-          <i class="fas fa-bookmark" style="color: #087AFE"></i>
-        <% end %>
+    <div class="logos_new_favorite">
+      <% if (Time.now - post.created_at <= 7.day) %>
+        <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
       <% end %>
+      <div class="card-favorite">
+        <% unless current_user.favorite_posts.exists?(id: post.id) %>
+          <%= link_to favorite_posts_path(post_id: post), method: :post do %>
+            <i class="far fa-bookmark" style="color: #087AFE"></i>
+          <% end %>
+        <% else %>
+          <%= link_to favorite_post_path(post), method: :delete do %>
+            <i class="fas fa-bookmark" style="color: #087AFE"></i>
+          <% end %>
+        <% end %>
+      </div>
     </div>
     <h2 class="card-title"><%= post.client %></h2>
     <h2 class="card-title"><%= post.title %></h2>
