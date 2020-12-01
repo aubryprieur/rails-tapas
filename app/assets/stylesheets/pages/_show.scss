@@ -1,0 +1,52 @@
+.show_intro {
+  display: flex;
+}
+
+.show_description {
+  flex-direction: row;
+  flex-basis:  80%;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+  h2 {
+    font-weight: bold;
+  }
+}
+
+.show_date {
+  flex-direction: row;
+  border-radius: 5px;
+  display: flex;
+  margin: 5px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+}
+
+.show_date p {
+  color: #057AFF;
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+}
+
+.show_text {
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+}
+
+.show_link {
+  border-radius: 5px;
+  margin: 10px 5px;
+  padding: 10px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+  .no-download, .fa-times-circle {
+    color: grey;
+    opacity: 0.8;
+  }
+}
