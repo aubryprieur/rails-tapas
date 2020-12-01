@@ -26,5 +26,10 @@
         <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
       <% end %>
     </div>
+    <div>
+    <%= link_to "MODIFIER", edit_post_path(@post), class: "btn btn-outline-primary" if policy(Post).update? %>
+    <%= link_to 'SUPPRIMER', post_path(@post), method: :delete, data: {confirm: "Vous êtes sûr?"}, class: "btn btn-outline-danger" if policy(Post).destroy? %>
+</div>
+
   </div>
 </div>
