@@ -1,22 +1,30 @@
-<div class="container">
-  <h2><%= @post.client %></h2>
-  <h2><%= @post.title %></h2>
-  <p><%= @post.rich_body %></p>
-  <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>
-  <% if @post.photo.attached? %>
-  <%= link_to "Télécharger le dossier", @post.photo, download: '' if @post.photo.attached? %></li>
-  <% end %>
-  <nav>
-    <ul>
-      <li>
-        <%= link_to 'MODIFIER', edit_post_path(@post), class: "nav-link" if policy(Post).update?  %>
-      </li>
-      <li>
-        <%= link_to 'SUPPRIMER', post_path(@post), method: :delete, data: {confirm: "Euh, sûr et certain ?"}, class: "nav-link" if policy(Post).destroy? %>
-      </li>
-      <li>
-        <%= link_to "LISTE DES AO", posts_path, id: "index_page", class: "nav-link" %>
-      </li>
-    </ul>
-  </nav>
+<div class="wrapper">
+  <div class="container">
+    <%= render 'static/nav' %>
+    <div class="show_intro">
+      <div class="show_description">
+        <h2><%= @post.client %></h2>
+        <h2><%= @post.title %></h2>
+      </div>
+      <div class="show_date">
+        <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>
+      </div>
+    </div>
+    <div class="show_text">
+      <% if @post.rich_body.present? %>
+          <p><%= @post.rich_body %></p>
+        <% else %>
+          <p>Pas de description.</p>
+      <% end %>
+    </div>
+    <div class="show_link">
+      <% if @post.photo.attached? %>
+        <%= link_to @post.photo, download: '', class: "" do %>
+          <i class="fas fa-paperclip"></i><span> Télécharger le dossier</span>
+        <% end %>
+      <% else %>
+        <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
+      <% end %>
+    </div>
+  </div>
 </div>
