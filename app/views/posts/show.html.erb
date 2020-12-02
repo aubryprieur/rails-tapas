@@ -19,7 +19,7 @@
     </div>
     <div class="show_link">
       <% if @post.photo.attached? %>
-        <%= link_to @post.photo, download: '', class: "" do %>
+        <%= link_to @post.photo, flag: "attachment", class: "" do %>
           <i class="fas fa-paperclip"></i><span> Télécharger le dossier</span>
         <% end %>
       <% else %>
