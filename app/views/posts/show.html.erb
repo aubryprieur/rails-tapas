@@ -18,8 +18,15 @@
       <% end %>
     </div>
     <div class="show_link">
-      <%= link_to rails_blob_path(@post.photo, disposition: "attachment"), target: "_blank" do %>
-        <i class="fas fa-file-download"></i>
+
+    <% if @post.photo.attached? %>
+      <%= link_to "Test 6", rails_blob_path(@post.photo, disposition: :attachment) , flags: "attachment" %>
+    <% end %>
+
+      <% if @post.photo.attached? %>
+        <%= link_to rails_blob_path(@post.photo, disposition: "attachment"), target: "_blank" do %>
+          <i class="fas fa-file-download"></i>
+        <% end %>
       <% end %>
 
       <% if @post.photo.attached? %>
