@@ -19,16 +19,20 @@
     </div>
     <div class="show_link">
       <% if @post.photo.attached? %>
-        <%= link_to 'download file', @post.photo.attachment, download: @post.photo.attachment, download: '', target: "_blank" %>
+        <%= link_to "Test 1", url_for(@post.photo), download: '' %>
       <% end %>
 
       <% if @post.photo.attached? %>
-        <%= link_to 'download file', @post.photo.attachment, type: 'raw', download: '', target: "_blank" %>
+        <%= link_to 'Test 2', @post.photo.attachment, download: @post.photo.attachment, download: '', target: "_blank" %>
+      <% end %>
+
+      <% if @post.photo.attached? %>
+        <%= link_to 'Test 3', @post.photo.attachment, type: 'raw', download: '', target: "_blank" %>
       <% end %>
 
       <% if @post.photo.attached? %>
         <%= link_to @post.photo, flag: "attachment",download: '', target: :blank , class: "" do %>
-          <i class="fas fa-paperclip"></i><span> Télécharger le dossier</span>
+          <i class="fas fa-paperclip"></i><span> Test 4</span>
         <% end %>
       <% else %>
         <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
