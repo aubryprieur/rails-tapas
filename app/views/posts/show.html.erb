@@ -19,13 +19,15 @@
     </div>
     <div class="show_link">
       <% if @post.photo.attached? %>
-        <%= link_to 'download file', @post.photo.attachment, download: @post.photo.attachment, target: "_blank" %>
+        <%= link_to 'download file', @post.photo.attachment, download: @post.photo.attachment, download: '', target: "_blank" %>
       <% end %>
 
-
+      <% if @post.photo.attached? %>
+        <%= link_to 'download file', @post.photo.attachment, type: 'raw', download: '', target: "_blank" %>
+      <% end %>
 
       <% if @post.photo.attached? %>
-        <%= link_to @post.photo, flag: "attachment", target: :blank , class: "" do %>
+        <%= link_to @post.photo, flag: "attachment",download: '', target: :blank , class: "" do %>
           <i class="fas fa-paperclip"></i><span> Télécharger le dossier</span>
         <% end %>
       <% else %>
