@@ -18,6 +18,13 @@
       <% end %>
     </div>
     <div class="show_link">
+      <% if @post.photo.attached? %>
+        <%= link_to @post.photo.filename, @post.photo, target: :blank %>
+      <% end %>
+
+      <% if @post.photo.attached? %>
+        <%= link_to @post.photo.filename, @post.photo, fl_attachment: "", target: :blank %>
+      <% end %>
 
     <% if @post.photo.attached? %>
       <%= link_to "Test 6", rails_blob_path(@post.photo, disposition: :attachment) , flags: "attachment" %>
