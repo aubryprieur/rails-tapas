@@ -19,7 +19,7 @@
     </div>
     <div class="show_link">
       <% if @post.photo.attached? %>
-        <%= link_to @post.photo.filename, rails_blob_path(@post.photo, disposition: "attachment") %>
+        <%= link_to @post.photo.filename, rails_blob_path(@post.photo, disposition: "attachment", download:true) %>
       <% end %>
 
       <% if @post.photo.attached? %>
@@ -27,15 +27,15 @@
       <% end %>
 
       <% if @post.photo.attached? %>
-        <%= link_to @post.photo.filename, @post.photo, :flags=>"attachment" %>
+        <%= link_to @post.photo.filename, @post.photo, :flags=>"attachment", download:true %>
       <% end %>
 
       <% if @post.photo.attached? %>
-        <%= link_to @post.photo.filename, @post.photo, fl_attachment: "", target: :blank %>
+        <%= link_to @post.photo.filename, @post.photo, fl_attachment: "", download:true, target: :blank %>
       <% end %>
 
     <% if @post.photo.attached? %>
-      <%= link_to "Test 6", rails_blob_path(@post.photo, disposition: :attachment) , flags: "attachment" %>
+      <%= link_to "Test 6", rails_blob_path(@post.photo, disposition: :attachment) , flags: "attachment", download:true %>
     <% end %>
 
       <% if @post.photo.attached? %>
@@ -49,11 +49,11 @@
       <% end %>
 
       <% if @post.photo.attached? %>
-        <%= link_to 'Test 2', @post.photo.attachment, download: @post.photo.attachment, download: '', target: "_blank" %>
+        <%= link_to 'Test 2', @post.photo.attachment, download: @post.photo.attachment, download:true, target: "_blank" %>
       <% end %>
 
       <% if @post.photo.attached? %>
-        <%= link_to 'Test 3', @post.photo.attachment, type: 'raw', download: '', target: "_blank" %>
+        <%= link_to 'Test 3', @post.photo.attachment, type: 'raw', download:true, target: "_blank" %>
       <% end %>
 
       <% if @post.photo.attached? %>
