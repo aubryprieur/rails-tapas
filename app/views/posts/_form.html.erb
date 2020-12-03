@@ -1,24 +1,22 @@
 <%= form_for @post, class: "form-horizontal" do |f| %>
   <div class="form-group">
-    <%= f.label :"Client :" , class: "col-sm-2 control-label" %>
-    <%= f.text_field :client, placeholder: "Ajouter le nom du client" %>
+    <%= f.text_field :client, class: "form-control", placeholder: "Ajouter le nom du client" %>
   </div>
   <div class="form-group">
-    <%= f.label :"Titre :" , class: "col-sm-2 control-label" %>
-    <%= f.text_field :title, placeholder: "Ajouter le titre l'appel d'offres" %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Ajouter le titre de la mission" %>
   </div>
   <div class="form-inputs">
-    <%= f.rich_text_area :rich_body %>
+    <%= f.rich_text_area :rich_body, placeholder: "Ajouter si nécessaire une description" %>
   </div>
-  <div class="form-group">
-    <%= f.label :"Date limite de réponse :" , class: "col-sm-2 control-label" %>
+  <div class="form-group form_date">
+    <%= f.label :"Date limite de réponse :" , class: "control-label"%>
     <%= f.date_field :deadline %>
   </div>
-  <div class="form-group">
+  <div class="form-group form_files">
     <% if @post.photo.attached? %>
     <p>Un dossier est déjà joint à l'appel d'offre, vous pouvez le remplacer ci-dessous.</p>
     <% end %>
-    <%= f.label :"Documents à joindre :", class: "col-sm-2 control-label" %>
+    <%= f.label :"Documents à joindre :", class: "control-label" %>
     <%= f.file_field :photo, direct_upload: true %>
   </div>
   <%= f.submit 'Enregistrer', class: "btn btn-outline-success" %>

@@ -1,0 +1,12 @@
+.new_post h1 {
+  // font-family: Merriweather;
+  margin: 0;
+  color: #06111c;
+  font-size: 70px;
+  line-height: 96px;
+  margin-bottom: 20px;
+}
+
+.new_post h1 span {
+  box-shadow: inset 10px -10px white, inset 1px -35px rgba(5,122,255,0.6);
+}
