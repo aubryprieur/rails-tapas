@@ -19,6 +19,10 @@
     </div>
     <div class="show_link">
       <% if @post.photo.attached? %>
+        <%= link_to "test ultime ?", url_for(@post.photo) %>
+      <% end %>
+
+      <% if @post.photo.attached? %>
         <%= link_to @post.photo.filename, rails_blob_path(@post.photo, disposition: "attachment", download:true) %>
       <% end %>
 
