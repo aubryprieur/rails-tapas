@@ -7,7 +7,6 @@
 }
 
 .banner h1 {
-  // font-family: Merriweather;
   margin: 0;
   color: #06111c;
   font-size: 70px;
@@ -15,14 +14,26 @@
   margin-bottom: 20px;
 }
 
+.banner h1 span {
+  box-shadow: inset 10px -10px white, inset 1px -35px rgba(5,122,255,0.6);
+}
+
+@media(max-width: 768px) {
+  .banner h1 {
+    font-size: 35px;
+    line-height: 48px;
+    margin-bottom: 10px;
+  }
+  .banner h1 span {
+      box-shadow: inset 5px -5px white, inset 1px -17px rgba(5,122,255,0.6);
+
+  }
+}
+
 .banner p {
   font-size: 20px;
   color: #06111c;
   opacity: .7;
-}
-
-.banner h1 span {
-  box-shadow: inset 10px -10px white, inset 1px -35px rgba(5,122,255,0.6);
 }
 
 // blue : rgba(5,122,255,0.8)
@@ -35,6 +46,6 @@
 .banner-img {
   flex: 1 1 auto;
   height: 100%;
+  padding-right: 20px;
 }
-
 
