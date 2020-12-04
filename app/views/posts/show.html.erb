@@ -18,6 +18,8 @@
       <% end %>
     </div>
     <div class="show_link">
+      <%= link_to "Télécharger le dossier 1", rails_blob_path(@post.photo, disposition: "attachment"), download: '' if @post.photo.attached? %>
+      <%= link_to "Télécharger le dossier 2", @post.photo, download: '' if @post.photo.attached? %>
       <% if @post.photo.attached? %>
         <%= link_to "test ultime ?", url_for(@post.photo) %>
       <% end %>
