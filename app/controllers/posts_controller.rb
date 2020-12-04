@@ -40,6 +40,7 @@ class PostsController < ApplicationController
 
   def destroy
     authorize @post
+    @post.photo.purge if @post.photo.attached?
     @post.delete
     if @post.destroy
       redirect_to posts_path, notice: "Appel d'offres supprimé "
