@@ -17,7 +17,7 @@
     <p>Un dossier est déjà joint à l'appel d'offre, vous pouvez le remplacer ci-dessous.</p>
     <% end %>
     <%= f.label :"Documents à joindre :", class: "control-label" %>
-    <%= f.file_field :photo, direct_upload: true %>
+    <%= f.file_field :photo %>
   </div>
   <%= f.submit 'Enregistrer', class: "btn btn-outline-success" %>
   <%= link_to 'Annuler', posts_path, class: "btn btn-outline-danger" %>
