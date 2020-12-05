@@ -10,10 +10,9 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <%= link_to "HOME", "/", class: "nav-link" %>
-      </li>
-      <%= render 'shared/admin_add_ao' %>
+      <% if admin_types.include?(current_user.try(:type)) %>
+        <%= render 'shared/admin_add_ao' %>
+      <% end %>
       <li class="nav-item">
         <%= link_to "LISTE DES AO", posts_path, class: "nav-link" %>
       </li>
@@ -23,7 +22,9 @@
       <li class="nav-item dropdown">
         <%= image_tag "avatar.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <%= render 'shared/admin_dashboard' %>
+          <% if admin_types.include?(current_user.try(:type)) %>
+            <%= render 'shared/admin_dashboard' %>
+          <% end %>
           <%= link_to "DÉCONNEXION", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
         </div>
       </li>
