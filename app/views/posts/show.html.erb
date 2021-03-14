@@ -28,6 +28,37 @@
           <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
       <% end %>
     </div>
+    <div class="show_text">
+      <h3>Positionnement</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"><i class="fas fa-book-reader"></i>Je lis l'AO (0)</th>
+            <th scope="col"><i class="fas fa-phone"></i>Je contacte le client (0)</th>
+            <th scope="col"><i class="fas fa-pencil-alt"></i>Je réponds (<%= @post.likes.count %>)</th>
+            <th scope="col"><i class="fas fa-user-plus"></i>J'intègre l'équipe (0)</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% @post.likes.each do |like| %>
+          <tr>
+              <td>#</td>
+              <td>#</td>
+              <td><%= like.user.first_name %></td>
+              <td>#</td>
+          </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="show_text">
+      <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+      <% if pre_like %>
+        <%= button_to 'Je ne réponds plus', post_like_path(@post, pre_like), method: :delete, class: "btn btn-outline-danger" %>
+      <% else %>
+        <%= button_to 'Je réponds', post_likes_path(@post), method: :post, class: "btn btn-outline-primary" %>
+      <% end %>
+    </div>
     <div>
       <%= link_to "MODIFIER", edit_post_path(@post), class: "btn btn-outline-primary" if policy(Post).update? %>
       <%= link_to 'SUPPRIMER', post_path(@post), method: :delete, data: {confirm: "Vous êtes sûr?"}, class: "btn btn-outline-danger" if policy(Post).destroy? %>

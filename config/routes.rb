@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   get '/favorites', to: 'favorite_posts#index', as: 'favorites'
   resources :favorite_posts, only: [:create, :destroy]
 
-  resources :posts
+  resources :posts do
+    resources :likes
+  end
   devise_for :users, skip: [:registrations]
   root to: 'static#homepage'
 end
