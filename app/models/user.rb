@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :favorites
   has_many :favorite_posts, through: :favorites, source: :favorited, source_type: 'Post'
+  has_many :likes, dependent: :destroy
 
   validates_presence_of :first_name, :last_name
 
