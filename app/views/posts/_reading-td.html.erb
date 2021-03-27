@@ -1,0 +1,7 @@
+<% if @post.readings.empty?  %>
+  <td>#</td>
+<% else %>
+  <% @post.readings.each do |reading| %>
+    <td><%= reading.user.first_name %></td>
+  <% end %>
+<% end %>
