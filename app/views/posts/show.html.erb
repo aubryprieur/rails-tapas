@@ -19,13 +19,8 @@
     <div class="show_link">
       <% if @post.photo.attached? %>
         <%= link_to(@post.photo.filename, cloudinary_url(@post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip" )) %>
-      <% end %>
-      <% if @post.photo.attached? %>
-        <%= link_to rails_blob_path(@post.photo, disposition: "attachment"), target: "_blank" do %>
-          <i class="fas fa-file-download"></i><span> Link-Test 2</span>
-        <% end %>
-        <% else %>
-          <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
+      <% else %>
+        <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
       <% end %>
     </div>
     <div class="show_text">
