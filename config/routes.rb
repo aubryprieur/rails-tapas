@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :readings
     resources :calls
     resources :teams
+    resources :rejections
   end
   devise_for :users, skip: [:registrations]
   root to: 'static#homepage'
