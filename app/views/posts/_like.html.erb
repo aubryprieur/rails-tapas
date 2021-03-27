@@ -1,6 +1,6 @@
 <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
 <% if pre_like %>
-  <%= button_to 'Je ne réponds plus', post_like_path(@post, pre_like), method: :delete, class: "btn btn-outline-danger" %>
+  <span><%= link_to "Je réponds (#{@post.likes.count})", post_like_path(@post, pre_like), method: :delete, class: "" %></span>
 <% else %>
-  <%= button_to 'Je réponds', post_likes_path(@post), method: :post, class: "btn btn-outline-primary" %>
+  <%= link_to 'Je réponds', post_likes_path(@post), method: :post, class: "" %>
 <% end %>

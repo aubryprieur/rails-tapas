@@ -1,7 +1,0 @@
-<% if @post.calls.empty?  %>
-  <td>#</td>
-<% else %>
-  <% @post.calls.each do |call| %>
-    <td><%= call.user.first_name %></td>
-  <% end %>
-<% end %>
