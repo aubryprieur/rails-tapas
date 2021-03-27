@@ -1,7 +1,0 @@
-<% if @post.teams.empty?  %>
-  <td>#</td>
-<% else %>
-  <% @post.teams.each do |team| %>
-    <td><%= team.user.first_name %></td>
-  <% end %>
-<% end %>
