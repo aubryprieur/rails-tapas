@@ -36,7 +36,7 @@
             <th scope="col"><i class="fas fa-book-reader"></i>Je lis l'AO (<%= @post.readings.count %>)</th>
             <th scope="col"><i class="fas fa-phone"></i>Je contacte le client (<%= @post.calls.count %>)</th>
             <th scope="col"><i class="fas fa-pencil-alt"></i>Je réponds (<%= @post.likes.count %>)</th>
-            <th scope="col"><i class="fas fa-user-plus"></i>J'intègre l'équipe (0)</th>
+            <th scope="col"><i class="fas fa-user-plus"></i>J'intègre l'équipe (<%= @post.teams.count %>)</th>
           </tr>
         </thead>
         <tbody>
@@ -44,15 +44,16 @@
             <%= render 'reading-td' %>
             <%= render 'call-td' %>
             <%= render 'like-td' %>
-            <td>#</td>
+            <%= render 'team-td' %>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="show_text">
-      <%= render 'like' %>
-      <%= render 'call' %>
+    <div class="show_text btn_block_ao">
       <%= render 'reading' %>
+      <%= render 'call' %>
+      <%= render 'like' %>
+      <%= render 'team' %>
     </div>
     <div>
       <%= link_to "MODIFIER", edit_post_path(@post), class: "btn btn-outline-primary" if policy(Post).update? %>

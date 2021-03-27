@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :readings, dependent: :destroy
   has_many :calls, dependent: :destroy
+  has_many :teams, dependent: :destroy
 
   validates_presence_of :first_name, :last_name
 
