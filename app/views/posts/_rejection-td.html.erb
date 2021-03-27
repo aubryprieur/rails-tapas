@@ -1,0 +1,7 @@
+<% if @post.rejections.empty?  %>
+  <td>#</td>
+<% else %>
+  <% @post.rejections.each do |rejection| %>
+    <td><%= rejection.user.first_name %></td>
+  <% end %>
+<% end %>
