@@ -34,7 +34,7 @@
         <thead>
           <tr>
             <th scope="col"><i class="fas fa-book-reader"></i>Je lis l'AO (<%= @post.readings.count %>)</th>
-            <th scope="col"><i class="fas fa-phone"></i>Je contacte le client (0)</th>
+            <th scope="col"><i class="fas fa-phone"></i>Je contacte le client (<%= @post.calls.count %>)</th>
             <th scope="col"><i class="fas fa-pencil-alt"></i>Je réponds (<%= @post.likes.count %>)</th>
             <th scope="col"><i class="fas fa-user-plus"></i>J'intègre l'équipe (0)</th>
           </tr>
@@ -42,7 +42,7 @@
         <tbody>
           <tr>
             <%= render 'reading-td' %>
-            <td>#</td>
+            <%= render 'call-td' %>
             <%= render 'like-td' %>
             <td>#</td>
           </tr>
@@ -51,6 +51,7 @@
     </div>
     <div class="show_text">
       <%= render 'like' %>
+      <%= render 'call' %>
       <%= render 'reading' %>
     </div>
     <div>
