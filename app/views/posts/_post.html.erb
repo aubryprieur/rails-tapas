@@ -8,11 +8,11 @@
       <div class="card-favorite">
         <% unless current_user.favorite_posts.exists?(id: post.id) %>
           <%= link_to favorite_posts_path(post_id: post), method: :post do %>
-            <i class="far fa-bookmark" style="color: #087AFE"></i>
+            <i class="far fa-bookmark" style="color: #F9CA62"></i>
           <% end %>
         <% else %>
           <%= link_to favorite_post_path(post), method: :delete do %>
-            <i class="fas fa-bookmark" style="color: #087AFE"></i>
+            <i class="fas fa-bookmark" style="color: #F9CA62"></i>
           <% end %>
         <% end %>
       </div>

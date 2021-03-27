@@ -25,7 +25,7 @@
 }
 
 .show_date p {
-  color: #057AFF;
+  color: #F9CA62;
   font-weight: bold;
   margin: auto;
   text-align: center;
@@ -61,4 +61,20 @@
     color: grey;
     opacity: 0.8;
   }
+  a {
+    color: #F9CA62;
+    font-weight: bold;
+  }
+}
+
+.ranking-link {
+  color: #F9CA62;
+}
+
+table i {
+  color: grey;
+}
+
+.fa-file-download {
+  color: grey;
 }
