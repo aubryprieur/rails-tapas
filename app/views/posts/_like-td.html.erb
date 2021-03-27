@@ -1,0 +1,7 @@
+<% if @post.likes.empty?  %>
+  <td>#</td>
+<% else %>
+  <% @post.likes.each do |like| %>
+    <td><%= like.user.first_name %></td>
+  <% end %>
+<% end %>

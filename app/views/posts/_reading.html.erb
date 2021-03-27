@@ -1,0 +1,6 @@
+<% pre_reading = @post.readings.find { |read| read.user_id == current_user.id} %>
+<% if pre_reading %>
+  <%= button_to "Je ne lis plus l'ao", post_reading_path(@post, pre_reading), method: :delete, class: "btn btn-outline-danger" %>
+<% else %>
+  <%= button_to "Je lis l'ao", post_readings_path(@post), method: :post, class: "btn btn-outline-primary" %>
+<% end %>
