@@ -39,6 +39,12 @@
   background-color: white;
 }
 
+.btn_block_ao {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .show_link {
   border-radius: 5px;
   margin: 10px 5px;
