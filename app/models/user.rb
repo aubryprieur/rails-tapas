@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :calls, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_many :rejections, dependent: :destroy
+  has_many :comments, as: :commentable
 
   validates_presence_of :first_name, :last_name
 

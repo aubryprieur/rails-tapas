@@ -28,6 +28,35 @@
       <h3>Positionnement</h3>
       <%= render 'table_position' %>
     </div>
+    <div class="card">
+      <div class="card-body">
+        <h3>Commentaires</h3>
+         <p>
+           <% if @post.comments.present? %>
+             <% @post.comments.each do |c| %>
+               <div>
+                  <small>
+                    <strong><%= @user.first_name %></strong> (il y a <%= time_ago_in_words(c.created_at) %>)
+                  </small>
+                  <p class="mt-1 ml-4">
+                    <%= c.body %>
+                  </p>
+                </div>
+              <% end %>
+            <% else %>
+              Il n'y a pas encore de commentaires pour cet utilisateur.
+            <% end %>
+          </p>
+          <%= form_for [@post, @comment] do |f| %>
+            <div class="form-group">
+              Vous voulez laisser un commentaire ?
+              <%= f.text_area :body, class: "form-control", placeholder: "Ecrivez votre commentaire ici.", rows: 3 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <%= f.submit "Enregistrer votre commentaire", class: "btn btn-primary" %>
+         <% end %>
+      </div>
+    </div>
     <div>
       <%= link_to "MODIFIER", edit_post_path(@post), class: "btn btn-outline-primary" if policy(Post).update? %>
       <%= link_to 'SUPPRIMER', post_path(@post), method: :delete, data: {confirm: "Vous êtes sûr?"}, class: "btn btn-outline-danger" if policy(Post).destroy? %>
