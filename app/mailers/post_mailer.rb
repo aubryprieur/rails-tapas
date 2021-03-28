@@ -6,7 +6,7 @@ class PostMailer < ApplicationMailer
     @post = post
 
     mail(
-      subject: "post #{@post.client} created!"
+      subject: "Nouvel appel d'offres | #{@post.client}"
     )
   end
 end
