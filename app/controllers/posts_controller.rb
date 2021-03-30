@@ -24,7 +24,6 @@ class PostsController < ApplicationController
 
   def show
     @users = User.all
-    @user = current_user
     @comment = Comment.create
   end
 

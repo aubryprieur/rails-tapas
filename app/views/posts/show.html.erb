@@ -36,7 +36,7 @@
              <% @post.comments.each do |c| %>
                <div>
                   <small>
-                    <strong><%= @user.first_name %></strong> (il y a <%= time_ago_in_words(c.created_at) %>)
+                    <strong><%= c.user.first_name %></strong> (il y a <%= time_ago_in_words(c.created_at) %>)
                   </small>
                   <p class="mt-1 ml-4">
                     <%= c.body %>
