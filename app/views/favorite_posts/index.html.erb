@@ -3,11 +3,7 @@
     <h1><span>Mes favoris</span></h1>
     <% if @posts.blank? %>
       <div class="text-center">
-        <i class="fas fa-exclamation-circle fa-2x"></i>
-        <i class="far fa-frown fa-2x"></i>
-        <span> Vous n'avez pas sauvegardé d'appels d'offres </span>
-        <i class="far fa-frown fa-2x"></i>
-        <i class="fas fa-exclamation-circle fa-2x"></i>
+        <%= image_tag ("empty-favori.svg"), class:"empty-img"%>
       </div>
     <% end %>
     <div class="cards">
