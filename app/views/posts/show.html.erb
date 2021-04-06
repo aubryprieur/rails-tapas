@@ -19,41 +19,7 @@
     <div class="show_link">
       <% if @post.photo.attached? %>
         <i class="fas fa-file-download"></i>
-        <%= link_to(@post.photo.filename, cloudinary_url(@post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip", class: "download-link" )) %>
-
-
-        <%= link_to "Télécharger le dossier 1", rails_blob_path(@post.photo, disposition: "attachment"), download: '' if @post.photo.attached? %>
-
-        <%= link_to "Télécharger le dossier 2", @post.photo, download: '' %>
-
-        <%= link_to "test ultime ?", url_for(@post.photo) %>
-
-        <%= link_to @post.photo.filename, rails_blob_path(@post.photo, disposition: "attachment", download:true) %>
-
-        <%= link_to("download", cloudinary_url(rails_blob_path(@post.photo),  :flags=>"attachment"  )) %>
-
-        <%= link_to @post.photo.filename, @post.photo, :flags=>"attachment", download:true %>
-
-        <%= link_to @post.photo.filename, @post.photo, fl_attachment: "", download:true, target: :blank %>
-
-        <%= link_to "Test 6", rails_blob_path(@post.photo, disposition: :attachment) , flags: "attachment", download:true %>
-
-        <%= link_to rails_blob_path(@post.photo, disposition: "attachment"), target: "_blank" do %>
-          <i class="fas fa-file-download"></i>
-        <% end %>
-
-        <%= link_to "Test 1", url_for(@post.photo), download: '' %>
-
-        <%= link_to 'Test 2', @post.photo.attachment, download: @post.photo.attachment, download:true, target: "_blank" %>
-
-        <%= link_to 'Test 3', @post.photo.attachment, type: 'raw', download:true, target: "_blank" %>
-
-        <%= link_to @post.photo, flags: "attachment" do %>
-          <i class="fas fa-paperclip"></i><span> Test 4</span>
-        <% end %>
-
-
-
+        <%= link_to("Télécharger le dossier", cloudinary_url(@post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip", class: "download-link" )) %>
       <% else %>
         <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
       <% end %>
