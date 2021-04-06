@@ -26,14 +26,9 @@
     <% end %>
   </div>
   <% if post.photo.attached?  %>
-<!--     <%= link_to post.photo, download: '', class: "card-attachment " do %>
+    <%= link_to(cloudinary_url(post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip"), class: "card-attachment") do %>
       <i class="fas fa-paperclip"></i>
-    <% end %> -->
-
-        <%= link_to("Lien", cloudinary_url(post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip", class: "download-link" )) %>
-
-
-
+    <% end %>
   <% end %>
   <div class="container-link">
     <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
