@@ -16,7 +16,7 @@
     <% if @post.photo.attached? %>
     <p>Un dossier est déjà joint à l'appel d'offre, vous pouvez le remplacer ci-dessous.</p>
     <% end %>
-    <%= f.label :"Documents à joindre :", class: "control-label" %>
+    <%= f.label :"Dossier à joindre (uniquement au format zip) :", class: "control-label" %>
     <%= f.file_field :photo, direct_upload: true %>
   </div>
   <%= f.submit 'Enregistrer', class: "btn btn-outline-success" %>
