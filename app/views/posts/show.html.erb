@@ -17,9 +17,12 @@
       <% end %>
     </div>
     <div class="show_link">
-      <% if @post.photo.attached? %>
+      <% if @post.photo.attached? && @post.photo.blob.filename.to_s.last(4) == ".zip" %>
         <i class="fas fa-file-download"></i>
         <%= link_to("Télécharger le dossier", cloudinary_url(@post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip", class: "download-link" )) %>
+      <% elsif @post.photo.attached? && @post.photo.blob.filename.to_s.last(4) != ".zip"  %>
+        <i class="fas fa-file-download"></i>
+        <%= link_to("Télécharger le dossier", cloudinary_url(@post.photo.key, :flags=>"attachment", class: "download-link" )) %>
       <% else %>
         <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
       <% end %>

@@ -25,8 +25,12 @@
       <p class="card-description">Pas de description.</p>
     <% end %>
   </div>
-  <% if post.photo.attached?  %>
+  <% if post.photo.attached? && post.photo.blob.filename.to_s.last(4) == ".zip"  %>
     <%= link_to(cloudinary_url(post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip"), class: "card-attachment") do %>
+      <i class="fas fa-paperclip"></i>
+    <% end %>
+  <% elsif post.photo.attached? && post.photo.blob.filename.to_s.last(4) != ".zip"  %>
+    <%= link_to(cloudinary_url(post.photo.key, :flags=>"attachment"), class: "card-attachment") do %>
       <i class="fas fa-paperclip"></i>
     <% end %>
   <% end %>
