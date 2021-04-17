@@ -5,15 +5,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :posts
-  has_many :favorites
-  has_many :favorite_posts, through: :favorites, source: :favorited, source_type: 'Post'
+  has_many :posts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_posts, through: :favorites, source: :favorited, source_type: 'Post', dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :readings, dependent: :destroy
   has_many :calls, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_many :rejections, dependent: :destroy
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates_presence_of :first_name, :last_name
 
