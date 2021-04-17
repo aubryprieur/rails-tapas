@@ -37,6 +37,7 @@
          <p>
            <% if @post.comments.present? %>
              <% @post.comments.each do |c| %>
+              <% if c.user.present? %>
                <div>
                   <small>
                     <strong><%= c.user.first_name %></strong> (il y a <%= time_ago_in_words(c.created_at) %>)
@@ -45,6 +46,7 @@
                     <%= c.body %>
                   </p>
                 </div>
+              <% end %>
               <% end %>
             <% else %>
               Il n'y a pas encore de commentaires pour cet utilisateur.
