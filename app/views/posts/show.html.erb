@@ -2,8 +2,8 @@
   <div class="container">
     <div class="show_intro">
       <div class="show_description">
-        <h2><%= @post.client %></h2>
-        <h2><%= @post.title %></h2>
+        <h2><%= @post.client.upcase %></h2>
+        <h2><%= @post.title.capitalize %></h2>
       </div>
       <div class="show_date">
         <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>

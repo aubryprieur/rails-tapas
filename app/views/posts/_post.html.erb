@@ -17,8 +17,8 @@
         <% end %>
       </div>
     </div>
-    <h2 class="card-title"><%= post.client %></h2>
-    <h2 class="card-title"><%= post.title %></h2>
+    <h2 class="card-title"><%= post.client.upcase %></h2>
+    <h2 class="card-title"><%= post.title.capitalize %></h2>
     <% if post.rich_body.present? %>
       <p class="card-description"><%= truncate(strip_tags(post.rich_body.to_s), length:100) %></p>
     <% else %>
