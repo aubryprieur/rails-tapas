@@ -17,8 +17,8 @@
         <% end %>
       </div>
     </div>
-    <h2 class="card-client"><%= truncate(strip_tags(post.client.to_s), length:50).upcase %></h2>
-    <h2 class="card-title"><%= truncate(strip_tags(post.title.to_s), length:75).capitalize %></h2>
+    <h2 class="card-client"><%= post.client.truncate(50).upcase %></h2>
+    <h2 class="card-title"><%= post.title.truncate(75).capitalize %></h2>
     <% if post.rich_body.present? %>
       <p class="card-description"><%= truncate(strip_tags(post.rich_body.to_s), length:100) %></p>
     <% else %>
