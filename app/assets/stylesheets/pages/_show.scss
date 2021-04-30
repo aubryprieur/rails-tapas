@@ -10,6 +10,9 @@
   padding: 10px;
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
   background-color: white;
+  h2 {
+    font-size: 18px;
+  }
   h2:first-child {
     font-weight: bold;
   }
@@ -20,6 +23,15 @@
   border-radius: 5px;
   display: flex;
   margin: 5px;
+  // box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+}
+
+.show_comment {
+  flex-direction: row;
+  border-radius: 5px;
+  display: flex;
+  margin: 10px 5px;
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
   background-color: white;
 }
