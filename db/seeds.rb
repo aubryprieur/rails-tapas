@@ -4,6 +4,8 @@ Post.destroy_all
 
 puts "Creating Users"
 user1 = User.create!(email: "aubry.prieur@gmail.com", first_name: "Aubry", last_name: "Prieur", password: "Copas123456", password_confirmation: "Copas123456")
+admin1 = AdminUser.create!(email: "aubry.prieur@copas.coop", first_name: "Aubry", last_name: "Prieur", password: "Copas123456", password_confirmation: "Copas123456")
+
 puts "User have been created"
 
 puts "Creating Posts"

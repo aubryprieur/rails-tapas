@@ -1,0 +1,13 @@
+Si vous n'avez pas pu suivre l'actualité de Tapas, voici un résumé de la semaine
+
+<% @posts_activities.each do |post| %>
+  <div>
+    <%= post.client %> | <%= post.title %>
+    <% if post.comments.present? %>
+      | Un ou des commentaires ont été postés par un copassien |
+    <% end %>
+    <% if post.likes.present? or post.readings.present? or post.teams.present? or post.calls.present? or post.reads.present?%>
+      | Un ou plusieurs copassiens se sont positionnés sur l'AO|
+    <% end %>
+  </div>
+<% end %>

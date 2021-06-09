@@ -103,15 +103,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_135037) do
     t.index ["user_id"], name: "index_readings_on_user_id"
   end
 
-  create_table "reads", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_reads_on_post_id"
-    t.index ["user_id"], name: "index_reads_on_user_id"
-  end
-
   create_table "rejections", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.bigint "user_id", null: false
@@ -154,8 +145,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_135037) do
   add_foreign_key "posts", "users"
   add_foreign_key "readings", "posts"
   add_foreign_key "readings", "users"
-  add_foreign_key "reads", "posts"
-  add_foreign_key "reads", "users"
   add_foreign_key "rejections", "posts"
   add_foreign_key "rejections", "users"
   add_foreign_key "teams", "posts"
