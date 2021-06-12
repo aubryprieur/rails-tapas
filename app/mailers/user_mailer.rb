@@ -11,4 +11,16 @@ class UserMailer < ApplicationMailer
     mail(to: User.pluck(:email), subject: "Hi, this is a test mail.")
   end
 
+  private
+
+# A travailler
+  def reading_ao_week
+    Reading.where(:created_at => (Date.today - 7)..(Date.today))
+    readings = Reading.where("created_at >= ?", Date.today.at_beginning_of_week)
+    readings.each do |reading|
+      Post.where(reading.post_id)
+    end
+  end
+# A travailler
+
 end
