@@ -41,6 +41,8 @@
 
       .table_ao, .th_ao, .td_ao {
         border: 1px solid gray;
+        text-align: center;
+        vertical-align: middle;
       }
 
       .body {
@@ -321,37 +323,46 @@
               <tr>
                 <td class="wrapper">
                   <div class="intro">
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="content-block">
-                    <span class="apple-link">Si vous avez raté l'actualité de la semaine. Vous trouverez ci-dessous un résumé de l'activité sur Tapas</span>
-                  </td>
-                </tr>
-              </table>
-            </div>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="content-block">
+                          <span class="apple-link">Si vous avez raté l'actualité de la semaine écoulée. Vous trouverez ci-dessous un résumé de l'activité sur Tapas.</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-
                       <td>
-
-      <table class="table_ao">
-        <tr>
-          <th class="th_ao">Client </th>
-          <th class="th_ao">Titre </th>
-          <th class="th_ao">Commentaire(s)</th>
-          <th class="th_ao">Positionnement(s)</th>
-        </tr>
-       <% @weekly_activities.each do |post| %>
-        <tr>
-          <td class="td_ao"><%= post.client%></td>
-          <td class="td_ao"><%= post.title %></td>
-          <td class="td_ao"><% if post.comments.present? %>OK<% end %></td>
-          <td class="td_ao"><% if post.likes.present? or post.readings.present? or post.teams.present? or post.calls.present? or post.reads.present?%>OK<% end %></td>
-        </tr>
-        <% end %>
-       </table>
+                        <table class="table_ao">
+                          <tr>
+                            <th class="th_ao">Client </th>
+                            <th class="th_ao">Titre </th>
+                            <th class="th_ao">Commentaire(s)</th>
+                            <th class="th_ao">Positionnement(s)</th>
+                          </tr>
+                         <% @weekly_activities.each do |post| %>
+                          <tr>
+                            <td class="td_ao"><%= post.client%></td>
+                            <td class="td_ao"><%= link_to "#{post.title}", post_url(post), target: "_blank"  %></td>
+                            <td class="td_ao center"><% if post.comments.present? %>✅<% end %></td>
+                            <td class="td_ao center"><% if post.likes.present? or post.readings.present? or post.teams.present? or post.calls.present? %>✅<% end %></td>
+                          </tr>
+                          <% end %>
+                         </table>
+                      </td>
                     </tr>
                   </table>
+                  <div class="intro">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="content-block">
+                          <span class="apple-link">Ce résumé reprend les AOs où un commentaire ou un positionnement "positif" a été crée sur les 7 derniers jours.</span>
+                          <span class="apple-link">(Positionnement positif : Tous les positionnements sauf "Pas pour moi".)</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </td>
               </tr>
             </table>

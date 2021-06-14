@@ -10,8 +10,11 @@ class UserMailer < ApplicationMailer
     @weekly_activities = []
     @weekly_activities << Post.joins(:teams).where("teams.created_at >= ?", Date.today - 7)
     @weekly_activities << Post.joins(:readings).where("readings.created_at >= ?", Date.today - 7)
-    @weekly_activities = @weekly_activities.flatten
-    mail(to: User.pluck(:email), subject: "Hi, this is a test mail.")
+    @weekly_activities << Post.joins(:likes).where("likes.created_at >= ?", Date.today - 7)
+    @weekly_activities << Post.joins(:calls).where("calls.created_at >= ?", Date.today - 7)
+    @weekly_activities << Post.joins(:comments).where("comments.created_at >= ?", Date.today - 7)
+    @weekly_activities = @weekly_activities.flatten.uniq
+    mail(to: User.pluck(:email), subject: "Tapas, le récap de la semaine.")
   end
 
   private
