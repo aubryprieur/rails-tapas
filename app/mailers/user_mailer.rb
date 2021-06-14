@@ -7,13 +7,10 @@ class UserMailer < ApplicationMailer
   end
 
   def newsletter_mailer
-    # (marche pas : j'ai tous les posts, pas de sélection)
-    @posts_activities = Post.includes(:readings, :likes, :calls, :teams).where("created_at >= ?", Date.today.at_beginning_of_week)
-    # (marche pas)
-    @posts_activities2 = Post.joins(:teams).where("teams.created_at >= ?", Date.today.at_beginning_of_week)
-    # (marche pas : bug, mal écrit)
-    @posts_activities3 = Post.joins(:teams, :readings).where("teams.created_at >= ?" or "readings.created_at >= ?", Date.today.at_beginning_of_week)
-    # (marche pas)
+    @weekly_activities = []
+    @weekly_activities << Post.joins(:teams).where("teams.created_at >= ?", Date.today - 7)
+    @weekly_activities << Post.joins(:readings).where("readings.created_at >= ?", Date.today - 7)
+    @weekly_activities = @weekly_activities.flatten
     mail(to: User.pluck(:email), subject: "Hi, this is a test mail.")
   end
 
