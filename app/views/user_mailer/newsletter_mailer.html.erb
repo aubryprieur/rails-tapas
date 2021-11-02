@@ -326,39 +326,48 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td class="content-block">
-                          <span class="apple-link">Si vous avez raté l'actualité de la semaine écoulée. Vous trouverez ci-dessous un résumé de l'activité sur Tapas.</span>
+                          <span class="apple-link">Si vous avez raté l'actualité de la semaine écoulée. Vous trouverez ci-dessous un résumé de l'activité sur Tapas :</span>
                         </td>
                       </tr>
                     </table>
                   </div>
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td>
-                        <table class="table_ao">
-                          <tr>
-                            <th class="th_ao">Client </th>
-                            <th class="th_ao">Titre </th>
-                            <th class="th_ao">Commentaire(s)</th>
-                            <th class="th_ao">Positionnement(s)</th>
-                          </tr>
-                         <% @weekly_activities.each do |post| %>
-                          <tr>
-                            <td class="td_ao"><%= post.client%></td>
-                            <td class="td_ao"><%= link_to "#{post.title}", post_url(post), target: "_blank"  %></td>
-                            <td class="td_ao center"><% if post.comments.present? %>✅<% end %></td>
-                            <td class="td_ao center"><% if post.likes.present? or post.readings.present? or post.teams.present? or post.calls.present? %>✅<% end %></td>
-                          </tr>
-                          <% end %>
-                         </table>
-                      </td>
-                    </tr>
-                  </table>
+                  <% if @weekly_activities.empty? %>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="content-block">
+                          <span class="apple-link"> 🥱🥱🥱 Pas d'activité cette semaine. 🥱🥱🥱</span>
+                        </td>
+                      </tr>
+                    </table>
+                  <% else %>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>
+                          <table class="table_ao">
+                            <tr>
+                              <th class="th_ao">Client </th>
+                              <th class="th_ao">Titre </th>
+                              <th class="th_ao">Commentaire(s)</th>
+                              <th class="th_ao">Positionnement(s)</th>
+                            </tr>
+                           <% @weekly_activities.each do |post| %>
+                            <tr>
+                              <td class="td_ao"><%= post.client%></td>
+                              <td class="td_ao"><%= link_to "#{post.title}", post_url(post), target: "_blank"  %></td>
+                              <td class="td_ao center"><% if post.comments.present? %>✅<% end %></td>
+                              <td class="td_ao center"><% if post.likes.present? or post.readings.present? or post.teams.present? or post.calls.present? %>✅<% end %></td>
+                            </tr>
+                            <% end %>
+                           </table>
+                        </td>
+                      </tr>
+                    </table>
+                  <% end %>
                   <div class="intro">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td class="content-block">
-                          <span class="apple-link">Ce résumé reprend les AOs où un commentaire ou un positionnement "positif" a été crée sur les 7 derniers jours.</span>
-                          <span class="apple-link">(Positionnement positif : Tous les positionnements sauf "Pas pour moi".)</span>
+                          <span class="apple-link">Ce résumé reprend les appels d'offres avec commentaire(s) et positionnement(s) partagés sur les 7 derniers jours.</span>
                         </td>
                       </tr>
                     </table>
