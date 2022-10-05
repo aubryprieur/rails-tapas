@@ -9,7 +9,9 @@ class CommentsController < ApplicationController
   def create
     @commentable = commentable
     @comment = @commentable.comments.new(comment_params)
+    @post = Post.find(params[:post_id])
     if @comment.save
+      CommentMailer.creation_comment(@post, @comment).deliver_now
       redirect_to commentable_path(commentable), notice: "Votre commentaire a été créé avec succès."
     end
   end
