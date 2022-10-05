@@ -11,7 +11,7 @@ puts "User have been created"
 puts "Creating Posts"
 
 20.times do |post|
-  Post.create!(deadline: Date.today, title: "title #{post}", description: "description #{post}", user_id: user1.id )
+  Post.create!(deadline: Date.today, client: "client #{post}", title: "title #{post}", description: "description #{post}", user_id: user1.id )
 end
 
 puts "20 Posts have been created"
