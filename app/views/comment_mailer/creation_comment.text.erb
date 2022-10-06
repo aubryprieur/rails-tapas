@@ -1,5 +1,9 @@
 Bonjour,
 
-Nouveau commentaire sur Tapas. Il concerne l'appel d'offres : <%= @post.client %> | <%= @post.title %>
-- Commentaire : <%= @comment.body %>
+Nouveau commentaire sur Tapas !
+
+Il concerne l'appel d'offres : <%= @post.client %> | <%= @post.title %>
+
+- Commentaire de <%= @comment.user.first_name %> : <%= @comment.body %>
+
 <%= link_to "Lien d'accès", post_url(@post), target: "_blank"  %>
