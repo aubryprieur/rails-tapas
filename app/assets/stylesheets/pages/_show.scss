@@ -18,6 +18,16 @@
   }
 }
 
+.show_favorite{
+  display: inline-block;
+}
+
+.show_title{
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .show_date {
   flex-direction: row;
   border-radius: 5px;
@@ -89,4 +99,26 @@ table i {
 
 .fa-file-download {
   color: grey;
+}
+
+.hoverable {
+  position: relative;
+}
+
+.hoverable>.hoverable__tooltip {
+  display: none;
+}
+
+.hoverable:hover>.hoverable__tooltip {
+  display: inline;
+  position: absolute;
+  z-index: 1;
+  font-size: 10px;
+  width: 100px;
+  bottom: 110%;
+  left: 0;
+  opacity: 75%;
+  background: #888;
+  border-radius: 5px;
+  transition: opacity 1s ease-in-out;
 }
