@@ -35,7 +35,7 @@
             </div>
           </div>
           <h2 class="card-client"><%= post.client.truncate(50).upcase %></h2>
-          <h2 class="card-title"><%= post.title.truncate(75).capitalize %></h2>
+          <h2 class="card-title"><%= post.title.capitalize %></h2>
         </div>
         <% if post.photo.attached? && post.photo.blob.filename.to_s.last(4) == ".zip"  %>
           <%= link_to(cloudinary_url(post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip"), class: "card-attachment") do %>
