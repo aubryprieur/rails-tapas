@@ -16,7 +16,7 @@ class FavoritePostsController < ApplicationController
 
   def destroy
     Favorite.where(favorited_id: @post.id, user_id: current_user.id).first.destroy
-    redirect_to posts_path, alert: "L'appel d'offres ' #{@post.title} ' a été supprimé de vos favoris "
+    redirect_to favorites_path, alert: "L'appel d'offres ' #{@post.title} ' a été supprimé de vos favoris "
   end
 
   private

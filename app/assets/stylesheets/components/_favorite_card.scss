@@ -1,0 +1,46 @@
+.favorite_cards {
+  display : grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+}
+
+.favorite_card-ao {
+  word-break: break-all;
+  position: relative;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.favorite_card-title {
+  font-family: Lato;
+  font-size: 16px;
+  color: #0d0d0d;
+  margin-bottom: 1.5rem;
+}
+
+.favorite_card-client {
+  font-family: Lato;
+  font-size: 16px;
+  color: #0d0d0d;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.remaining_time {
+  font-family: Lato;
+  color: gray;
+  text-align: center;
+  line-height: 0.25;
+  .remaining_time__text {
+    text-decoration: underline;
+    text-underline-offset: 8px;
+  }
+  .remaining_time_dot {
+    margin: 0;
+    font-weight: bold;
+    font-size: 30px;
+  }
+}
+

@@ -1,13 +1,60 @@
 <div class="wrapper">
   <div class="container list-posts">
     <h1><span>Mes favoris</span></h1>
-    <% if @posts.blank? %>
+    <% if @favorite_posts.blank? %>
       <div class="text-center">
         <%= image_tag ("empty.svg"), class:"empty-img"%>
       </div>
+    <% else %>
+      <div class="favorite_cards">
+        <% @posts.each do |post| %>
+        <div class="remaining_time">
+          <p class="remaining_time__text">Il reste <%= ((post.deadline.to_time - Time.now) / 86400).round  %> jours </p>
+          <p class="remaining_time_dot">.</p>
+          <p class="remaining_time_dot">.</p>
+          <p class="remaining_time_dot">.</p>
+        </div>
+        <div class="favorite_card-ao">
+          <div class="container-card">
+
+          <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
+          <div class="logos_new_favorite">
+            <% if (Time.now - post.created_at <= 7.day) %>
+              <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
+            <% end %>
+            <div class="card-favorite">
+              <% unless current_user.favorite_posts.exists?(id: post.id) %>
+                <%= link_to favorite_posts_path(post_id: post), method: :post do %>
+                  <i class="far fa-bookmark" style="color: #F9CA62"></i>
+                <% end %>
+              <% else %>
+                <%= link_to favorite_post_path(post), method: :delete do %>
+                  <i class="fas fa-bookmark" style="color: #F9CA62"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <h2 class="card-client"><%= post.client.truncate(50).upcase %></h2>
+          <h2 class="card-title"><%= post.title.truncate(75).capitalize %></h2>
+        </div>
+        <% if post.photo.attached? && post.photo.blob.filename.to_s.last(4) == ".zip"  %>
+          <%= link_to(cloudinary_url(post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip"), class: "card-attachment") do %>
+            <i class="fas fa-paperclip"></i>
+          <% end %>
+        <% elsif post.photo.attached? && post.photo.blob.filename.to_s.last(4) != ".zip"  %>
+          <%= link_to(cloudinary_url(post.photo.key, :flags=>"attachment"), class: "card-attachment") do %>
+            <i class="fas fa-paperclip"></i>
+          <% end %>
+        <% end %>
+        <div class="container-link">
+          <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
+        </div>
+      </div>
+
+        <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
-    <div class="cards">
-      <%= render @posts %>
-    </div>
   </div>
 </div>
