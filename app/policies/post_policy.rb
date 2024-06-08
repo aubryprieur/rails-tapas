@@ -1,25 +1,27 @@
 class PostPolicy < ApplicationPolicy
+  def show?
+    true # Autoriser tout le monde à voir les détails d'un post
+  end
 
   def update?
-    return true if admin?
+    admin?
   end
 
   def destroy?
-    return true if admin?
+    admin?
   end
 
   def new?
-    return true if admin?
+    admin?
+  end
+
+  def create?
+    admin?
   end
 
   private
 
-    def admin
-      record.user_id == admin?
-    end
-
-    def admin?
-      admin_types.include?(user.type)
-    end
-
+  def admin?
+    user.present? && admin_types.include?(user.type)
+  end
 end

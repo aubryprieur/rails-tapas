@@ -17,6 +17,10 @@ class User < ApplicationRecord
 
   validates_presence_of :first_name, :last_name
 
+  def admin?
+    type == 'AdminUser'
+  end
+
   private
 
   def send_welcome_email

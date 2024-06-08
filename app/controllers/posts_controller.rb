@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, except: [:index, :show]
 
   def index
     @posts = Post.where('deadline >= ?', Date.today).order('deadline DESC')
   end
-
 
   def new
     @post = Post.new
@@ -14,6 +14,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
+    authorize @post
     if @post.save
       PostMailer.creation_confirmation(@post).deliver_now
       redirect_to @post, notice: "L'appel d'offres vient d'être créé! "
@@ -43,7 +44,6 @@ class PostsController < ApplicationController
   def destroy
     authorize @post
     @post.photo.purge if @post.photo.attached?
-    @post.delete
     if @post.destroy
       redirect_to posts_path, notice: "Appel d'offres supprimé "
     else
@@ -53,14 +53,15 @@ class PostsController < ApplicationController
 
   private
 
-    def post_params
-      params.require(:post).permit(:deadline, :title, :description, :photo, :client, :rich_body)
-    end
+  def post_params
+    params.require(:post).permit(:deadline, :title, :description, :photo, :client, :rich_body)
+  end
 
-    def set_post
-      @post = Post.find(params[:id])
-    end
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-
-
+  def authorize_admin
+    authorize :admin, :admin?
+  end
 end
