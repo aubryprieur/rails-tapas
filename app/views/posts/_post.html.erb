@@ -1,10 +1,12 @@
 <div class="card-ao">
   <div class="container-card">
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
+
     <div class="logos_new_favorite">
       <% if (Time.now - post.created_at <= 7.days) %>
         <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
       <% end %>
+
       <div class="card-favorite">
         <% unless current_user.favorite_posts.exists?(id: post.id) %>
           <%= link_to favorite_posts_path(post_id: post), method: :post do %>
@@ -17,6 +19,7 @@
         <% end %>
       </div>
     </div>
+
     <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase %></h2>
     <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize %></h2>
 
@@ -28,19 +31,8 @@
   </div>
 
   <% if post.photo.attached? %>
-    <% begin %>
-      <% url = url_for(post.photo) %>
-      <% if post.photo.filename.to_s.downcase.ends_with?('.zip') %>
-        <%= link_to url, class: "card-attachment", target: "_blank", rel: "noopener" do %>
-          <i class="fas fa-paperclip"></i>
-        <% end %>
-      <% else %>
-        <%= link_to url, class: "card-attachment", target: "_blank", rel: "noopener" do %>
-          <i class="fas fa-paperclip"></i>
-        <% end %>
-      <% end %>
-    <% rescue => e %>
-      <% Rails.logger.error "Erreur d'affichage de la pièce jointe : #{e.message}" %>
+    <%= link_to url_for(post.photo), class: "card-attachment", target: "_blank", rel: "noopener" do %>
+      <i class="fas fa-paperclip"></i>
     <% end %>
   <% end %>
 
