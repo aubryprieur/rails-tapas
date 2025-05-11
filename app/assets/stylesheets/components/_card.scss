@@ -73,3 +73,13 @@
   margin-bottom: 5px;
 }
 
+.project-attachment {
+  margin-right: 8px;
+  color: #4A4A4A; /* Couleur grise foncée, à ajuster selon votre design */
+  font-size: 14px;
+}
+
+.project-attachment:hover {
+  color: #007bff; /* Couleur bleue au survol, pour indiquer qu'il y a une action possible */
+}
+

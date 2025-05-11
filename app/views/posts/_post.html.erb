@@ -1,10 +1,13 @@
 <div class="card-ao">
   <div class="container-card">
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
-
     <div class="logos_new_favorite">
       <% if (Time.now - post.created_at <= 7.days) %>
         <i class="far fa-bell project-new"></i>
+      <% end %>
+
+      <% if post.photo.attached? %>
+        <i class="fas fa-paperclip project-attachment" title="Pièce jointe disponible"></i>
       <% end %>
 
       <div class="card-favorite">
@@ -19,12 +22,10 @@
         <% end %>
       </div>
     </div>
-
     <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase rescue "Client" %></h2>
     <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize rescue "Titre" %></h2>
     <p class="card-description">Cliquez pour voir les détails</p>
   </div>
-
   <div class="container-link">
     <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
   </div>
