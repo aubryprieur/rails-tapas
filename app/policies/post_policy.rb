@@ -7,6 +7,10 @@ class PostPolicy < ApplicationPolicy
     admin?
   end
 
+  def edit?
+    update? # Cohérent avec update?
+  end
+
   def destroy?
     admin?
   end

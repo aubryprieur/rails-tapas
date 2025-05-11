@@ -23,11 +23,11 @@ class ApplicationPolicy
   end
 
   def update?
-    update?
+    false # Corrigé - ne s'appelle plus lui-même
   end
 
   def edit?
-    false
+    update? # Corrigé - appelle update? au lieu de retourner false directement
   end
 
   def destroy?
