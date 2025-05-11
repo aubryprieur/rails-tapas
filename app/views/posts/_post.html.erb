@@ -20,7 +20,7 @@
     <h2 class="card-client"><%= post.client.truncate(50).upcase %></h2>
     <h2 class="card-title"><%= post.title.truncate(75).capitalize %></h2>
     <% if post.rich_body.present? %>
-      <p class="card-description"><%= truncate(strip_tags(post.rich_body.to_s), length:100) %></p>
+      <p class="card-description"><%= truncate(strip_tags(post.rich_body.to_s), length: 100) %></p>
     <% else %>
       <p class="card-description">Pas de description.</p>
     <% end %>
@@ -28,13 +28,10 @@
 
   <% if post.photo.attached? %>
     <% filename = post.photo.blob.filename.to_s %>
+    <% attachment_url = url_for(post.photo) rescue nil %>
 
-    <% if filename.ends_with?(".zip") %>
-      <%= link_to rails_blob_url(post.photo, disposition: :attachment), class: "card-attachment" do %>
-        <i class="fas fa-paperclip"></i>
-      <% end %>
-    <% else %>
-      <%= link_to rails_blob_url(post.photo), class: "card-attachment" do %>
+    <% if attachment_url.present? %>
+      <%= link_to attachment_url, class: "card-attachment", target: "_blank", rel: "noopener" do %>
         <i class="fas fa-paperclip"></i>
       <% end %>
     <% end %>
