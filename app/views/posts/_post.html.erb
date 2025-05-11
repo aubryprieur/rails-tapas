@@ -27,13 +27,13 @@
   </div>
 
   <% if post.photo.attached? %>
-    <% filename = post.photo.blob.filename.to_s %>
-    <% attachment_url = url_for(post.photo) rescue nil %>
-
-    <% if attachment_url.present? %>
-      <%= link_to attachment_url, class: "card-attachment", target: "_blank", rel: "noopener" do %>
+    <% begin %>
+      <% attachment_url = url_for(post.photo) %>
+      <%= link_to attachment_url, class: "card-attachment", target: "_blank", rel: "noopener", download: true do %>
         <i class="fas fa-paperclip"></i>
       <% end %>
+    <% rescue => e %>
+      <% Rails.logger.error "Erreur d'affichage de la pièce jointe : #{e.message}" %>
     <% end %>
   <% end %>
 
