@@ -4,9 +4,9 @@
       <div class="show_description">
         <span class="show_favorite">
           <% unless current_user.favorite_posts.exists?(id: @post.id) %>
-            <%= link_to favorite_posts_path(post_id: @post),method: :post do %>
+            <%= link_to favorite_posts_path(post_id: @post), method: :post do %>
               <i class="far fa-bookmark" style="color: #F9CA62"></i>
-              <% end %>
+            <% end %>
           <% else %>
             <%= link_to favorite_post_path(@post), method: :delete do %>
               <i class="fas fa-bookmark" style="color: #F9CA62"></i>
@@ -20,36 +20,32 @@
         <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>
       </div>
     </div>
+
     <div class="show_text">
       <% if @post.rich_body.present? %>
-          <p><%= @post.rich_body %></p>
-        <% else %>
-          <p>Pas de description.</p>
-      <% end %>
-    </div>
-    <div class="show_link">
-      <% if @post.photo.attached? && @post.photo.blob.filename.to_s.last(4) == ".zip" %>
-        <i class="fas fa-file-download"></i>
-        <%= link_to("Télécharger le dossier", cloudinary_url(@post.photo.key, :flags=>"attachment", :resource_type => "raw", :format => "zip", class: "download-link" )) %>
-      <% elsif @post.photo.attached? && @post.photo.blob.filename.to_s.last(4) != ".zip"  %>
-        <i class="fas fa-file-download"></i>
-        <%= link_to("Télécharger le dossier", cloudinary_url(@post.photo.key, :flags=>"attachment", class: "download-link" )) %>
+        <p><%= @post.rich_body %></p>
       <% else %>
-        <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
+        <p>Pas de description.</p>
       <% end %>
     </div>
+
+    <div class="show_link">
+      <%= render partial: "shared/download_link", locals: { post: @post } %>
+    </div>
+
     <div class="show_text">
       <h3>Positionnement</h3>
       <%= render 'table_position' %>
     </div>
+
     <div class="show_comment">
       <div class="card-body">
         <h3>Commentaires</h3>
-         <p>
-           <% if @post.comments.present? %>
-             <% @post.comments.each do |c| %>
+        <p>
+          <% if @post.comments.present? %>
+            <% @post.comments.each do |c| %>
               <% if c.user.present? %>
-               <div>
+                <div>
                   <small>
                     <strong><%= c.user.first_name %></strong> (il y a <%= time_ago_in_words(c.created_at) %>)
                   </small>
@@ -58,24 +54,26 @@
                   </p>
                 </div>
               <% end %>
-              <% end %>
-            <% else %>
-              Il n'y a pas encore de commentaires pour cet ao.
             <% end %>
-          </p>
-          <%= form_for [@post, @comment] do |f| %>
-            <div class="form-group">
-              Vous voulez laisser un commentaire ?
-              <%= f.text_area :body, class: "form-control", placeholder: "Ecrivez votre commentaire ici.", rows: 3 %>
-              <%= f.hidden_field :user_id, :value => current_user.id %>
-            </div>
-            <%= f.submit "Enregistrer votre commentaire", class: "btn btn-primary" %>
+          <% else %>
+            Il n'y a pas encore de commentaires pour cet ao.
           <% end %>
+        </p>
+
+        <%= form_for [@post, @comment] do |f| %>
+          <div class="form-group">
+            Vous voulez laisser un commentaire ?
+            <%= f.text_area :body, class: "form-control", placeholder: "Écrivez votre commentaire ici.", rows: 3 %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+          </div>
+          <%= f.submit "Enregistrer votre commentaire", class: "btn btn-primary" %>
+        <% end %>
       </div>
     </div>
+
     <div>
       <%= link_to "MODIFIER", edit_post_path(@post), class: "btn btn-outline-primary" if policy(Post).update? %>
-      <%= link_to 'SUPPRIMER', post_path(@post), method: :delete, data: {confirm: "Vous êtes sûr?"}, class: "btn btn-outline-danger" if policy(Post).destroy? %>
+      <%= link_to "SUPPRIMER", post_path(@post), method: :delete, data: { confirm: "Vous êtes sûr ?" }, class: "btn btn-outline-danger" if policy(Post).destroy? %>
     </div>
   </div>
 </div>
