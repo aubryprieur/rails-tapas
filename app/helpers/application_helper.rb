@@ -13,14 +13,15 @@ module ApplicationHelper
     filename = post.photo.blob.filename.to_s
     is_zip = filename.downcase.ends_with?(".zip")
 
-    if post.photo.blob.respond_to?(:service_name) && post.photo.blob.service_name == "Cloudinary"
+    # Vérifier si Cloudinary est configuré
+    if defined?(Cloudinary) && post.photo.service.is_a?(::ActiveStorage::Service::CloudinaryService)
       if is_zip
         cloudinary_url(post.photo.key, flags: "attachment", resource_type: "raw", format: "zip")
       else
-        cloudinary_url(post.photo.key)
+        cloudinary_url(post.photo.key, flags: "attachment")
       end
     else
-      # Fallback for non-Cloudinary uploads (local, S3, etc.)
+      # Fallback pour les uploads non-Cloudinary (local, S3, etc.)
       is_zip ? rails_blob_url(post.photo, disposition: :attachment) : url_for(post.photo)
     end
   end
