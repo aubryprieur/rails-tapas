@@ -31,14 +31,8 @@
   </div>
 
   <% if post.photo.attached? %>
-    <% if post.photo.blob.filename.to_s.last(4) == ".zip" %>
-      <%= link_to rails_blob_path(post.photo, disposition: "attachment"), class: "card-attachment", target: "_blank", rel: "noopener" do %>
-        <i class="fas fa-paperclip"></i>
-      <% end %>
-    <% else %>
-      <%= link_to rails_blob_path(post.photo, disposition: "attachment"), class: "card-attachment", target: "_blank", rel: "noopener" do %>
-        <i class="fas fa-paperclip"></i>
-      <% end %>
+    <%= link_to "#", class: "card-attachment", title: "Voir les détails pour télécharger la pièce jointe" do %>
+      <i class="fas fa-paperclip"></i>
     <% end %>
   <% end %>
 
