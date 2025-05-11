@@ -2,7 +2,7 @@
   <div class="container-card">
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
     <div class="logos_new_favorite">
-      <% if (Time.now - post.created_at <= 7.day) %>
+      <% if (Time.now - post.created_at <= 7.days) %>
         <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
       <% end %>
       <div class="card-favorite">
@@ -17,8 +17,9 @@
         <% end %>
       </div>
     </div>
-    <h2 class="card-client"><%= post.client.truncate(50).upcase %></h2>
-    <h2 class="card-title"><%= post.title.truncate(75).capitalize %></h2>
+    <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase %></h2>
+    <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize %></h2>
+
     <% if post.rich_body.present? %>
       <p class="card-description"><%= truncate(strip_tags(post.rich_body.to_s), length: 100) %></p>
     <% else %>
@@ -28,9 +29,15 @@
 
   <% if post.photo.attached? %>
     <% begin %>
-      <% attachment_url = url_for(post.photo) %>
-      <%= link_to attachment_url, class: "card-attachment", target: "_blank", rel: "noopener", download: true do %>
-        <i class="fas fa-paperclip"></i>
+      <% url = url_for(post.photo) %>
+      <% if post.photo.filename.to_s.downcase.ends_with?('.zip') %>
+        <%= link_to url, class: "card-attachment", target: "_blank", rel: "noopener" do %>
+          <i class="fas fa-paperclip"></i>
+        <% end %>
+      <% else %>
+        <%= link_to url, class: "card-attachment", target: "_blank", rel: "noopener" do %>
+          <i class="fas fa-paperclip"></i>
+        <% end %>
       <% end %>
     <% rescue => e %>
       <% Rails.logger.error "Erreur d'affichage de la pièce jointe : #{e.message}" %>
