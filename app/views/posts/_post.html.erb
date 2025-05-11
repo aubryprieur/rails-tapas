@@ -4,7 +4,7 @@
 
     <div class="logos_new_favorite">
       <% if (Time.now - post.created_at <= 7.days) %>
-        <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
+        <i class="far fa-bell project-new"></i>
       <% end %>
 
       <div class="card-favorite">
@@ -20,21 +20,10 @@
       </div>
     </div>
 
-    <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase %></h2>
-    <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize %></h2>
-
-    <% if post.rich_body.present? %>
-      <p class="card-description"><%= truncate(strip_tags(post.rich_body.to_s), length: 100) %></p>
-    <% else %>
-      <p class="card-description">Pas de description.</p>
-    <% end %>
+    <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase rescue "Client" %></h2>
+    <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize rescue "Titre" %></h2>
+    <p class="card-description">Cliquez pour voir les détails</p>
   </div>
-
-  <% if post.photo.attached? %>
-    <%= link_to "#", class: "card-attachment", title: "Voir les détails pour télécharger la pièce jointe" do %>
-      <i class="fas fa-paperclip"></i>
-    <% end %>
-  <% end %>
 
   <div class="container-link">
     <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
