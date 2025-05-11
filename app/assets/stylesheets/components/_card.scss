@@ -73,13 +73,28 @@
   margin-bottom: 5px;
 }
 
+.card-ao {
+  position: relative; /* Assurez-vous que la carte est en position relative */
+}
+
 .attachment-indicator {
   position: absolute;
-  bottom: 15px;
-  left: 15px;
+  bottom: 15px; /* Ajustez selon vos besoins */
+  left: 15px; /* Ajustez selon vos besoins */
+  z-index: 10; /* Assurez-vous que l'indicateur est au-dessus des autres éléments */
+}
+
+.download-attachment-link {
+  text-decoration: none;
+  display: block;
 }
 
 .project-attachment {
-  color: #4A4A4A;
+  color: #4A4A4A; /* Couleur grise foncée, à ajuster selon votre design */
   font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.download-attachment-link:hover .project-attachment {
+  color: #007bff; /* Couleur bleue au survol */
 }
