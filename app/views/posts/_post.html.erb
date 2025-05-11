@@ -28,7 +28,7 @@
 
   <% if post.photo.attached? %>
     <% filename = post.photo.blob.filename.to_s %>
-    <% use_cloudinary = post.photo.blob.respond_to?(:service_name) && post.photo.blob.service.name.to_s == "Cloudinary" %>
+    <% use_cloudinary = post.photo.blob.respond_to?(:service_name) ? post.photo.blob.service.name.to_s == "Cloudinary" : false %>
 
     <% if filename.ends_with?(".zip") %>
       <% if use_cloudinary %>
