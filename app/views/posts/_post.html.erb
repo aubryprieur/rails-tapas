@@ -3,7 +3,7 @@
     <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
     <div class="logos_new_favorite">
       <% if (Time.now - post.created_at <= 7.days) %>
-        <i class="far fa-bell project-new"></i>
+        <i class="far fa-bell project-new animate__animated animate__swing animate__slow animate__repeat-2"></i>
       <% end %>
       <div class="card-favorite">
         <% unless current_user.favorite_posts.exists?(id: post.id) %>
