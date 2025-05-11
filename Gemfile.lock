@@ -129,7 +129,7 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    ffi (1.17.0)
+    ffi (1.16.3)
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
     globalid (1.2.1)
@@ -351,6 +351,7 @@ DEPENDENCIES
   devise (~> 4.7, >= 4.7.3)
   dotenv-rails
   factory_bot_rails
+  ffi (< 1.17)
   font-awesome-sass (~> 4.6, >= 4.6.2)
   jbuilder (~> 2.7)
   letter_opener

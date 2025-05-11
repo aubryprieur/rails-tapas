@@ -21,6 +21,7 @@ gem 'font-awesome-sass', '~> 4.6', '>= 4.6.2'
 gem 'simple_form'
 gem "administrate"
 gem 'pundit', '~> 2.1'
+gem 'ffi', '< 1.17'
 gem "letter_opener", :group => :development
 gem 'sendgrid-ruby'
 
