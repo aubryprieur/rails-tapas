@@ -31,13 +31,6 @@
   font-weight: bold;
 }
 
-.card-description {
-  color: darken(#404040, 1%);
-  margin-bottom: 2.5rem;
-  font-family: Lato;
-  font-size: 14px;
-  font-style: italic;
-}
 
 .card-date {
   font-size: 12px;
@@ -97,4 +90,22 @@
 
 .download-attachment-link:hover .project-attachment {
   color: #007bff; /* Couleur bleue au survol */
+}
+
+.card-description {
+  color: darken(#404040, 1%);
+  margin-bottom: 2.5rem;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: italic;
+  min-height: 3em; /* Hauteur minimale pour maintenir l'alignement */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limite à 3 lignes */
+  -webkit-box-orient: vertical;
+}
+
+/* Style pour le message quand pas de description */
+.card-description.text-muted {
+  color: #6c757d; /* Gris pour le texte muted */
 }

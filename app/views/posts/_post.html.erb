@@ -19,7 +19,14 @@
     </div>
     <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase rescue "Client" %></h2>
     <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize rescue "Titre" %></h2>
-    <p class="card-description">Cliquez pour voir les détails</p>
+
+    <!-- Description tronquée ou message par défaut -->
+    <% if post.rich_body.present? %>
+      <p class="card-description"><%= strip_tags(post.rich_body.to_s).truncate(150) %></p>
+    <% else %>
+      <p class="card-description text-muted"><em>Aucune description disponible</em></p>
+    <% end %>
+
     <% if post.photo.attached? %>
       <div class="attachment-indicator">
         <%= link_to rails_blob_path(post.photo, disposition: :attachment), title: "Télécharger la pièce jointe", class: "download-attachment-link" do %>
