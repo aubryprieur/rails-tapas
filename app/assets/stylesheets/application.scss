@@ -4,9 +4,15 @@
 @import "config/bootstrap_variables";
 
 // External libraries
-@import "bootstrap/scss/bootstrap";
-@import "font-awesome-sprockets";
-@import "font-awesome";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+// Font Awesome
+$fa-font-path: "../../../node_modules/@fortawesome/fontawesome-free/webfonts";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/brands";
+
 @import "trix/dist/trix";
 
 // Your CSS partials

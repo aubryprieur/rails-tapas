@@ -67,10 +67,10 @@
             <div class="form-group">
               Vous voulez laisser un commentaire ?
               <%= f.text_area :body, class: "form-control", placeholder: "Ecrivez votre commentaire ici.", rows: 3 %>
-            <%= f.hidden_field :user_id, :value => current_user.id %>
-          </div>
-          <%= f.submit "Enregistrer votre commentaire", class: "btn btn-primary" %>
-         <% end %>
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+            </div>
+            <%= f.submit "Enregistrer votre commentaire", class: "btn btn-primary" %>
+          <% end %>
       </div>
     </div>
     <div>

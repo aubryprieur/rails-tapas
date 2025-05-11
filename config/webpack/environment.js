@@ -1,13 +1,22 @@
-// config/webpack/environment.js
 const { environment } = require('@rails/webpacker')
-
-// Bootstrap 4 has a dependency over jQuery & Popper.js:
 const webpack = require('webpack')
+
+environment.loaders.append('Fonts', {
+  test: /\.(eot|svg|ttf|woff|woff2)$/,
+  use: [{
+    loader: 'file-loader',
+    options: {
+      name: '[path][name].[ext]',
+      context: 'node_modules'
+    }
+  }]
+})
+
 environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
     $: 'jquery',
     jQuery: 'jquery',
-    Popper: ['popper.js', 'default']
+    Popper: ['@popperjs/core', 'default']
   })
 )
 

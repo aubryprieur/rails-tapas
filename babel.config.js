@@ -1,9 +1,6 @@
 module.exports = function(api) {
-  var validEnv = ['development', 'test', 'production']
-  var currentEnv = api.env()
-  var isDevelopmentEnv = api.env('development')
-  var isProductionEnv = api.env('production')
-  var isTestEnv = api.env('test')
+  const validEnv = ['development', 'test', 'production']
+  const currentEnv = api.env()
 
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
@@ -17,56 +14,14 @@ module.exports = function(api) {
 
   return {
     presets: [
-      isTestEnv && [
-        '@babel/preset-env',
-        {
-          targets: {
-            node: 'current'
-          }
-        }
-      ],
-      (isProductionEnv || isDevelopmentEnv) && [
-        '@babel/preset-env',
-        {
-          forceAllTransforms: true,
-          useBuiltIns: 'entry',
-          corejs: 3,
-          modules: false,
-          exclude: ['transform-typeof-symbol']
-        }
-      ]
-    ].filter(Boolean),
+      '@babel/preset-env'
+    ],
     plugins: [
-      'babel-plugin-macros',
       '@babel/plugin-syntax-dynamic-import',
-      isTestEnv && 'babel-plugin-dynamic-import-node',
-      '@babel/plugin-transform-destructuring',
-      [
-        '@babel/plugin-proposal-class-properties',
-        {
-          loose: true
-        }
-      ],
-      [
-        '@babel/plugin-proposal-object-rest-spread',
-        {
-          useBuiltIns: true
-        }
-      ],
-      [
-        '@babel/plugin-transform-runtime',
-        {
-          helpers: false,
-          regenerator: true,
-          corejs: false
-        }
-      ],
-      [
-        '@babel/plugin-transform-regenerator',
-        {
-          async: false
-        }
-      ]
-    ].filter(Boolean)
+      '@babel/plugin-proposal-class-properties',
+      ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
+      // Supprimé le doublon et gardé une seule version avec les options
+      ['@babel/plugin-transform-runtime', { helpers: false }]
+    ]
   }
 }

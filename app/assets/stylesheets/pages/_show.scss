@@ -1,3 +1,6 @@
+.wrapper {
+  padding: 20px;
+}
 .show_intro {
   display: flex;
 }
@@ -91,6 +94,7 @@
 
 .ranking-link {
   color: #F9CA62;
+  text-decoration: none;
 }
 
 table i {
@@ -120,5 +124,16 @@ table i {
   opacity: 75%;
   background: #888;
   border-radius: 5px;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.3s ease-in-out, display 0.3s ease-in-out;
 }
+
+.card-body {
+  padding: 25px;
+
+  .btn-primary {
+    margin-top: 15px;
+    color: white;
+  }
+}
+
+
