@@ -7,29 +7,16 @@ module ApplicationHelper
     admin_types.include?(current_user.type)
   end
 
-  def download_link_for(post)
-    return unless post.photo.attached?
+  def cloudinary_download_url(key, options = {})
+    # Construction directe de l'URL Cloudinary
+    resource_type = options[:resource_type] || "image"
+    format = options[:format]
+    transformation = options[:transformation] || "fl_attachment"
 
-    filename = post.photo.blob.filename.to_s
-    is_zip = filename.downcase.ends_with?(".zip")
+    url = "https://res.cloudinary.com/#{ENV['CLOUDINARY_CLOUD_NAME']}/#{resource_type}/upload/#{transformation}"
+    url += "/#{key}"
+    url += ".#{format}" if format
 
-    # Utiliser une approche plus simple qui fonctionne avec tous les types de services
-    begin
-      if defined?(Cloudinary) && ENV['CLOUDINARY_URL'].present?
-        # Si Cloudinary est configuré, utiliser cloudinary_url
-        if is_zip
-          cloudinary_url(post.photo.key, flags: "attachment", resource_type: "raw", format: "zip")
-        else
-          cloudinary_url(post.photo.key, flags: "attachment")
-        end
-      else
-        # Fallback pour les uploads non-Cloudinary (local, S3, etc.)
-        is_zip ? rails_blob_url(post.photo, disposition: :attachment) : url_for(post.photo)
-      end
-    rescue => e
-      # En cas d'erreur, utiliser le fallback
-      Rails.logger.error("Erreur lors de la génération du lien de téléchargement: #{e.message}")
-      is_zip ? rails_blob_url(post.photo, disposition: :attachment) : url_for(post.photo)
-    end
+    url
   end
 end
