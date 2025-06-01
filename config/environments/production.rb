@@ -62,6 +62,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_TOKEN"] }
   config.action_mailer.default_url_options = { host: 'https://rails-tapas.herokuapp.com'}
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -113,14 +114,14 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   #Sendgrid
-  ActionMailer::Base.smtp_settings = {
-    :user_name => 'apikey',
-    :password => ENV['SENDGRID_API_KEY'],
-    :domain => 'aubry.prieur@copas.coop',
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
-  }
+  # ActionMailer::Base.smtp_settings = {
+  #   :user_name => 'apikey',
+  #   :password => ENV['SENDGRID_API_KEY'],
+  #   :domain => 'aubry.prieur@copas.coop',
+  #   :address => 'smtp.sendgrid.net',
+  #   :port => 587,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
 
 end

@@ -24,6 +24,7 @@ gem 'pundit', '~> 2.1'
 gem 'ffi', '< 1.17'
 gem "letter_opener", :group => :development
 gem 'sendgrid-ruby'
+gem 'postmark-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
