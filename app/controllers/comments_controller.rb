@@ -10,9 +10,24 @@ class CommentsController < ApplicationController
     @commentable = commentable
     @comment = @commentable.comments.new(comment_params)
     @post = Post.find(params[:post_id])
+
     if @comment.save
-      CommentMailer.creation_comment(@post, @comment).deliver_now
-      redirect_to commentable_path(commentable), notice: "Votre commentaire a été créé avec succès."
+      # Tentative d'envoi d'email avec gestion d'erreur
+      email_sent = EmailService.send_email_safe(
+        ->(post, comment) { CommentMailer.creation_comment(post, comment) },
+        @post, @comment
+      )
+
+      success_message = if email_sent
+        "Votre commentaire a été créé avec succès et les utilisateurs ont été notifiés !"
+      else
+        "Votre commentaire a été créé avec succès ! (Notification par email temporairement indisponible)"
+      end
+
+      redirect_to commentable_path(commentable), notice: success_message
+    else
+      # Si le commentaire ne se sauvegarde pas, afficher les erreurs
+      redirect_to commentable_path(commentable), alert: "Erreur lors de la création du commentaire."
     end
   end
 

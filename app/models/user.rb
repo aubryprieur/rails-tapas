@@ -24,7 +24,12 @@ class User < ApplicationRecord
   private
 
   def send_welcome_email
-    UserMailer.welcome(self).deliver_now
+    begin
+      UserMailer.welcome(self).deliver_now
+    rescue StandardError => e
+      Rails.logger.error "Erreur envoi email de bienvenue pour l'utilisateur #{self.id}: #{e.message}"
+      # L'utilisateur est quand même créé, juste pas d'email de bienvenue
+    end
   end
 
 end
