@@ -4,10 +4,14 @@ class LikesController < ApplicationController
 
   def create
     if already_liked?
-      flash[:notice] = "You can't like more than once"
+      flash[:notice] = "Vous ne pouvez pas liker plus d'une fois"
     else
       @post.likes.create(user_id: current_user.id)
-      LikeMailer.creation_like(@post).deliver_now
+      # Tentative d'envoi d'email avec gestion d'erreur
+      EmailService.send_email_safe(
+        ->(post) { LikeMailer.creation_like(post) },
+        @post
+      )
     end
     redirect_to post_path(@post)
   end

@@ -15,9 +15,19 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     authorize @post
+
     if @post.save
-      PostMailer.creation_confirmation(@post).deliver_now
-      redirect_to @post, notice: "L'appel d'offres vient d'être créé! "
+      # Tentative d'envoi d'email avec gestion d'erreur
+      email_result = EmailService.send_email(
+        ->(post) { PostMailer.creation_confirmation(post) },
+        @post
+      )
+
+      if email_result[:success]
+        redirect_to @post, notice: "L'appel d'offres vient d'être créé et les utilisateurs ont été notifiés !"
+      else
+        redirect_to @post, notice: "L'appel d'offres vient d'être créé ! (Notification par email temporairement indisponible)"
+      end
     else
       render :new
     end
