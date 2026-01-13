@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.0'
 
 # Ajoutez ou mettez à jour
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 7.0.8'
 gem 'webpacker', '~> 5.0'
 gem 'psych', '~> 4.0'
 gem 'pg', '>= 0.18', '< 2.0'
