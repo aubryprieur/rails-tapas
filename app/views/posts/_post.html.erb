@@ -29,7 +29,7 @@
 
     <% if post.photo.attached? %>
       <div class="attachment-indicator">
-        <%= link_to rails_blob_path(post.photo, disposition: :attachment), title: "Télécharger la pièce jointe", class: "download-attachment-link" do %>
+        <%= link_to post_attachment_download_url(post), title: "Télécharger la pièce jointe", class: "download-attachment-link" do %>
           <i class="fas fa-paperclip project-attachment" title="Télécharger la pièce jointe"></i>
         <% end %>
       </div>

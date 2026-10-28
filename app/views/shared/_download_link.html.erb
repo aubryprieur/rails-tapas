@@ -1,12 +1,6 @@
 <% if post.photo.attached? %>
   <i class="fas fa-file-download"></i>
-  <%
-    filename = post.photo.blob.filename.to_s
-    is_zip = filename.downcase.ends_with?(".zip")
-    options = is_zip ? { resource_type: "raw", format: "zip" } : {}
-    options[:filename] = filename
-  %>
-  <%= link_to("Télécharger le dossier", cloudinary_download_url(post.photo.key, options), class: "download-link") %>
+  <%= link_to("Télécharger le dossier", post_attachment_download_url(post), class: "download-link") %>
 <% else %>
   <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
 <% end %>
