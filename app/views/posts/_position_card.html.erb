@@ -18,7 +18,7 @@
       <% records.each do |record| %>
         <% user = record.user %>
         <span class="person-chip <%= 'person-chip--me' if record == mine %>" title="<%= [user.first_name, user.last_name].compact.join(' ') %>">
-          <span class="person-chip__avatar"><%= [user.first_name, user.last_name].compact.map { |n| n.to_s.first }.join.upcase %></span>
+          <span class="person-chip__avatar"><%= user_initials(user) %></span>
           <span class="person-chip__name"><%= record == mine ? "Moi" : user.first_name %></span>
         </span>
       <% end %>

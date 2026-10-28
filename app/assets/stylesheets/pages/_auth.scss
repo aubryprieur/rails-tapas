@@ -1,0 +1,95 @@
+// Pages de connexion / mot de passe (devise)
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px 64px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border: 1px solid #ECECEC;
+  border-top: 4px solid #F9CA62;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+}
+
+.auth-card__title {
+  margin: 0 0 6px;
+  font-family: $headers-font;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.auth-card__subtitle {
+  margin: 0 0 24px;
+  color: #7A7F87;
+  font-size: 14px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label { font-size: 14px; font-weight: 600; }
+
+  .form-control {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #E4E6EA;
+
+    &:focus {
+      border-color: #F9CA62;
+      box-shadow: 0 0 0 4px rgba(249, 202, 98, .2);
+    }
+  }
+}
+
+.auth-hint { color: #7A7F87; }
+
+.auth-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+
+  .form-check-input { margin: 0; }
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+}
+
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  font-size: 14px;
+
+  a { color: #7A7F87; text-decoration: none; }
+  a:hover { color: #22252A; text-decoration: underline; }
+}
+
+.auth-errors {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #FFF5F5;
+  color: #C4302B;
+  font-size: 14px;
+
+  ul { margin: 0; padding-left: 18px; }
+}

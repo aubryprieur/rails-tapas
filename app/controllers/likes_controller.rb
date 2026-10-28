@@ -4,7 +4,7 @@ class LikesController < ApplicationController
 
   def create
     if already_liked?
-      flash[:notice] = "Vous ne pouvez pas liker plus d'une fois"
+      flash[:notice] = "Vous êtes déjà positionné·e sur cette réponse."
     else
       @post.likes.create(user_id: current_user.id)
       # Tentative d'envoi d'email avec gestion d'erreur
@@ -22,7 +22,7 @@ class LikesController < ApplicationController
 
   def destroy
     if !(already_liked?)
-      flash[:notice] = "Cannot unlike"
+      flash[:notice] = "Action impossible."
     else
       @like.destroy
     end

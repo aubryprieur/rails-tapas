@@ -1,48 +1,27 @@
-<div class="wrapper">
-  <div class="container list-posts">
-    <h1><span>Mes favoris</span></h1>
-
-    <% if @favorite_posts.blank? %>
-      <div class="text-center">
-        <%= image_tag("empty.svg", class: "empty-img") %>
+<div class="ao-page">
+  <div class="container">
+    <header class="ao-list-header">
+      <div>
+        <h1 class="ao-list-header__title">Mes favoris</h1>
+        <p class="ao-list-header__subtitle">
+          <% if @posts.any? %>
+            <%= pluralize(@posts.size, "appel d'offres suivi", plural: "appels d'offres suivis") %>, classés par date limite
+          <% else %>
+            Retrouvez ici les appels d'offres que vous suivez.
+          <% end %>
+        </p>
       </div>
+    </header>
+
+    <% if @posts.empty? %>
+      <%= render "shared/empty_state",
+                 icon: "fa-bookmark",
+                 title: "Pas encore de favoris",
+                 text: "Cliquez sur l'icône favori d'un appel d'offres pour le retrouver ici.",
+                 link: ["Voir les appels d'offres", posts_path] %>
     <% else %>
-      <div class="favorite_cards">
-        <% @posts.each do |post| %>
-          <div class="remaining_time">
-            <p class="remaining_time__text">
-              Il reste <%= ((post.deadline.to_time - Time.now) / 86400).round %> jours
-            </p>
-            <p class="remaining_time_dot">.</p>
-            <p class="remaining_time_dot">.</p>
-            <p class="remaining_time_dot">.</p>
-          </div>
-
-          <div class="favorite_card-ao">
-            <div class="container-card">
-              <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
-
-              <div class="logos_new_favorite">
-                <% if Time.now - post.created_at <= 7.days %>
-                  <i class="far fa-bell project-new animate__animated animate__swing animate__fast animate__repeat-3"></i>
-                <% end %>
-
-                <div class="card-favorite">
-                  <%= render partial: "shared/favorite_button", locals: { post: post } %>
-                </div>
-              </div>
-
-              <h2 class="card-client"><%= post.client.truncate(50).upcase %></h2>
-              <h2 class="card-title"><%= post.title.capitalize %></h2>
-            </div>
-
-            <%= render partial: "shared/download_link", locals: { post: post } %>
-
-            <div class="container-link">
-              <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
-            </div>
-          </div>
-        <% end %>
+      <div class="ao-tiles">
+        <%= render partial: "posts/post", collection: @posts %>
       </div>
     <% end %>
   </div>

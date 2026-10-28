@@ -1,0 +1,106 @@
+// Notifications (shared/_flashes) : en haut à droite, fermeture automatique
+
+.toasts {
+  position: fixed;
+  top: 84px; // sous la barre de navigation
+  right: 16px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(380px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.toast-msg {
+  --tone: #18B572;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 14px 16px 16px;
+  overflow: hidden;
+  border: 1px solid #ECECEC;
+  border-left: 4px solid var(--tone);
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+  pointer-events: auto;
+  animation: toast-in .35s cubic-bezier(.21, 1.02, .73, 1) both;
+
+  &--error { --tone: #E5484D; }
+
+  &.is-leaving { animation: toast-out .3s ease forwards; }
+  &.is-paused .toast-msg__progress { animation-play-state: paused; }
+}
+
+.toast-msg__icon {
+  flex-shrink: 0;
+  color: var(--tone);
+  font-size: 20px;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.toast-msg__text {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #22252A;
+  overflow-wrap: anywhere;
+}
+
+.toast-msg__close {
+  flex-shrink: 0;
+  padding: 2px 4px;
+  border: 0;
+  background: none;
+  color: #9A9FA6;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover { color: #22252A; }
+}
+
+.toast-msg__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--tone);
+  opacity: .35;
+  transform-origin: left;
+  animation: toast-progress var(--toast-delay, 3500ms) linear forwards;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-10px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes toast-out {
+  to { opacity: 0; transform: translateX(24px); }
+}
+
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+@media (max-width: 575.98px) {
+  .toasts {
+    top: auto;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-msg, .toast-msg.is-leaving { animation: none; }
+  .toast-msg__progress { display: none; }
+}

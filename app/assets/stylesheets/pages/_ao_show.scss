@@ -120,10 +120,13 @@ $ao-border: #ECECEC;
 
   svg { color: var(--tone); }
 
-  &--soon   { --tone: #E67E22; }
-  &--urgent { --tone: #E5484D; }
-  &--past   { --tone: #8A8F98; }
 }
+
+// Couleur selon l'urgence (fiche + cartes)
+.ao-deadline--ok     { --tone: #18B572; }
+.ao-deadline--soon   { --tone: #E67E22; }
+.ao-deadline--urgent { --tone: #E5484D; }
+.ao-deadline--past   { --tone: #8A8F98; }
 
 .ao-deadline__badge {
   padding: 2px 10px;

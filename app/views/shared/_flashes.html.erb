@@ -1,0 +1,19 @@
+<% messages = flash.to_hash.select { |_, msg| msg.present? } %>
+<% if messages.any? %>
+  <div class="toasts" aria-live="polite">
+    <% messages.each do |type, message| %>
+      <% kind = %w[alert error danger].include?(type.to_s) ? "error" : "success" %>
+      <div class="toast-msg toast-msg--<%= kind %>" role="<%= kind == 'error' ? 'alert' : 'status' %>"
+           data-toast data-toast-delay="<%= kind == 'error' ? 6000 : 3500 %>">
+        <span class="toast-msg__icon">
+          <i class="fa-solid <%= kind == 'error' ? 'fa-circle-exclamation' : 'fa-circle-check' %>"></i>
+        </span>
+        <p class="toast-msg__text"><%= message %></p>
+        <button type="button" class="toast-msg__close" data-toast-close aria-label="Fermer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <span class="toast-msg__progress"></span>
+      </div>
+    <% end %>
+  </div>
+<% end %>

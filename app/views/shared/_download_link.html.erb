@@ -1,6 +1,0 @@
-<% if post.photo.attached? %>
-  <i class="fas fa-file-download"></i>
-  <%= link_to("Télécharger le dossier", post_attachment_download_url(post), class: "download-link") %>
-<% else %>
-  <i class="far fa-times-circle"></i><span class="no-download"> Pas de dossier à télécharger</span>
-<% end %>

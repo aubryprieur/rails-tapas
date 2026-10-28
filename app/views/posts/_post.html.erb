@@ -1,41 +1,52 @@
-<div class="card-ao">
-  <div class="container-card">
-    <p class="card-date"><%= post.deadline.strftime("%d/%m/%Y") %></p>
-    <div class="logos_new_favorite">
-      <% if (Time.now - post.created_at <= 7.days) %>
-        <i class="far fa-bell project-new animate__animated animate__swing animate__slow animate__repeat-2"></i>
+<% deadline = deadline_info(post) %>
+<article class="ao-tile ao-tile--<%= deadline[:status] %>"
+         data-search="<%= [post.client, post.title].join(' ').downcase %>">
+  <div class="ao-tile__top">
+    <span class="ao-tile__client" title="<%= post.client %>"><%= post.client %></span>
+
+    <div class="ao-tile__actions">
+      <% if new_post?(post) %>
+        <span class="ao-tile__new">Nouveau</span>
       <% end %>
-      <div class="card-favorite">
-        <% unless current_user.favorite_posts.exists?(id: post.id) %>
-          <%= link_to favorite_posts_path(post_id: post), method: :post do %>
-            <i class="far fa-bookmark" style="color: #F9CA62"></i>
-          <% end %>
-        <% else %>
-          <%= link_to favorite_post_path(post), method: :delete do %>
-            <i class="fas fa-bookmark" style="color: #F9CA62"></i>
-          <% end %>
+      <% if favorited?(post) %>
+        <%= link_to favorite_post_path(post), method: :delete, class: "ao-icon-btn is-active", title: "Retirer des favoris", "aria-label": "Retirer des favoris" do %>
+          <i class="fa-solid fa-bookmark"></i>
         <% end %>
-      </div>
+      <% else %>
+        <%= link_to favorite_posts_path(post_id: post), method: :post, class: "ao-icon-btn", title: "Ajouter aux favoris", "aria-label": "Ajouter aux favoris" do %>
+          <i class="fa-regular fa-bookmark"></i>
+        <% end %>
+      <% end %>
     </div>
-    <h2 class="card-client"><%= post.client.to_s.truncate(50).upcase rescue "Client" %></h2>
-    <h2 class="card-title"><%= post.title.to_s.truncate(75).capitalize rescue "Titre" %></h2>
+  </div>
 
-    <!-- Description tronquée ou message par défaut -->
-    <% if post.rich_body.present? %>
-      <p class="card-description"><%= strip_tags(post.rich_body.to_s).truncate(150) %></p>
-    <% else %>
-      <p class="card-description text-muted"><em>Aucune description disponible</em></p>
-    <% end %>
+  <h3 class="ao-tile__title">
+    <%= link_to post.title.to_s.upcase_first, post_path(post), class: "ao-tile__link" %>
+  </h3>
 
-    <% if post.photo.attached? %>
-      <div class="attachment-indicator">
-        <%= link_to post_attachment_download_url(post), title: "Télécharger la pièce jointe", class: "download-attachment-link" do %>
-          <i class="fas fa-paperclip project-attachment" title="Télécharger la pièce jointe"></i>
+  <% excerpt = post.rich_body.present? ? post.rich_body.to_plain_text : post.try(:description).to_s %>
+  <% if excerpt.present? %>
+    <p class="ao-tile__excerpt"><%= excerpt.squish.truncate(160) %></p>
+  <% else %>
+    <p class="ao-tile__excerpt ao-tile__excerpt--empty">Aucune description</p>
+  <% end %>
+
+  <div class="ao-tile__footer">
+    <span class="ao-tile__deadline ao-deadline--<%= deadline[:status] %>" title="Date limite de réponse">
+      <i class="fa-regular fa-calendar"></i>
+      <%= post.deadline.strftime("%d/%m/%Y") %>
+      <span class="ao-deadline__badge"><%= deadline[:label] %></span>
+    </span>
+
+    <span class="ao-tile__stats">
+      <span title="Je lis l'AO"><i class="fa-solid fa-book-open-reader"></i> <%= post.readings.size %></span>
+      <span title="Je réponds"><i class="fa-solid fa-pen-nib"></i> <%= post.likes.size %></span>
+      <span title="J'intègre l'équipe"><i class="fa-solid fa-user-plus"></i> <%= post.teams.size %></span>
+      <% if post.photo.attached? %>
+        <%= link_to post_attachment_download_url(post), class: "ao-icon-btn ao-icon-btn--small", title: "Télécharger le dossier", "aria-label": "Télécharger le dossier" do %>
+          <i class="fa-solid fa-paperclip"></i>
         <% end %>
-      </div>
-    <% end %>
+      <% end %>
+    </span>
   </div>
-  <div class="container-link">
-    <%= link_to "Voir l'annonce", post_path(post), class: "card-link" %>
-  </div>
-</div>
+</article>

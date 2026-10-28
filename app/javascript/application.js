@@ -8,6 +8,8 @@ import "./jquery"
 import * as bootstrap from "bootstrap"
 import "@fortawesome/fontawesome-free/js/all"
 
+import "./ui"
+
 // Action Text
 import "trix"
 import "@rails/actiontext"

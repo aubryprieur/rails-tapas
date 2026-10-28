@@ -1,0 +1,40 @@
+# Traductions propres à TAPAS (chargées après rails.fr.yml et devise.fr.yml, elles les complètent)
+fr:
+  activerecord:
+    models:
+      post:
+        one: Appel d'offres
+        other: Appels d'offres
+      comment:
+        one: Commentaire
+        other: Commentaires
+      user:
+        one: Utilisateur
+        other: Utilisateurs
+    attributes:
+      post:
+        client: Client
+        title: Titre de la mission
+        deadline: Date limite de réponse
+        description: Description
+        rich_body: Description
+        photo: Dossier
+        user: Auteur
+      comment:
+        body: Commentaire
+        user: Auteur
+      user:
+        first_name: Prénom
+        last_name: Nom
+        email: Email
+        password: Mot de passe
+        password_confirmation: Confirmation du mot de passe
+        remember_me: Se souvenir de moi
+  devise:
+    failure:
+      unauthenticated: Vous devez vous connecter pour continuer.
+      timeout: Votre session a expiré, merci de vous reconnecter.
+    sessions:
+      signed_in: Vous êtes connecté·e. Bienvenue !
+      signed_out: Vous êtes déconnecté·e. À bientôt !
+      already_signed_out: Vous êtes déconnecté·e.

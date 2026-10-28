@@ -1,19 +1,6 @@
 <%
-  days_left = (@post.deadline - Date.current).to_i
-  deadline_status =
-    if days_left < 0 then "past"
-    elsif days_left <= 3 then "urgent"
-    elsif days_left <= 7 then "soon"
-    else "ok"
-    end
-  deadline_label =
-    case days_left
-    when ...0 then "Échéance dépassée"
-    when 0 then "Aujourd'hui"
-    when 1 then "Demain"
-    else "J-#{days_left}"
-    end
-  favorite = current_user.favorite_posts.exists?(id: @post.id)
+  deadline = deadline_info(@post)
+  favorite = favorited?(@post)
   comments = @post.comments.includes(:user).order(:created_at).select(&:user)
 %>
 
@@ -31,10 +18,10 @@
         <h1 class="ao-header__title"><%= @post.title.upcase_first %></h1>
 
         <div class="ao-header__meta">
-          <span class="ao-deadline ao-deadline--<%= deadline_status %>">
+          <span class="ao-deadline ao-deadline--<%= deadline[:status] %>">
             <i class="fa-regular fa-calendar"></i>
             Réponse avant le <strong><%= @post.deadline.strftime("%d/%m/%Y") %></strong>
-            <span class="ao-deadline__badge"><%= deadline_label %></span>
+            <span class="ao-deadline__badge"><%= deadline[:label] %></span>
           </span>
           <% if @post.user %>
             <span class="ao-header__author">
@@ -120,7 +107,7 @@
         <ul class="ao-comments__list">
           <% comments.each do |c| %>
             <li class="ao-comment">
-              <span class="ao-avatar"><%= [c.user.first_name, c.user.last_name].compact.map { |n| n.to_s.first }.join.upcase %></span>
+              <span class="ao-avatar"><%= user_initials(c.user) %></span>
               <div class="ao-comment__content">
                 <div class="ao-comment__meta">
                   <strong><%= c.user.first_name %></strong>

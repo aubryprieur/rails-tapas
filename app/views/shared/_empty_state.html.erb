@@ -1,0 +1,8 @@
+<div class="ao-empty">
+  <span class="ao-empty__icon"><i class="fa-solid <%= icon %>"></i></span>
+  <h2 class="ao-empty__title"><%= title %></h2>
+  <p class="ao-empty__text"><%= text %></p>
+  <% if local_assigns[:link] %>
+    <%= link_to link.first, link.last, class: "ao-btn ao-btn--primary" %>
+  <% end %>
+</div>

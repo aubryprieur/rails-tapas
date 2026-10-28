@@ -1,17 +1,31 @@
-<div class="wrapper">
-  <% if @posts.blank? %>
-    <div class="container list-posts">
-      <h1>Liste des <span>appels d'offres</span></h1>
-      <%= image_tag ("empty.svg"), class:"empty-img"%>
-    </div>
-  <% else %>
-    <div class="container list-posts">
-      <h1>Liste des <span>appels d'offres</span></h1>
-        <div class="cards">
-          <%= render @posts %>
-        </div>
-    </div>
-  <% end %>
+<div class="ao-page">
+  <div class="container">
+    <header class="ao-list-header">
+      <div>
+        <h1 class="ao-list-header__title">Appels d'offres</h1>
+        <p class="ao-list-header__subtitle">
+          <%= pluralize(@posts.size, "appel d'offres en cours", plural: "appels d'offres en cours") %>
+        </p>
+      </div>
+
+      <% if @posts.any? %>
+        <label class="ao-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" placeholder="Rechercher un client, une mission…" data-ao-search aria-label="Rechercher">
+        </label>
+      <% end %>
+    </header>
+
+    <% if @posts.empty? %>
+      <%= render "shared/empty_state",
+                 icon: "fa-inbox",
+                 title: "Aucun appel d'offres en cours",
+                 text: "Les nouveaux appels d'offres apparaîtront ici." %>
+    <% else %>
+      <div class="ao-tiles" data-ao-tiles>
+        <%= render @posts %>
+      </div>
+      <p class="ao-no-result" data-ao-no-result hidden>Aucun appel d'offres ne correspond à votre recherche.</p>
+    <% end %>
+  </div>
 </div>
-
-
