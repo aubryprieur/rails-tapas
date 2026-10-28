@@ -1,18 +1,14 @@
-Bonjour <%= @user.first_name %>, Bienvenue sur le Tapas de Copas !
+Bienvenue <%= @user.first_name %> !
 
-Tapas remplace Decidim.
-La plateforme regroupe aujourd'hui les AO partagés par Dorothée. Avec Tapas, vous pouvez :
+Votre compte TAPAS est prêt. TAPAS regroupe les appels d'offres partagés par l'équipe de Copas.
 
-  - Voir l'ensemble des ao en cours. Ils sont classés par ordre décroissant, avec un rapide descriptif [nom du client, intitulé de la mission, date limite]
-  - Télécharger les dossiers de consultations
-  - Ajouter en favori les ao intéressants
-  - Partager son  positionnement
-  - Laisser un commentaire
+Avec TAPAS, vous pouvez :
+- consulter les appels d'offres en cours (client, mission, date limite) ;
+- télécharger les dossiers de consultation ;
+- ajouter les AO intéressants à vos favoris ;
+- partager votre positionnement : lecture, appel du client, réponse, équipe ;
+- échanger en commentaires avec l'équipe.
 
-Pour faciliter la veille, vous recevrez à chaque ajout d'un appel d'offres, un message directement dans la boite email.
+Vous recevrez un email à chaque nouvel appel d'offres, ainsi qu'un récapitulatif chaque semaine.
 
-La plateforme pourra s'enrichir de nouvelles fonctionnalités au fil du temps et en fonction des besoins et remarques partagés.
-
-Bref, le souhait est de Tapas devient LA plateforme de Copas !
-
-Pour accéder à la plateforme : <%= link_to "link", new_user_session_url %>
+Accéder à TAPAS : <%= new_user_session_url %>

@@ -1,1 +1,12 @@
+Récap de la semaine sur TAPAS
 
+<% if @weekly_activities.empty? %>
+Pas d'activité cette semaine.
+<% else %>
+<% @weekly_activities.each do |post| %>
+- <%= post.client %> · <%= post.title %> (avant le <%= post.deadline.strftime("%d/%m/%Y") %>)
+  <%= post_url(post) %>
+<% end %>
+<% end %>
+
+Voir tous les appels d'offres : <%= posts_url %>

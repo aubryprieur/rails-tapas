@@ -1,12 +1,8 @@
 class LikeMailer < ApplicationMailer
-  default to: -> { User.pluck(:email) },
-          from: 'aubry.prieur@copas.coop'
-
-  def creation_like(post)
+  # user : la personne qui vient de se positionner sur « Je réponds »
+  def creation_like(post, user = nil)
     @post = post
-
-    mail(
-      subject: "Tapas | Une réponse à un appel d'offres se prépare !"
-    )
+    @user = user
+    mail_to_all_members(subject: "Une réponse se prépare · #{@post.client}")
   end
 end

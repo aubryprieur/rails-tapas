@@ -1,0 +1,30 @@
+<%
+  deadline = deadline_info(post)
+  tone, tone_bg = {
+    "ok" => ["#118A57", "#E3F6EC"], "soon" => ["#B85F12", "#FCEBDC"],
+    "urgent" => ["#C4302B", "#FDE4E4"], "past" => ["#6B7078", "#EEEFF1"]
+  }[deadline[:status]]
+%>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="margin:20px 0 4px; border:1px solid #ECECEC; border-radius:12px; background:#FCFCFD;">
+  <tr>
+    <td style="padding:18px 20px; font-family:Helvetica,Arial,sans-serif;">
+      <span style="display:inline-block; padding:3px 10px; border-radius:999px; background:#FDF1D3; color:#9A6B00; font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase;">
+        <%= post.client %>
+      </span>
+      <p style="margin:10px 0 8px; font-size:18px; font-weight:700; line-height:1.35; color:#22252A;">
+        <a href="<%= post_url(post) %>" target="_blank" style="color:#22252A; text-decoration:none;"><%= post.title.to_s.upcase_first %></a>
+      </p>
+      <p style="margin:0; font-size:14px; color:#5F646C;">
+        Réponse avant le <strong style="color:#22252A;"><%= post.deadline.strftime("%d/%m/%Y") %></strong>
+        <span style="display:inline-block; margin-left:6px; padding:1px 8px; border-radius:999px; background:<%= tone_bg %>; color:<%= tone %>; font-size:12px; font-weight:700;"><%= deadline[:label] %></span>
+      </p>
+      <% if local_assigns[:with_excerpt] %>
+        <% excerpt = post.rich_body.present? ? post.rich_body.to_plain_text.squish : post.try(:description).to_s.squish %>
+        <% if excerpt.present? %>
+          <p style="margin:12px 0 0; font-size:14px; line-height:1.55; color:#5F646C;"><%= excerpt.truncate(260) %></p>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>

@@ -2,7 +2,7 @@ class UserMailer < ApplicationMailer
 
   def welcome(user)
     @user = user  # Instance variable => available in view
-    mail(to: @user.email, subject: 'Bienvenue sur Tapas!')
+    mail(to: @user.email, subject: "Bienvenue sur TAPAS !")
     # This will render a view in `app/views/user_mailer`!
   end
 
@@ -14,7 +14,7 @@ class UserMailer < ApplicationMailer
     @weekly_activities << Post.joins(:calls).where("calls.created_at >= ?", Date.today - 7)
     @weekly_activities << Post.joins(:comments).where("comments.created_at >= ?", Date.today - 7)
     @weekly_activities = @weekly_activities.flatten.uniq
-    mail(to: User.pluck(:email), subject: "Tapas, le récap de la semaine.")
+    mail_to_all_members(subject: "TAPAS · Le récap de la semaine")
   end
 
   private

@@ -1,6 +1,9 @@
-Bonjour,
+Nouvel appel d'offres sur TAPAS
 
-Nouvel appel d'offres sur Tapas :
-- <%= @post.client %>
-- <%= link_to @post.title, post_url(@post)  %>
-Date limite : <%= @post.deadline %>
+<%= @post.client %>
+<%= @post.title %>
+Réponse avant le <%= @post.deadline.strftime("%d/%m/%Y") %> (<%= deadline_info(@post)[:label] %>)
+
+Voir l'appel d'offres : <%= post_url(@post) %>
+
+Ça vous intéresse ? Positionnez-vous ou laissez un commentaire directement sur la fiche.

@@ -1,3 +1,7 @@
-Like#creation_like
+<%= @user&.first_name.presence ? "#{@user.first_name} prépare une réponse" : "Une réponse est en préparation" %> sur TAPAS.
+Envie de rejoindre l'équipe ou d'aider à la rédaction de la proposition ?
 
-<%= @greeting %>, find me in app/views/like_mailer/creation_like.text.erb
+<%= @post.client %> · <%= @post.title %>
+Réponse avant le <%= @post.deadline.strftime("%d/%m/%Y") %>
+
+Rejoindre l'équipe : <%= post_url(@post) %>

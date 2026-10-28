@@ -1,9 +1,8 @@
-Bonjour,
+<%= @comment.user&.first_name.presence || "Un membre" %> a commenté un appel d'offres sur TAPAS :
 
-Nouveau commentaire sur Tapas !
+« <%= @comment.body %> »
 
-Il concerne l'appel d'offres : <%= @post.client %> | <%= @post.title %>
+<%= @post.client %> · <%= @post.title %>
+Réponse avant le <%= @post.deadline.strftime("%d/%m/%Y") %>
 
-- Commentaire de <%= @comment.user.first_name %> : <%= @comment.body %>
-
-<%= link_to "Lien d'accès", post_url(@post), target: "_blank"  %>
+Répondre sur TAPAS : <%= post_url(@post) %>

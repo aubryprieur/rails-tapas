@@ -9,8 +9,8 @@ class LikesController < ApplicationController
       @post.likes.create(user_id: current_user.id)
       # Tentative d'envoi d'email avec gestion d'erreur
       EmailService.send_email_safe(
-        ->(post) { LikeMailer.creation_like(post) },
-        @post
+        ->(post, user) { LikeMailer.creation_like(post, user) },
+        @post, current_user
       )
     end
     redirect_to post_path(@post)
