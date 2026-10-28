@@ -1,79 +1,149 @@
-<div class="wrapper">
+<%
+  days_left = (@post.deadline - Date.current).to_i
+  deadline_status =
+    if days_left < 0 then "past"
+    elsif days_left <= 3 then "urgent"
+    elsif days_left <= 7 then "soon"
+    else "ok"
+    end
+  deadline_label =
+    case days_left
+    when ...0 then "Échéance dépassée"
+    when 0 then "Aujourd'hui"
+    when 1 then "Demain"
+    else "J-#{days_left}"
+    end
+  favorite = current_user.favorite_posts.exists?(id: @post.id)
+  comments = @post.comments.includes(:user).order(:created_at).select(&:user)
+%>
+
+<div class="ao-page">
   <div class="container">
-    <div class="show_intro">
-      <div class="show_description">
-        <span class="show_favorite">
-          <% unless current_user.favorite_posts.exists?(id: @post.id) %>
-            <%= link_to favorite_posts_path(post_id: @post), method: :post do %>
-              <i class="far fa-bookmark" style="color: #F9CA62"></i>
-            <% end %>
-          <% else %>
-            <%= link_to favorite_post_path(@post), method: :delete do %>
-              <i class="fas fa-bookmark" style="color: #F9CA62"></i>
-            <% end %>
+
+    <%= link_to posts_path, class: "ao-back" do %>
+      <i class="fa-solid fa-arrow-left"></i> Tous les appels d'offres
+    <% end %>
+
+    <%# En-tête %>
+    <header class="ao-card ao-header">
+      <div class="ao-header__main">
+        <span class="ao-header__client"><%= @post.client %></span>
+        <h1 class="ao-header__title"><%= @post.title.upcase_first %></h1>
+
+        <div class="ao-header__meta">
+          <span class="ao-deadline ao-deadline--<%= deadline_status %>">
+            <i class="fa-regular fa-calendar"></i>
+            Réponse avant le <strong><%= @post.deadline.strftime("%d/%m/%Y") %></strong>
+            <span class="ao-deadline__badge"><%= deadline_label %></span>
+          </span>
+          <% if @post.user %>
+            <span class="ao-header__author">
+              <i class="fa-regular fa-user"></i>
+              Publié par <%= @post.user.first_name %> le <%= @post.created_at.strftime("%d/%m/%Y") %>
+            </span>
           <% end %>
-        </span>
-        <h2 class="show_title"><%= @post.client.upcase %></h2>
-        <h2><%= @post.title.capitalize %></h2>
+        </div>
       </div>
-      <div class="show_date">
-        <p>Date limite de réponse : <%= @post.deadline.strftime("%d/%m/%Y") %></p>
-      </div>
-    </div>
 
-    <div class="show_text">
-      <% if @post.rich_body.present? %>
-        <p><%= @post.rich_body %></p>
-      <% else %>
-        <p>Pas de description.</p>
-      <% end %>
-    </div>
-
-    <div class="show_link">
-      <%= render partial: "shared/download_link", locals: { post: @post } %>
-    </div>
-
-    <div class="show_text">
-      <h3>Positionnement</h3>
-      <%= render 'table_position' %>
-    </div>
-
-    <div class="show_comment">
-      <div class="card-body">
-        <h3>Commentaires</h3>
-        <p>
-          <% if @post.comments.present? %>
-            <% @post.comments.each do |c| %>
-              <% if c.user.present? %>
-                <div>
-                  <small>
-                    <strong><%= c.user.first_name %></strong> (il y a <%= time_ago_in_words(c.created_at) %>)
-                  </small>
-                  <p class="mt-1 ml-4">
-                    <%= c.body %>
-                  </p>
-                </div>
-              <% end %>
-            <% end %>
-          <% else %>
-            Il n'y a pas encore de commentaires pour cet ao.
+      <div class="ao-header__actions">
+        <% if favorite %>
+          <%= link_to favorite_post_path(@post), method: :delete, class: "ao-btn ao-btn--favorite is-active", title: "Retirer des favoris" do %>
+            <i class="fa-solid fa-bookmark"></i> <span>Favori</span>
           <% end %>
-        </p>
+        <% else %>
+          <%= link_to favorite_posts_path(post_id: @post), method: :post, class: "ao-btn ao-btn--favorite", title: "Ajouter aux favoris" do %>
+            <i class="fa-regular fa-bookmark"></i> <span>Ajouter aux favoris</span>
+          <% end %>
+        <% end %>
 
-        <%= form_for [@post, @comment] do |f| %>
-          <div class="form-group">
-            Vous voulez laisser un commentaire ?
-            <%= f.text_area :body, class: "form-control", placeholder: "Écrivez votre commentaire ici.", rows: 3 %>
-            <%= f.hidden_field :user_id, value: current_user.id %>
-          </div>
-          <%= f.submit "Enregistrer votre commentaire", class: "btn btn-primary" %>
+        <% if policy(Post).update? %>
+          <%= link_to edit_post_path(@post), class: "ao-btn ao-btn--ghost", title: "Modifier" do %>
+            <i class="fa-solid fa-pen"></i> <span>Modifier</span>
+          <% end %>
+        <% end %>
+        <% if policy(Post).destroy? %>
+          <%= link_to post_path(@post), method: :delete, data: { confirm: "Supprimer cet appel d'offres ?" }, class: "ao-btn ao-btn--danger", title: "Supprimer" do %>
+            <i class="fa-solid fa-trash-can"></i> <span>Supprimer</span>
+          <% end %>
         <% end %>
       </div>
+    </header>
+
+    <div class="ao-grid">
+      <%# Description %>
+      <section class="ao-card ao-description">
+        <h2 class="ao-section-title">Description</h2>
+        <% if @post.rich_body.present? %>
+          <div class="ao-description__body"><%= @post.rich_body %></div>
+        <% elsif @post.try(:description).present? %>
+          <div class="ao-description__body"><%= simple_format(@post.description) %></div>
+        <% else %>
+          <p class="ao-muted">Pas de description.</p>
+        <% end %>
+      </section>
+
+      <%# Dossier %>
+      <aside class="ao-card ao-file">
+        <h2 class="ao-section-title">Dossier</h2>
+        <% if @post.photo.attached? %>
+          <%= link_to post_attachment_download_url(@post), class: "ao-file__link" do %>
+            <span class="ao-file__icon"><i class="fa-solid fa-file-arrow-down"></i></span>
+            <span class="ao-file__info">
+              <span class="ao-file__name"><%= @post.photo.blob.filename %></span>
+              <span class="ao-file__size"><%= number_to_human_size(@post.photo.blob.byte_size) %></span>
+            </span>
+          <% end %>
+        <% else %>
+          <div class="ao-file__none">
+            <i class="fa-regular fa-folder-open"></i>
+            <span>Pas de dossier à télécharger</span>
+          </div>
+        <% end %>
+      </aside>
     </div>
 
-    <div>
-      <%= link_to "MODIFIER", edit_post_path(@post), class: "btn btn-outline-primary" if policy(Post).update? %>
-      <%= link_to "SUPPRIMER", post_path(@post), method: :delete, data: { confirm: "Vous êtes sûr ?" }, class: "btn btn-outline-danger" if policy(Post).destroy? %>
-    </div>
+    <%# Positionnement %>
+    <section class="ao-card">
+      <h2 class="ao-section-title">Positionnement</h2>
+      <%= render "table_position" %>
+    </section>
+
+    <%# Commentaires %>
+    <section class="ao-card ao-comments">
+      <h2 class="ao-section-title">
+        Commentaires <span class="ao-count"><%= comments.size %></span>
+      </h2>
+
+      <% if comments.empty? %>
+        <p class="ao-muted">Il n'y a pas encore de commentaires pour cet AO.</p>
+      <% else %>
+        <ul class="ao-comments__list">
+          <% comments.each do |c| %>
+            <li class="ao-comment">
+              <span class="ao-avatar"><%= [c.user.first_name, c.user.last_name].compact.map { |n| n.to_s.first }.join.upcase %></span>
+              <div class="ao-comment__content">
+                <div class="ao-comment__meta">
+                  <strong><%= c.user.first_name %></strong>
+                  <span><%= c.created_at.strftime("%d/%m/%Y à %Hh%M") %></span>
+                </div>
+                <div class="ao-comment__body"><%= simple_format(c.body) %></div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <%= form_for [@post, @comment], html: { class: "ao-comment-form" } do |f| %>
+        <%= f.label :body, "Laisser un commentaire", class: "visually-hidden" %>
+        <%= f.text_area :body, class: "form-control", placeholder: "Écrivez votre commentaire…", rows: 3 %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <div class="ao-comment-form__actions">
+          <%= button_tag type: "submit", class: "ao-btn ao-btn--primary" do %>
+            <i class="fa-solid fa-paper-plane"></i> <span>Publier</span>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+
   </div>
 </div>
