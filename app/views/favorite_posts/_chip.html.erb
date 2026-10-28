@@ -1,0 +1,12 @@
+<% deadline = deadline_info(post) %>
+<div class="fav-chip ao-deadline--<%= deadline[:status] %>" title="<%= post.client %> · <%= post.title %> (<%= deadline[:label] %>)">
+  <%= link_to post_path(post), class: "fav-chip__link" do %>
+    <span class="fav-chip__client"><%= post.client %></span>
+    <span class="fav-chip__title"><%= post.title.to_s.upcase_first %></span>
+    <span class="fav-chip__badge"><%= deadline[:label] %></span>
+  <% end %>
+  <%= link_to favorite_post_path(post), method: :delete, class: "fav-chip__remove",
+              title: "Retirer des favoris", "aria-label": "Retirer « #{post.title} » des favoris" do %>
+    <i class="fa-solid fa-xmark"></i>
+  <% end %>
+</div>

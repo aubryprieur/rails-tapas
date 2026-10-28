@@ -1,28 +1,122 @@
+<% content_for :title, "Mes favoris" %>
+<%
+  today = Date.current
+  month_label = I18n.l(@month, format: "%B %Y").upcase_first
+  day_names = I18n.t("date.abbr_day_names").rotate(1) # semaine commençant le lundi
+  month_posts = @posts_by_date.select { |date, _| date.month == @month.month }.sort
+%>
+
 <div class="ao-page">
   <div class="container">
     <header class="ao-list-header">
       <div>
         <h1 class="ao-list-header__title">Mes favoris</h1>
         <p class="ao-list-header__subtitle">
-          <% if @posts.any? %>
-            <%= pluralize(@posts.size, "appel d'offres suivi", plural: "appels d'offres suivis") %>, classés par date limite
+          <% if @upcoming_count.positive? %>
+            <%= pluralize(@upcoming_count, "échéance à venir", plural: "échéances à venir") %> dans vos favoris
           <% else %>
-            Retrouvez ici les appels d'offres que vous suivez.
+            Ajoutez des appels d'offres en favori pour suivre leurs échéances ici.
           <% end %>
         </p>
       </div>
+      <div class="fav-legend" aria-hidden="true">
+        <span class="ao-deadline--ok"><i></i> + de 7 jours</span>
+        <span class="ao-deadline--soon"><i></i> 7 jours</span>
+        <span class="ao-deadline--urgent"><i></i> 3 jours</span>
+      </div>
     </header>
 
-    <% if @posts.empty? %>
+    <section class="ao-card fav-calendar">
+      <div class="fav-calendar__toolbar">
+        <div class="fav-calendar__nav">
+          <%= link_to favorites_path(month: @month.prev_month.strftime("%Y-%m")), class: "ao-icon-btn", title: "Mois précédent", "aria-label": "Mois précédent" do %>
+            <i class="fa-solid fa-chevron-left"></i>
+          <% end %>
+          <h2 class="fav-calendar__month"><%= month_label %></h2>
+          <%= link_to favorites_path(month: @month.next_month.strftime("%Y-%m")), class: "ao-icon-btn", title: "Mois suivant", "aria-label": "Mois suivant" do %>
+            <i class="fa-solid fa-chevron-right"></i>
+          <% end %>
+        </div>
+        <% unless @month == today.beginning_of_month %>
+          <%= link_to "Aujourd'hui", favorites_path, class: "ao-btn ao-btn--ghost fav-calendar__today-btn" %>
+        <% end %>
+      </div>
+
+      <%# Grille (ordinateur et tablette) %>
+      <div class="fav-grid" role="grid" aria-label="Calendrier des favoris, <%= month_label %>">
+        <% day_names.each do |name| %>
+          <div class="fav-grid__dayname" role="columnheader"><%= name.delete(".").capitalize %></div>
+        <% end %>
+
+        <% (@calendar_start..@calendar_end).each do |date| %>
+          <%
+            classes = ["fav-day"]
+            classes << "fav-day--other-month" if date.month != @month.month
+            classes << "fav-day--past" if date < today
+            classes << "fav-day--today" if date == today
+            classes << "fav-day--weekend" if date.saturday? || date.sunday?
+            posts = @posts_by_date[date] || []
+          %>
+          <div class="<%= classes.join(' ') %>" role="gridcell">
+            <div class="fav-day__head">
+              <span class="fav-day__number"><%= date.day %></span>
+            </div>
+            <div class="fav-day__items">
+              <%= render partial: "favorite_posts/chip", collection: posts, as: :post %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Agenda (mobile) %>
+      <div class="fav-agenda">
+        <% if month_posts.empty? %>
+          <p class="ao-muted fav-agenda__empty">Aucune échéance en <%= month_label.downcase %>.</p>
+        <% else %>
+          <% today_marked = !(@month == today.beginning_of_month) %>
+          <% month_posts.each do |date, posts| %>
+            <% if !today_marked && date >= today %>
+              <% today_marked = true %>
+              <div class="fav-agenda__today"><span>Aujourd'hui · <%= I18n.l(today, format: "%A %-d %B") %></span></div>
+            <% end %>
+            <div class="fav-agenda__day <%= 'is-past' if date < today %>">
+              <div class="fav-agenda__date">
+                <span class="fav-agenda__weekday"><%= I18n.l(date, format: "%a").delete(".") %></span>
+                <span class="fav-agenda__num"><%= date.day %></span>
+              </div>
+              <div class="fav-agenda__items">
+                <%= render partial: "favorite_posts/chip", collection: posts, as: :post %>
+              </div>
+            </div>
+          <% end %>
+          <% unless today_marked %>
+            <div class="fav-agenda__today"><span>Aujourd'hui · <%= I18n.l(today, format: "%A %-d %B") %></span></div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if month_posts.empty? && (@next_favorite || @previous_favorite) %>
+        <div class="fav-calendar__hint">
+          <% if @previous_favorite %>
+            <%= link_to favorites_path(month: @previous_favorite.deadline.strftime("%Y-%m")) do %>
+              ← Échéance précédente : <%= I18n.l(@previous_favorite.deadline, format: "%-d %B") %>
+            <% end %>
+          <% end %>
+          <% if @next_favorite %>
+            <%= link_to favorites_path(month: @next_favorite.deadline.strftime("%Y-%m")) do %>
+              Prochaine échéance : <%= I18n.l(@next_favorite.deadline, format: "%-d %B") %> →
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+
+    <% if @upcoming_count.zero? %>
       <%= render "shared/empty_state",
                  icon: "fa-bookmark",
                  title: "Pas encore de favoris",
-                 text: "Cliquez sur l'icône favori d'un appel d'offres pour le retrouver ici.",
+                 text: "Cliquez sur l'icône favori d'un appel d'offres pour suivre son échéance dans ce calendrier.",
                  link: ["Voir les appels d'offres", posts_path] %>
-    <% else %>
-      <div class="ao-tiles">
-        <%= render partial: "posts/post", collection: @posts %>
-      </div>
     <% end %>
   </div>
 </div>

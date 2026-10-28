@@ -1,0 +1,308 @@
+// Calendrier des favoris (favorite_posts/index)
+
+.fav-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: #7A7F87;
+  font-size: 13px;
+
+  span { display: inline-flex; align-items: center; gap: 6px; }
+  i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--tone);
+  }
+}
+
+.fav-calendar { padding: 20px; }
+
+.fav-calendar__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.fav-calendar__nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .ao-icon-btn { border: 1.5px solid #ECECEC; }
+}
+
+.fav-calendar__month {
+  min-width: 190px;
+  margin: 0;
+  font-family: $headers-font;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.fav-calendar__today-btn { padding: 7px 14px; }
+
+.fav-calendar__hint {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+
+  a { color: #9A6B00; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+}
+
+// ---- Grille ----
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid #ECECEC;
+  border-left: 1px solid #ECECEC;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fav-grid__dayname {
+  padding: 8px 10px;
+  border-right: 1px solid #ECECEC;
+  border-bottom: 1px solid #ECECEC;
+  background: #FAFAFA;
+  color: #7A7F87;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+}
+
+.fav-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  min-height: 112px;
+  padding: 6px;
+  border-right: 1px solid #ECECEC;
+  border-bottom: 1px solid #ECECEC;
+  background: white;
+
+  &--weekend { background: #FCFCFD; }
+
+  // Jours passés : grisés et hachurés
+  &--past {
+    background:
+      repeating-linear-gradient(-45deg, transparent 0 6px, rgba(0, 0, 0, .025) 6px 12px),
+      #F7F7F8;
+    .fav-day__number { color: #B5B9BF; }
+  }
+
+  &--other-month {
+    .fav-day__number { color: #C9CCD1; }
+  }
+
+  &--today {
+    position: relative;
+    background: #FFFBF0;
+    box-shadow: inset 0 0 0 2px #F9CA62;
+  }
+}
+
+.fav-day__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 2px 4px;
+}
+
+.fav-day__number {
+  font-size: 13px;
+  font-weight: 700;
+  color: #22252A;
+}
+
+.fav-day--today .fav-day__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #F9CA62;
+  color: white;
+}
+
+
+.fav-day__items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+// ---- Pastille d'un favori ----
+.fav-chip {
+  position: relative;
+  min-width: 0;
+  border-left: 3px solid var(--tone);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--tone) 10%, white);
+  transition: box-shadow .15s ease, transform .15s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    transform: translateY(-1px);
+    .fav-chip__remove { opacity: 1; }
+  }
+}
+
+.fav-chip__link {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px 22px 5px 7px;
+  color: #22252A;
+  text-decoration: none;
+
+  &:hover { color: #22252A; }
+}
+
+.fav-chip__client {
+  overflow: hidden;
+  color: var(--tone);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .4px;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.fav-chip__title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.fav-chip__badge {
+  margin-top: 2px;
+  color: var(--tone);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.fav-chip__remove {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  color: #8A8F98;
+  font-size: 11px;
+  opacity: .55;
+  transition: opacity .15s ease, background .15s ease, color .15s ease;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+    background: #FDE4E4;
+    color: #C4302B;
+  }
+}
+
+// ---- Agenda (mobile) ----
+.fav-agenda { display: none; }
+
+.fav-agenda__empty { padding: 20px 0; text-align: center; }
+
+.fav-agenda__today {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+  color: #9A6B00;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  &::before, &::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: #F9CA62;
+  }
+}
+
+.fav-agenda__day {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #F2F2F2;
+
+  &:last-child { border-bottom: 0; }
+  &.is-past { opacity: .6; }
+}
+
+.fav-agenda__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 46px;
+}
+
+.fav-agenda__weekday {
+  color: #7A7F87;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.fav-agenda__num {
+  font-family: $headers-font;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.fav-agenda__items {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+
+  .fav-chip__link { padding: 8px 32px 8px 10px; }
+  .fav-chip__client { font-size: 11px; }
+  .fav-chip__title { font-size: 14px; -webkit-line-clamp: 3; }
+  .fav-chip__badge { font-size: 12px; }
+  .fav-chip__remove { top: 6px; right: 6px; width: 26px; height: 26px; font-size: 13px; opacity: 1; }
+}
+
+@media (max-width: 991.98px) {
+  .fav-day { min-height: 96px; padding: 4px; }
+  .fav-chip__title { -webkit-line-clamp: 1; }
+}
+
+@media (max-width: 767.98px) {
+  .fav-grid { display: none; }
+  .fav-agenda { display: block; }
+  .fav-calendar { padding: 16px; }
+  .fav-calendar__month { min-width: 0; font-size: 19px; }
+  .fav-legend { display: none; }
+}
