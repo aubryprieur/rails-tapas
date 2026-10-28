@@ -1,49 +1,43 @@
-source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+source "https://rubygems.org"
 
-ruby '3.1.0'
+ruby "~> 3.4.0"
 
-# Ajoutez ou mettez à jour
-gem 'rails', '~> 6.1.0'
-gem 'webpacker', '~> 5.0'
-gem 'psych', '~> 4.0'
-gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 4.1'
-gem 'sass-rails', '~> 6.0'
-gem 'bootstrap', '~> 5.2', '>= 5.2.3'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.7'
-gem 'devise', '~> 4.7', '>= 4.7.3'
-gem 'cloudinary', '~> 2.2'
-gem 'bootsnap', '~> 1.18', '>= 1.18.4'
-gem 'autoprefixer-rails'
-gem 'font-awesome-sass', '~> 4.6', '>= 4.6.2'
-gem 'simple_form'
-gem "administrate"
-gem 'pundit', '~> 2.1'
-gem 'ffi', '< 1.17'
-gem "letter_opener", :group => :development
-gem 'sendgrid-ruby'
-gem 'postmark-rails'
+gem "rails", "~> 8.1.0"
+gem "pg", "~> 1.5"
+gem "puma", ">= 6.0"
+gem "bootsnap", require: false
+
+# Assets : Propshaft + esbuild (JS) + Dart Sass (CSS)
+gem "propshaft"
+gem "jsbundling-rails"
+gem "cssbundling-rails"
+
+gem "jbuilder"
+gem "devise", "~> 5.0"
+gem "cloudinary", "~> 2.2"
+gem "simple_form"
+gem "administrate", "~> 1.0"
+gem "pundit", "~> 2.1"
+gem "sendgrid-ruby"
+gem "postmark-rails"
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'database_cleaner', '~> 1.8', '>= 1.8.5'
-  gem 'dotenv-rails'
-  gem 'factory_bot_rails'
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "dotenv-rails"
+  gem "factory_bot_rails"
+  gem "rspec-rails", "~> 8.0"
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.2'
+  gem "web-console"
+  gem "letter_opener"
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  gem 'webdrivers'
-  gem 'rspec-rails', '~> 6.1.0'
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "database_cleaner-active_record"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]

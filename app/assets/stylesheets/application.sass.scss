@@ -4,14 +4,9 @@
 @import "config/bootstrap_variables";
 
 // External libraries
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
-// Font Awesome
-$fa-font-path: "../../../node_modules/@fortawesome/fontawesome-free/webfonts";
-@import "../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
-@import "../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
-@import "../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
-@import "../../../node_modules/@fortawesome/fontawesome-free/scss/brands";
+// Font Awesome : les icônes sont rendues en SVG par le JavaScript (app/javascript/application.js)
 
 @import "trix/dist/trix";
 

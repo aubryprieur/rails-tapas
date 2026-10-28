@@ -1,24 +1,38 @@
-# README
+# TAPAS
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Application Rails de partage et de suivi des appels d'offres.
 
-Things you may want to cover:
+## Versions
 
-* Ruby version
+- Ruby 3.4
+- Rails 8.1
+- PostgreSQL (Heroku Postgres 18)
+- Node 22 + Yarn 1 (esbuild pour le JavaScript, Dart Sass pour le CSS)
 
-* System dependencies
+## Installation en local
 
-* Configuration
+```bash
+bundle install
+yarn install
+bin/rails db:prepare
+```
 
-* Database creation
+## Lancer l'application
 
-* Database initialization
+```bash
+bin/dev
+```
 
-* How to run the test suite
+`bin/dev` démarre le serveur Rails ainsi que la compilation du JavaScript et du CSS
+en mode « watch » (voir `Procfile.dev`). L'application est sur http://localhost:3000.
 
-* Services (job queues, cache servers, search engines, etc.)
+## Tests
 
-* Deployment instructions
+```bash
+bundle exec rspec
+```
 
-* ...
+## Déploiement
+
+L'application est déployée sur Heroku (`rails-tapas`). Les migrations sont lancées
+automatiquement à chaque déploiement (phase `release` du `Procfile`).

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Health check (renvoie 200 si l'app démarre sans erreur)
+  get "up" => "rails/health#show", as: :rails_health_check
+
   namespace :admin do
       resources :users
       resources :admin_users

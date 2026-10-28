@@ -1,1 +1,2 @@
-web: bundle exec puma -t 5:5 -p ${PORT} -e ${RACK_ENV}
+web: bundle exec puma -C config/puma.rb
+release: bundle exec rails db:migrate

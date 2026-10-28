@@ -14,7 +14,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 
 RSpec.configure do |config|
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = [Rails.root.join("spec/fixtures")]
   config.use_transactional_fixtures = false
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
   config.before(:each) { DatabaseCleaner.strategy = :transaction }

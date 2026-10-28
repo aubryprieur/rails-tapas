@@ -1,21 +1,20 @@
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+import Rails from "@rails/ujs"
+import * as ActiveStorage from "@rails/activestorage"
 
-// Bootstrap et Font Awesome
-import '@popperjs/core'
-import 'bootstrap'
-import '@fortawesome/fontawesome-free/js/all'
-import '@fortawesome/fontawesome-free/css/all'
+// jQuery, exposé globalement
+import "./jquery"
 
-// jQuery (si nécessaire)
-import $ from 'jquery'
-global.$ = global.jQuery = $
+// Bootstrap et Font Awesome (icônes en SVG)
+import * as bootstrap from "bootstrap"
+import "@fortawesome/fontawesome-free/js/all"
 
 // Action Text
-require("trix")
-require("@rails/actiontext")
+import "trix"
+import "@rails/actiontext"
+
+window.bootstrap = bootstrap
+Rails.start()
+ActiveStorage.start()
 
 // Direct uploads
 addEventListener("direct-upload:initialize", event => {
