@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-md app-nav">
   <div class="container">
-    <%= link_to root_path, class: "navbar-brand app-nav__brand" do %>
-      <%= image_tag "tapas_logo.png", alt: "", class: "app-nav__logo" %>
-      <span>TAPAS</span>
+    <%= link_to root_path, class: "navbar-brand app-nav__brand", "aria-label": "TAPAS, accueil" do %>
+      <%= image_tag "tapas_logo.png", alt: "TAPAS", class: "app-nav__logo" %>
     <% end %>
 
     <% if user_signed_in? %>
