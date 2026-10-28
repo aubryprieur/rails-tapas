@@ -4,6 +4,7 @@
     filename = post.photo.blob.filename.to_s
     is_zip = filename.downcase.ends_with?(".zip")
     options = is_zip ? { resource_type: "raw", format: "zip" } : {}
+    options[:filename] = filename
   %>
   <%= link_to("Télécharger le dossier", cloudinary_download_url(post.photo.key, options), class: "download-link") %>
 <% else %>
