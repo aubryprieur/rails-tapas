@@ -1,32 +1,56 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <%= link_to "/", class: "navbar-brand" do %>
-    <%= image_tag "tapas_logo.png", class: "logo_navbar" %>
-  <% end %>
+<nav class="navbar navbar-expand-md app-nav">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand app-nav__brand" do %>
+      <%= image_tag "tapas_logo.png", alt: "", class: "app-nav__logo" %>
+      <span>TAPAS</span>
+    <% end %>
 
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto"> <!-- Changed mr-auto to me-auto for Bootstrap 5 -->
-      <% if admin_types.include?(current_user.try(:type)) %>
-        <%= render 'shared/admin_add_ao' %>
-      <% end %>
-      <li class="nav-item">
-        <%= link_to "LISTE DES AO", posts_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "FAVORIS", favorites_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item dropdown">
-        <%= image_tag "avatar.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> <!-- Changed right to end -->
-          <% if admin_types.include?(current_user.try(:type)) %>
-            <%= render 'shared/admin_dashboard' %>
-          <% end %>
-          <%= link_to "DÉCONNEXION", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+    <% if user_signed_in? %>
+      <div class="app-nav__right order-md-last">
+        <%# Avatar visible en permanence (ouvre le menu du compte) %>
+        <div class="dropdown">
+          <button class="app-nav__avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu du compte" title="<%= [current_user.first_name, current_user.last_name].compact.join(' ') %>">
+            <%= user_initials(current_user).presence || current_user.email.first.upcase %>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end app-nav__menu">
+            <div class="app-nav__menu-header">
+              <strong><%= [current_user.first_name, current_user.last_name].compact.join(" ") %></strong>
+              <span><%= current_user.email %></span>
+            </div>
+            <% if current_user.admin? %>
+              <%= link_to admin_posts_path, class: "dropdown-item" do %>
+                <i class="fa-solid fa-gauge"></i> Administration
+              <% end %>
+            <% end %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item app-nav__logout" do %>
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion
+            <% end %>
+          </div>
         </div>
-      </li>
-    </ul>
+
+        <button class="navbar-toggler app-nav__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Ouvrir le menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-md-4 me-auto app-nav__links">
+          <li class="nav-item">
+            <%= link_to "Accueil", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Appels d'offres", posts_path, class: "nav-link #{'active' if controller_name == 'posts' && action_name == 'index'}" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Favoris", favorites_path, class: "nav-link #{'active' if controller_name == 'favorite_posts'}" %>
+          </li>
+        </ul>
+        <% if current_user.admin? %>
+          <%= link_to new_post_path, id: "new_post", class: "ao-btn ao-btn--primary app-nav__cta" do %>
+            <i class="fa-solid fa-plus"></i> <span>Ajouter un AO</span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-</div>
+</nav>

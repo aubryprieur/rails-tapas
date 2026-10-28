@@ -1,19 +1,127 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: #F9F9F9;
-  padding-left: 50px;
-  padding-right: 50px;
+// Barre de navigation (shared/_navbar)
 
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  padding: 10px 0;
+  border-bottom: 1px solid #ECECEC;
+  background: rgba(255, 255, 255, .92);
+  backdrop-filter: saturate(180%) blur(8px);
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.app-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #22252A;
+  font-family: $headers-font;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: .5px;
+
+  &:hover { color: #22252A; }
 }
 
-.navbar-lewagon .navbar-brand img {
+.app-nav__logo { width: 38px; height: auto; }
+
+.app-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-nav__links {
+  gap: 4px;
+
+  .nav-link {
+    padding: 8px 14px !important;
+    border-radius: 10px;
+    color: #5F646C;
+    font-weight: 600;
+    transition: background .15s ease, color .15s ease;
+
+    &:hover { background: #F3F4F6; color: #22252A; }
+
+    &.active {
+      background: rgba(249, 202, 98, .2);
+      color: #8A5F00;
+    }
+  }
+}
+
+.app-nav__cta { margin-right: 12px; padding: 9px 16px; }
+
+// Avatar à initiales
+.app-nav__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F9CA62, #E0A82E);
+  box-shadow: 0 0 0 1.5px #F1D58F;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .15s ease;
+
+  &:hover,
+  &[aria-expanded="true"] {
+    box-shadow: 0 0 0 4px rgba(249, 202, 98, .35);
+  }
 }
 
-.logo_navbar {
-  width: 60px !important;
+.app-nav__menu {
+  min-width: 240px;
+  margin-top: 10px !important;
+  padding: 6px;
+  border: 1px solid #ECECEC;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .12);
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+
+    svg { width: 16px; color: #9A9FA6; }
+  }
+
+  .app-nav__logout:hover { background: #FFF5F5; color: #C4302B; svg { color: #C4302B; } }
+}
+
+.app-nav__menu-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+  padding: 8px 12px 10px;
+  border-bottom: 1px solid #F2F2F2;
+
+  strong { font-size: 14px; color: #22252A; }
+  span { overflow: hidden; color: #7A7F87; font-size: 12px; text-overflow: ellipsis; }
+}
+
+.app-nav__toggler {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1.5px solid #E4E6EA;
+  border-radius: 10px;
+  color: #5F646C;
+
+  &:focus { box-shadow: 0 0 0 4px rgba(249, 202, 98, .25); }
+}
+
+@media (max-width: 767.98px) {
+  .app-nav .navbar-collapse { padding: 12px 0 4px; }
+  .app-nav__cta { width: 100%; margin: 10px 0 0; }
 }

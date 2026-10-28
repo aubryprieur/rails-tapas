@@ -1,1 +1,83 @@
-<%= render 'banner' %>
+<div class="ao-page home">
+  <div class="container">
+
+    <section class="home-hero">
+      <div class="home-hero__text">
+        <p class="home-hero__eyebrow">TAPAS · Tableau des appels à propositions</p>
+        <h1 class="home-hero__title">Bonjour <%= current_user.first_name.presence || "à vous" %> !</h1>
+        <p class="home-hero__lead">
+          <% if @closing_soon_count.positive? %>
+            <strong><%= pluralize(@closing_soon_count, "appel d'offres arrive", plural: "appels d'offres arrivent") %> à échéance</strong> dans les 7 prochains jours.
+          <% else %>
+            Aucune échéance dans les 7 prochains jours.
+          <% end %>
+        </p>
+        <div class="home-hero__actions">
+          <%= link_to posts_path, class: "ao-btn ao-btn--primary" do %>
+            <i class="fa-solid fa-list"></i> <span>Voir les appels d'offres</span>
+          <% end %>
+          <% if current_user.admin? %>
+            <%= link_to new_post_path, class: "ao-btn ao-btn--ghost" do %>
+              <i class="fa-solid fa-plus"></i> <span>Ajouter un AO</span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <%= image_tag "banner-img.svg", alt: "", class: "home-hero__img" %>
+    </section>
+
+    <section class="home-stats">
+      <%= link_to posts_path, class: "home-stat" do %>
+        <span class="home-stat__icon" style="--accent: #167FFB"><i class="fa-solid fa-folder-open"></i></span>
+        <span class="home-stat__value"><%= @open_count %></span>
+        <span class="home-stat__label">AO en cours</span>
+      <% end %>
+      <%= link_to posts_path, class: "home-stat" do %>
+        <span class="home-stat__icon" style="--accent: #E5484D"><i class="fa-solid fa-hourglass-half"></i></span>
+        <span class="home-stat__value"><%= @closing_soon_count %></span>
+        <span class="home-stat__label">Échéances sous 7 jours</span>
+      <% end %>
+      <%= link_to favorites_path, class: "home-stat" do %>
+        <span class="home-stat__icon" style="--accent: #E0A82E"><i class="fa-solid fa-bookmark"></i></span>
+        <span class="home-stat__value"><%= @favorites_count %></span>
+        <span class="home-stat__label">Mes favoris</span>
+      <% end %>
+      <div class="home-stat">
+        <span class="home-stat__icon" style="--accent: #18B572"><i class="fa-solid fa-hand"></i></span>
+        <span class="home-stat__value"><%= @my_positions_count %></span>
+        <span class="home-stat__label">Mes positionnements</span>
+      </div>
+    </section>
+
+    <% if @closing_soon.any? %>
+      <section class="home-section">
+        <div class="home-section__header">
+          <h2 class="ao-section-title">Échéances les plus proches</h2>
+          <%= link_to "Tout voir →", posts_path, class: "home-section__more" %>
+        </div>
+        <div class="ao-tiles">
+          <%= render partial: "posts/post", collection: @closing_soon %>
+        </div>
+      </section>
+    <% end %>
+
+    <% if @latest.any? %>
+      <section class="home-section">
+        <div class="home-section__header">
+          <h2 class="ao-section-title">Derniers appels d'offres publiés</h2>
+          <%= link_to "Tout voir →", posts_path, class: "home-section__more" %>
+        </div>
+        <div class="ao-tiles">
+          <%= render partial: "posts/post", collection: @latest %>
+        </div>
+      </section>
+    <% end %>
+
+    <% if @open_count.zero? %>
+      <%= render "shared/empty_state",
+                 icon: "fa-inbox",
+                 title: "Aucun appel d'offres en cours",
+                 text: "Les nouveaux appels d'offres apparaîtront ici." %>
+    <% end %>
+  </div>
+</div>
