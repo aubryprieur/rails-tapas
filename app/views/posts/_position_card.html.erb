@@ -1,0 +1,37 @@
+<%
+  records = position[:records].includes(:user).select(&:user)
+  mine = records.find { |r| r.user_id == current_user.id }
+%>
+
+<div class="position-card <%= 'position-card--active' if mine %>" style="--accent: <%= position[:color] %>">
+  <div class="position-card__header">
+    <span class="position-card__icon"><i class="fa-solid <%= position[:icon] %>"></i></span>
+    <span class="position-card__count"><%= records.size %></span>
+  </div>
+
+  <h4 class="position-card__label"><%= position[:label] %></h4>
+
+  <div class="position-card__people">
+    <% if records.empty? %>
+      <span class="position-card__empty">Personne pour l'instant</span>
+    <% else %>
+      <% records.each do |record| %>
+        <% user = record.user %>
+        <span class="person-chip <%= 'person-chip--me' if record == mine %>" title="<%= [user.first_name, user.last_name].compact.join(' ') %>">
+          <span class="person-chip__avatar"><%= [user.first_name, user.last_name].compact.map { |n| n.to_s.first }.join.upcase %></span>
+          <span class="person-chip__name"><%= record == mine ? "Moi" : user.first_name %></span>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if mine %>
+    <%= link_to position[:destroy].call(mine), method: :delete, class: "position-card__button position-card__button--active", title: "Cliquer pour vous retirer" do %>
+      <i class="fa-solid fa-check"></i> <span>Positionné·e</span>
+    <% end %>
+  <% else %>
+    <%= link_to position[:create], method: :post, class: "position-card__button" do %>
+      <i class="fa-solid fa-plus"></i> <span>Me positionner</span>
+    <% end %>
+  <% end %>
+</div>

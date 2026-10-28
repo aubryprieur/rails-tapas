@@ -1,0 +1,177 @@
+// Tableau de positionnement sur un appel d'offres (posts/_table_position)
+
+.positions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.position-card {
+  --accent: #F9CA62;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, white);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #ECECEC;
+  border-radius: 12px;
+  background: white;
+  transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+
+  &:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .07);
+    transform: translateY(-1px);
+  }
+
+  &--active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--accent-soft), white 70%);
+  }
+}
+
+.position-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.position-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.position-card__count {
+  font-family: $headers-font;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: #2B2B2B;
+}
+
+.position-card__label {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2B2B2B;
+}
+
+.position-card__people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-grow: 1;
+  align-content: flex-start;
+  min-height: 30px;
+}
+
+.position-card__empty {
+  font-size: 13px;
+  color: #9A9A9A;
+  font-style: italic;
+}
+
+.person-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 3px;
+  border-radius: 999px;
+  background: #F3F4F6;
+  font-size: 13px;
+  color: #3A3A3A;
+  max-width: 100%;
+
+  &--me {
+    background: var(--accent-soft);
+    font-weight: 700;
+  }
+}
+
+.person-chip__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.person-chip__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.position-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--accent);
+    color: white;
+  }
+
+  &--active {
+    background: var(--accent);
+    color: white;
+
+    // Au survol, on indique qu'un clic retire le positionnement
+    &:hover span { display: none; }
+    &:hover::after { content: "Me retirer"; }
+    &:hover svg { display: none; }
+  }
+}
+
+// Sur mobile : cartes en ligne, plus compactes
+@media (max-width: 575.98px) {
+  .positions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .position-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "icon label  count"
+      "icon people people"
+      "btn  btn    btn";
+    column-gap: 12px;
+    row-gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .position-card__header { display: contents; }
+  .position-card__icon   { grid-area: icon; align-self: start; }
+  .position-card__count  { grid-area: count; font-size: 20px; align-self: center; }
+  .position-card__label  { grid-area: label; align-self: center; }
+  .position-card__people { grid-area: people; min-height: 0; }
+  .position-card__button { grid-area: btn; }
+}
