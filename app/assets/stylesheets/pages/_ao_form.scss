@@ -1,0 +1,264 @@
+// Formulaire de création / modification d'un appel d'offres (posts/_form)
+
+.ao-form-page { max-width: 860px; }
+
+.ao-form__section { padding: 24px 28px; }
+
+.ao-form__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(249, 202, 98, .25);
+  color: #9A6B00;
+  font-size: 13px;
+}
+
+.ao-form__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 18px 20px;
+}
+
+.ao-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+
+  &--full { grid-column: 1 / -1; }
+
+  .form-control {
+    padding: 11px 14px;
+    border: 1.5px solid #E4E6EA;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+
+    &::placeholder { color: #A5A9AF; }
+
+    &:focus {
+      border-color: #F9CA62;
+      box-shadow: 0 0 0 4px rgba(249, 202, 98, .2);
+    }
+  }
+
+  // Rails entoure les champs en erreur d'une div.field_with_errors
+  .field_with_errors { display: contents; }
+  .field_with_errors .form-control { border-color: #E5484D; }
+  .field_with_errors label { color: #C4302B; }
+}
+
+.ao-field__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #22252A;
+}
+
+.ao-field__required { color: #E5484D; }
+
+.ao-field__optional {
+  margin-left: 4px;
+  color: #A5A9AF;
+  font-family: $body-font;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+// Éditeur de texte riche (Trix)
+.ao-field--editor {
+  trix-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 6px;
+    border: 1.5px solid #E4E6EA;
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    background: #FAFAFA;
+
+    .trix-button-group {
+      margin-bottom: 0;
+      border-color: #E4E6EA;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .trix-button { border-bottom: 0; }
+
+    // Sur petit écran, les boutons passent à la ligne au lieu d'être coupés
+    .trix-button-row {
+      flex-wrap: wrap;
+      gap: 6px;
+      overflow: visible;
+    }
+    .trix-button-group-spacer { display: none; }
+    .trix-button-group:not(:first-child) { margin-left: 0; }
+    .trix-button--icon-attach { display: none; } // les fichiers passent par la section Dossier
+  }
+
+  trix-editor {
+    min-height: 200px;
+    padding: 14px 16px;
+    border: 1.5px solid #E4E6EA;
+    border-radius: 0 0 10px 10px;
+    background: white;
+    line-height: 1.6;
+
+    &:focus {
+      outline: 0;
+      border-color: #F9CA62;
+      box-shadow: 0 0 0 4px rgba(249, 202, 98, .2);
+    }
+  }
+}
+
+// Dépôt de fichier
+.ao-form__current-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #F6F7F9;
+  color: #5F646C;
+  font-size: 14px;
+
+  svg { color: #B07D00; flex-shrink: 0; }
+  strong { color: #22252A; overflow-wrap: anywhere; }
+}
+
+.ao-dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 32px 20px;
+  border: 2px dashed #DADDE2;
+  border-radius: 14px;
+  background: #FCFCFD;
+  text-align: center;
+  transition: border-color .15s ease, background .15s ease;
+
+  &:hover,
+  &.is-dragover,
+  &:focus-within {
+    border-color: #F9CA62;
+    background: rgba(249, 202, 98, .07);
+  }
+
+  &.has-file {
+    border-style: solid;
+    border-color: #18B572;
+    background: rgba(24, 181, 114, .05);
+
+    .ao-dropzone__icon { background: rgba(24, 181, 114, .12); color: #18B572; }
+  }
+
+  // Barre de progression de l'envoi (Active Storage)
+  .direct-upload {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 420px;
+    padding: 8px 12px;
+    border: 1px solid #E4E6EA;
+    border-radius: 8px;
+    background: white;
+    font-size: 13px;
+  }
+  .direct-upload__progress { background: #F9CA62; opacity: .5; }
+}
+
+// L'input couvre toute la zone : clic et glisser-déposer natifs
+.ao-dropzone__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ao-dropzone__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 4px;
+  border-radius: 14px;
+  background: rgba(249, 202, 98, .2);
+  color: #B07D00;
+  font-size: 22px;
+}
+
+.ao-dropzone__text {
+  color: #5F646C;
+  overflow-wrap: anywhere;
+  strong { color: #22252A; }
+}
+
+.ao-dropzone__hint {
+  color: #A5A9AF;
+  font-size: 13px;
+}
+
+// Erreurs de validation
+.ao-form__errors {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid #F7C6C7;
+  border-radius: 14px;
+  background: #FFF5F5;
+  color: #C4302B;
+  font-size: 14px;
+
+  svg { flex-shrink: 0; margin-top: 2px; font-size: 18px; }
+  ul { margin: 6px 0 0; padding-left: 18px; }
+}
+
+// Barre d'actions
+.ao-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.ao-form__notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: #7A7F87;
+  font-size: 14px;
+}
+
+.ao-form__buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+
+  .ao-btn { padding: 11px 18px; }
+}
+
+@media (max-width: 767.98px) {
+  .ao-form__section { padding: 18px; }
+  .ao-form__grid { grid-template-columns: minmax(0, 1fr); }
+
+  .ao-form__buttons {
+    width: 100%;
+    flex-direction: column-reverse;
+
+    .ao-btn { width: 100%; }
+  }
+}

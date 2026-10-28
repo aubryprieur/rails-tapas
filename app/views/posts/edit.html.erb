@@ -1,5 +1,15 @@
-<div class="container edit_post">
-  <h1>Modifier <span>l'appel d'offres</span></h1>
-  <%= render 'form' %>
+<% content_for :title, "Modifier l'appel d'offres" %>
+<div class="ao-page">
+  <div class="container ao-form-page">
+    <%= link_to post_path(@post), class: "ao-back" do %>
+      <i class="fa-solid fa-arrow-left"></i> Retour à l'appel d'offres
+    <% end %>
+    <header class="ao-list-header">
+      <div>
+        <h1 class="ao-list-header__title">Modifier l'appel d'offres</h1>
+        <p class="ao-list-header__subtitle"><%= @post.client %> · <%= @post.title_was.presence || @post.title %></p>
+      </div>
+    </header>
+    <%= render "form" %>
+  </div>
 </div>
-

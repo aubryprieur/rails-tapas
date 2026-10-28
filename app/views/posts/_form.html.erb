@@ -1,24 +1,79 @@
-<%= form_for @post, class: "form-horizontal" do |f| %>
-  <div class="form-group">
-    <%= f.text_field :client, class: "form-control", placeholder: "Ajouter le nom du client" %>
-  </div>
-  <div class="form-group">
-    <%= f.text_field :title, class: "form-control", placeholder: "Ajouter le titre de la mission" %>
-  </div>
-  <div class="form-inputs">
-    <%= f.rich_text_area :rich_body, placeholder: "Ajouter si nécessaire une description" %>
-  </div>
-  <div class="form-group form_date">
-    <%= f.label :"Date limite de réponse :" , class: "control-label"%>
-    <%= f.date_field :deadline %>
-  </div>
-  <div class="form-group form_files">
+<%= form_for @post, html: { class: "ao-form", novalidate: false } do |f| %>
+  <% if @post.errors.any? %>
+    <div class="ao-form__errors" role="alert">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <div>
+        <strong>Merci de corriger <%= @post.errors.count > 1 ? "les points suivants" : "le point suivant" %> :</strong>
+        <ul>
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Informations %>
+  <section class="ao-card ao-form__section">
+    <h2 class="ao-section-title"><span class="ao-form__step">1</span> Informations</h2>
+
+    <div class="ao-form__grid">
+      <div class="ao-field">
+        <%= f.label :client, class: "ao-field__label" do %>Client <span class="ao-field__required">*</span><% end %>
+        <%= f.text_field :client, class: "form-control", placeholder: "Ex. : RIVP, Métropole Européenne de Lille…", required: true, autofocus: @post.new_record? %>
+      </div>
+
+      <div class="ao-field">
+        <%= f.label :deadline, class: "ao-field__label" do %>Date limite de réponse <span class="ao-field__required">*</span><% end %>
+        <%= f.date_field :deadline, class: "form-control", required: true, min: (Date.current if @post.new_record?) %>
+      </div>
+
+      <div class="ao-field ao-field--full">
+        <%= f.label :title, class: "ao-field__label" do %>Titre de la mission <span class="ao-field__required">*</span><% end %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Ex. : Accompagnement à la concertation des locataires…", required: true %>
+      </div>
+    </div>
+  </section>
+
+  <%# Description %>
+  <section class="ao-card ao-form__section">
+    <h2 class="ao-section-title"><span class="ao-form__step">2</span> Description <span class="ao-field__optional">facultatif</span></h2>
+    <div class="ao-field ao-field--editor">
+      <%= f.rich_text_area :rich_body, placeholder: "Contexte, attendus, budget, dates clés, visite de site…" %>
+    </div>
+  </section>
+
+  <%# Dossier %>
+  <section class="ao-card ao-form__section">
+    <h2 class="ao-section-title"><span class="ao-form__step">3</span> Dossier <span class="ao-field__optional">facultatif</span></h2>
+
     <% if @post.photo.attached? %>
-    <p>Un dossier est déjà joint à l'appel d'offre, vous pouvez le remplacer ci-dessous.</p>
+      <div class="ao-form__current-file">
+        <i class="fa-solid fa-file-zipper"></i>
+        <span>Fichier actuel : <strong><%= @post.photo.blob.filename %></strong>. Il sera remplacé si vous en choisissez un autre.</span>
+      </div>
     <% end %>
-    <%= f.label :"Dossier à joindre (uniquement au format zip ou pdf) :", class: "control-label" %>
-    <%= f.file_field :photo, direct_upload: true %>
+
+    <div class="ao-dropzone" data-dropzone>
+      <%= f.file_field :photo, direct_upload: true, accept: ".zip,.pdf,application/zip,application/pdf", class: "ao-dropzone__input", "aria-label": "Choisir un fichier" %>
+      <span class="ao-dropzone__icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+      <span class="ao-dropzone__text" data-dropzone-text>
+        <strong>Glissez votre fichier ici</strong> ou cliquez pour le choisir
+      </span>
+      <span class="ao-dropzone__hint">Format ZIP ou PDF</span>
+    </div>
+  </section>
+
+  <div class="ao-form__actions">
+    <% if @post.new_record? %>
+      <p class="ao-form__notice"><i class="fa-regular fa-envelope"></i> Tous les membres seront prévenus par email.</p>
+    <% end %>
+    <div class="ao-form__buttons">
+      <%= link_to "Annuler", (@post.persisted? ? post_path(@post) : posts_path), class: "ao-btn ao-btn--ghost" %>
+      <%= button_tag type: "submit", class: "ao-btn ao-btn--primary", data: { disable_with: "Enregistrement…" } do %>
+        <i class="fa-solid fa-check"></i>
+        <span><%= @post.new_record? ? "Publier l'appel d'offres" : "Enregistrer les modifications" %></span>
+      <% end %>
+    </div>
   </div>
-  <%= f.submit 'Enregistrer', class: "btn btn-outline-success" %>
-  <%= link_to 'Annuler', posts_path, class: "btn btn-outline-danger" %>
 <% end %>

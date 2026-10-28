@@ -45,9 +45,39 @@ function initSearch() {
   })
 }
 
+// Zone de dépôt du dossier : affiche le fichier choisi et l'effet de survol
+function initDropzones() {
+  document.querySelectorAll("[data-dropzone]").forEach((zone) => {
+    const input = zone.querySelector("input[type=file]")
+    const text = zone.querySelector("[data-dropzone-text]")
+    if (!input || !text) return
+    const initial = text.innerHTML
+
+    const formatSize = (bytes) =>
+      bytes > 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1).replace(".", ",")} Mo` : `${Math.max(1, Math.round(bytes / 1024))} Ko`
+
+    input.addEventListener("change", () => {
+      const file = input.files[0]
+      zone.classList.toggle("has-file", !!file)
+      if (file) {
+        text.textContent = ""
+        const name = document.createElement("strong")
+        name.textContent = file.name
+        text.append(name, ` (${formatSize(file.size)}) · cliquez pour changer`)
+      } else {
+        text.innerHTML = initial
+      }
+    })
+
+    ;["dragenter", "dragover"].forEach((type) => input.addEventListener(type, () => zone.classList.add("is-dragover")))
+    ;["dragleave", "drop"].forEach((type) => input.addEventListener(type, () => zone.classList.remove("is-dragover")))
+  })
+}
+
 function init() {
   initToasts()
   initSearch()
+  initDropzones()
 }
 
 if (document.readyState === "loading") {

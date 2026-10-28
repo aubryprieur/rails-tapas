@@ -1,4 +1,15 @@
-<div class="container new_post">
-  <h1>Créer un nouvel <span>appel d'offres</span></h1>
-  <%= render 'form' %>
+<% content_for :title, "Nouvel appel d'offres" %>
+<div class="ao-page">
+  <div class="container ao-form-page">
+    <%= link_to posts_path, class: "ao-back" do %>
+      <i class="fa-solid fa-arrow-left"></i> Tous les appels d'offres
+    <% end %>
+    <header class="ao-list-header">
+      <div>
+        <h1 class="ao-list-header__title">Nouvel appel d'offres</h1>
+        <p class="ao-list-header__subtitle">Les champs marqués d'un <span class="ao-field__required">*</span> sont obligatoires.</p>
+      </div>
+    </header>
+    <%= render "form" %>
+  </div>
 </div>
