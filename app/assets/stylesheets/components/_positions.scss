@@ -2,13 +2,14 @@
 
 .positions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
   gap: 14px;
   margin-top: 12px;
 }
 
 .position-card {
   --accent: #F9CA62;
+  min-width: 0;
   --accent-soft: color-mix(in srgb, var(--accent) 12%, white);
 
   display: flex;
@@ -152,7 +153,7 @@
 // Sur mobile : cartes en ligne, plus compactes
 @media (max-width: 575.98px) {
   .positions {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px;
   }
 

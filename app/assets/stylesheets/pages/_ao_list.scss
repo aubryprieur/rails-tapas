@@ -53,12 +53,14 @@
 
 .ao-tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  // min(…, 100%) et minmax(0, …) : une carte ne peut jamais dépasser la largeur de l'écran
+  grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
   gap: 18px;
 }
 
 .ao-tile {
   position: relative;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -177,6 +179,7 @@
 }
 
 .ao-tile__footer {
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -252,6 +255,6 @@
 }
 
 @media (max-width: 575.98px) {
-  .ao-tiles { grid-template-columns: 1fr; gap: 12px; }
+  .ao-tiles { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .ao-search { width: 100%; }
 }

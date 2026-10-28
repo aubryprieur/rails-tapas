@@ -75,6 +75,8 @@ $ao-border: #ECECEC;
 
 .ao-header__client {
   display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   margin-bottom: 8px;
   padding: 4px 12px;
   border-radius: 999px;
