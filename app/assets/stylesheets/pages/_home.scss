@@ -8,11 +8,11 @@
   margin-bottom: 24px;
   padding: 36px 40px;
   overflow: hidden;
-  border: 1px solid #F3E2B5;
+  border: 1px solid #ECECEC;
+  border-top: 4px solid #F9CA62; // même bande jaune que la fiche AO et la connexion
   border-radius: 20px;
-  background:
-    radial-gradient(circle at 85% 20%, rgba(249, 202, 98, .35), transparent 45%),
-    linear-gradient(135deg, #FFFBF0, #FFFFFF 60%);
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
 }
 
 .home-hero__text { flex: 1; min-width: 0; }
