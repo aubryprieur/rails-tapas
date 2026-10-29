@@ -1,6 +1,7 @@
 <% deadline = deadline_info(post) %>
 <article class="ao-tile ao-tile--<%= deadline[:status] %>"
-         data-search="<%= [post.client, post.title].join(' ').downcase %>">
+         data-search="<%= [post.client, post.title].join(' ').downcase %>"
+         data-new="<%= new_post?(post) %>">
   <div class="ao-tile__top">
     <span class="ao-tile__client" title="<%= post.client %>"><%= post.client %></span>
 

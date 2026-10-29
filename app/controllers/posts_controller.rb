@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   def index
     @posts = Post.where('deadline >= ?', Date.today).order('deadline DESC')
                  .with_rich_text_rich_body.includes(:readings, :likes, :teams, photo_attachment: :blob)
+    @new_count = @posts.count { |post| helpers.new_post?(post) }
   end
 
   def new

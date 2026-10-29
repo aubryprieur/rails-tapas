@@ -24,6 +24,15 @@ describe "Appels d'offres" do
       expect(page).to have_content("J-3")
     end
 
+    it "propose le filtre « Nouveaux » avec le nombre d'AO publiés ces 7 derniers jours" do
+      ao.update_columns(created_at: 10.days.ago)
+      visit posts_path
+
+      expect(page).to have_button("Nouveaux 1")
+      expect(page).to have_css('[data-new="true"]', count: 1)
+      expect(page).to have_css('[data-new="false"]', count: 1)
+    end
+
     it "permet d'ouvrir la fiche en cliquant sur le titre" do
       click_link "Concertation Saint-Blaise"
       expect(page).to have_current_path(post_path(ao))

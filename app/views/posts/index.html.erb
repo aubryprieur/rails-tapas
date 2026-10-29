@@ -9,10 +9,22 @@
       </div>
 
       <% if @posts.any? %>
-        <label class="ao-search">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="search" placeholder="Rechercher un client, une mission…" data-ao-search aria-label="Rechercher">
-        </label>
+        <div class="ao-list-tools">
+          <div class="ao-filters" role="group" aria-label="Filtrer les appels d'offres">
+            <button type="button" class="ao-filter is-active" data-ao-filter="all" aria-pressed="true">
+              Tous <span class="ao-filter__count"><%= @posts.size %></span>
+            </button>
+            <button type="button" class="ao-filter" data-ao-filter="new" aria-pressed="false"
+                    title="Publiés ces 7 derniers jours" <%= "disabled" if @new_count.zero? %>>
+              <i class="fa-regular fa-bell"></i> Nouveaux <span class="ao-filter__count"><%= @new_count %></span>
+            </button>
+          </div>
+
+          <label class="ao-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" placeholder="Rechercher un client, une mission" data-ao-search aria-label="Rechercher">
+          </label>
+        </div>
       <% end %>
     </header>
 
@@ -25,7 +37,7 @@
       <div class="ao-tiles" data-ao-tiles>
         <%= render @posts %>
       </div>
-      <p class="ao-no-result" data-ao-no-result hidden>Aucun appel d'offres ne correspond à votre recherche.</p>
+      <p class="ao-no-result" data-ao-no-result hidden>Aucun appel d'offres ne correspond à votre recherche ou à votre filtre.</p>
     <% end %>
   </div>
 </div>

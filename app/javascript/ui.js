@@ -25,24 +25,49 @@ function initToasts() {
   })
 }
 
-// Recherche instantanée dans la liste des appels d'offres
+// Recherche instantanée et filtre « Nouveaux » dans la liste des appels d'offres
 function initSearch() {
-  const input = document.querySelector("[data-ao-search]")
   const list = document.querySelector("[data-ao-tiles]")
-  if (!input || !list) return
+  if (!list) return
+  const input = document.querySelector("[data-ao-search]")
+  const filterButtons = document.querySelectorAll("[data-ao-filter]")
   const noResult = document.querySelector("[data-ao-no-result]")
-  const normalize = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+  const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
 
-  input.addEventListener("input", () => {
-    const query = normalize(input.value.trim())
+  // Le filtre est gardé dans l'adresse (?filtre=nouveaux) : il reste actif après un rechargement
+  const params = new URLSearchParams(window.location.search)
+  let onlyNew = params.get("filtre") === "nouveaux"
+
+  function apply() {
+    const query = input ? normalize(input.value.trim()) : ""
     let visible = 0
     list.querySelectorAll("[data-search]").forEach((tile) => {
-      const match = !query || normalize(tile.dataset.search).includes(query)
-      tile.hidden = !match
-      if (match) visible++
+      const matchSearch = !query || normalize(tile.dataset.search).includes(query)
+      const matchFilter = !onlyNew || tile.dataset.new === "true"
+      tile.hidden = !(matchSearch && matchFilter)
+      if (!tile.hidden) visible++
     })
     if (noResult) noResult.hidden = visible > 0
+
+    filterButtons.forEach((button) => {
+      const active = (button.dataset.aoFilter === "new") === onlyNew
+      button.classList.toggle("is-active", active)
+      button.setAttribute("aria-pressed", active)
+    })
+  }
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      onlyNew = button.dataset.aoFilter === "new"
+      const url = new URL(window.location)
+      if (onlyNew) url.searchParams.set("filtre", "nouveaux")
+      else url.searchParams.delete("filtre")
+      window.history.replaceState({}, "", url)
+      apply()
+    })
   })
+  input?.addEventListener("input", apply)
+  apply()
 }
 
 // Zone de dépôt du dossier : affiche le fichier choisi et l'effet de survol
