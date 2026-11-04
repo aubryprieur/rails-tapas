@@ -56,22 +56,10 @@
       </div>
     </header>
 
-    <div class="ao-grid">
-      <%# Description %>
-      <section class="ao-card ao-description">
-        <h2 class="ao-section-title">Description</h2>
-        <% if @post.rich_body.present? %>
-          <div class="ao-description__body"><%= @post.rich_body %></div>
-        <% elsif @post.try(:description).present? %>
-          <div class="ao-description__body"><%= simple_format(@post.description) %></div>
-        <% else %>
-          <p class="ao-muted">Pas de description.</p>
-        <% end %>
-      </section>
-
-      <%# Dossier %>
-      <aside class="ao-card ao-file">
-        <h2 class="ao-section-title">Dossier</h2>
+    <%# Description, avec l'encart Dossier en haut à droite : le texte l'entoure puis reprend toute la largeur %>
+    <section class="ao-card ao-description">
+      <aside class="ao-file" aria-label="Dossier">
+        <h2 class="ao-file__title">Dossier</h2>
         <% if @post.photo.attached? %>
           <%= link_to post_attachment_download_url(@post), class: "ao-file__link" do %>
             <span class="ao-file__icon"><i class="fa-solid fa-file-arrow-down"></i></span>
@@ -87,7 +75,16 @@
           </div>
         <% end %>
       </aside>
-    </div>
+
+      <h2 class="ao-section-title">Description</h2>
+      <% if @post.rich_body.present? %>
+        <div class="ao-description__body"><%= @post.rich_body %></div>
+      <% elsif @post.try(:description).present? %>
+        <div class="ao-description__body"><%= simple_format(@post.description) %></div>
+      <% else %>
+        <p class="ao-muted">Pas de description.</p>
+      <% end %>
+    </section>
 
     <%# Positionnement %>
     <section class="ao-card">
