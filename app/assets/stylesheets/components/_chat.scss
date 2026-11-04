@@ -71,7 +71,7 @@ $chat-gray: #E9E9EB;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
-  max-width: min(78%, 520px);
+  max-width: 75%; // les messages longs occupent la largeur, les courts restent courts
 
   .chat__group--mine & { align-items: flex-end; }
   .chat__group--theirs & { align-items: flex-start; }
