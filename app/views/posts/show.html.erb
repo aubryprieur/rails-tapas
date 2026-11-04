@@ -101,35 +101,7 @@
         Commentaires <span class="ao-count"><%= comments.size %></span>
       </h2>
 
-      <% if comments.empty? %>
-        <p class="ao-muted">Il n'y a pas encore de commentaires pour cet AO.</p>
-      <% else %>
-        <ul class="ao-comments__list">
-          <% comments.each do |c| %>
-            <li class="ao-comment">
-              <span class="ao-avatar"><%= user_initials(c.user) %></span>
-              <div class="ao-comment__content">
-                <div class="ao-comment__meta">
-                  <strong><%= c.user.first_name %></strong>
-                  <span><%= c.created_at.strftime("%d/%m/%Y à %Hh%M") %></span>
-                </div>
-                <div class="ao-comment__body"><%= simple_format(c.body) %></div>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <%= form_for [@post, @comment], html: { class: "ao-comment-form" } do |f| %>
-        <%= f.label :body, "Laisser un commentaire", class: "visually-hidden" %>
-        <%= f.text_area :body, class: "form-control", placeholder: "Écrivez votre commentaire…", rows: 3 %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
-        <div class="ao-comment-form__actions">
-          <%= button_tag type: "submit", class: "ao-btn ao-btn--primary" do %>
-            <i class="fa-solid fa-paper-plane"></i> <span>Publier</span>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render "comments", comments: comments %>
     </section>
 
   </div>

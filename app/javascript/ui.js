@@ -99,10 +99,45 @@ function initDropzones() {
   })
 }
 
+// Commentaires façon messagerie : défilement en bas, champ qui s'agrandit, Entrée pour envoyer
+function initChat() {
+  const thread = document.querySelector("[data-chat-thread]")
+  const form = document.querySelector("[data-chat-form]")
+  if (!thread || !form) return
+  const input = form.querySelector("[data-chat-input]")
+  const send = form.querySelector("[data-chat-send]")
+
+  // Afficher les derniers messages (comme sur un téléphone)
+  thread.style.scrollBehavior = "auto"
+  thread.scrollTop = thread.scrollHeight
+  thread.style.scrollBehavior = ""
+
+  const resize = () => {
+    input.style.height = "auto"
+    input.style.height = `${Math.min(input.scrollHeight, 160)}px`
+  }
+  const toggleSend = () => { send.disabled = input.value.trim() === "" }
+
+  input.addEventListener("input", () => { resize(); toggleSend() })
+  input.addEventListener("keydown", (event) => {
+    const hasKeyboard = window.matchMedia("(hover: hover)").matches
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing && hasKeyboard) {
+      event.preventDefault()
+      if (input.value.trim() !== "") form.requestSubmit()
+    }
+  })
+  form.addEventListener("submit", () => { send.disabled = true })
+  toggleSend()
+
+  // Arrivée depuis un email ou après l'envoi (#commentaires) : on place le curseur dans le champ
+  if (window.location.hash === "#commentaires") input.focus({ preventScroll: true })
+}
+
 function init() {
   initToasts()
   initSearch()
   initDropzones()
+  initChat()
 }
 
 if (document.readyState === "loading") {

@@ -261,68 +261,6 @@ $ao-border: #ECECEC;
   font-size: 14px;
 }
 
-// ---- Commentaires ----
-.ao-comments__list {
-  list-style: none;
-  margin: 0 0 20px;
-  padding: 0;
-}
-
-.ao-comment {
-  display: flex;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid #F2F2F2;
-
-  &:first-child { padding-top: 0; }
-}
-
-.ao-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: $ao-brand;
-  color: white;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.ao-comment__content { min-width: 0; flex: 1; }
-
-.ao-comment__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: baseline;
-  font-size: 14px;
-
-  span { color: $ao-muted; font-size: 12px; }
-}
-
-.ao-comment__body {
-  margin-top: 4px;
-  overflow-wrap: anywhere;
-  p { margin: 0 0 6px; }
-}
-
-.ao-comment-form {
-  textarea {
-    border-radius: 12px;
-    padding: 12px 14px;
-    resize: vertical;
-  }
-}
-
-.ao-comment-form__actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
 // ---- Responsive ----
 @media (max-width: 991.98px) {
   .ao-grid { grid-template-columns: minmax(0, 1fr); }

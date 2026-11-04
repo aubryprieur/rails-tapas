@@ -67,6 +67,32 @@ describe "Appels d'offres" do
     end
   end
 
+  describe "commentaires" do
+    it "affiche mes messages à droite et ceux des autres à gauche" do
+      other = create(:user, first_name: "Dalila")
+      ao.comments.create!(body: "Je peux reprendre la note méthodo.", user: other)
+      login_as(user, scope: :user)
+      visit post_path(ao)
+
+      fill_in "comment[body]", with: "Super, merci !"
+      click_button "Envoyer"
+
+      expect(page).to have_css(".chat__group--theirs", text: "Je peux reprendre la note méthodo.")
+      expect(page).to have_css(".chat__group--theirs .chat__author", text: "Dalila")
+      expect(page).to have_css(".chat__group--mine", text: "Super, merci !")
+    end
+
+    it "n'enregistre pas un message vide" do
+      login_as(user, scope: :user)
+      visit post_path(ao)
+
+      fill_in "comment[body]", with: "   "
+      click_button "Envoyer"
+
+      expect(ao.comments.count).to eq(0)
+    end
+  end
+
   describe "création" do
     it "est réservée aux admins" do
       login_as(user, scope: :user)

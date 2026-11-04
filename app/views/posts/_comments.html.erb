@@ -1,0 +1,66 @@
+<%#
+  Fil de commentaires façon messagerie (iMessage) :
+  - mes messages à droite en bleu, ceux des autres à gauche en gris ;
+  - messages regroupés par auteur (moins de 10 min d'écart), nom au-dessus, avatar au dernier ;
+  - séparateurs par jour, heure sous le dernier message d'un groupe.
+%>
+<%
+  groups = comments.chunk_while { |a, b|
+    a.user_id == b.user_id && a.created_at.to_date == b.created_at.to_date && b.created_at - a.created_at < 10.minutes
+  }.to_a
+  day_label = lambda do |date|
+    if date == Date.current then "Aujourd'hui"
+    elsif date == Date.yesterday then "Hier"
+    elsif date > Date.current - 7 then I18n.l(date, format: "%A").capitalize
+    else I18n.l(date, format: "%A %-d %B").capitalize
+    end
+  end
+  previous_day = nil
+%>
+
+<div class="chat" data-chat>
+  <div class="chat__thread" data-chat-thread>
+    <% if groups.empty? %>
+      <div class="chat__empty">
+        <i class="fa-regular fa-comments"></i>
+        <p>Pas encore de message sur cet AO.<br>Lancez la discussion !</p>
+      </div>
+    <% end %>
+
+    <% groups.each do |group| %>
+      <% first = group.first %>
+      <% mine = first.user_id == current_user.id %>
+      <% day = first.created_at.to_date %>
+      <% if day != previous_day %>
+        <div class="chat__day"><span><%= day_label.call(day) %></span></div>
+        <% previous_day = day %>
+      <% end %>
+
+      <div class="chat__group <%= mine ? 'chat__group--mine' : 'chat__group--theirs' %>">
+        <% unless mine %>
+          <span class="chat__avatar" title="<%= [first.user.first_name, first.user.last_name].compact.join(' ') %>"><%= user_initials(first.user) %></span>
+        <% end %>
+        <div class="chat__bubbles">
+          <% unless mine %>
+            <span class="chat__author"><%= first.user.first_name %></span>
+          <% end %>
+          <% group.each do |comment| %>
+            <div class="chat__bubble" title="<%= I18n.l(comment.created_at, format: "%-d %B à %Hh%M") %>"><%= simple_format(comment.body, {}, wrapper_tag: "span") %></div>
+          <% end %>
+          <span class="chat__time"><%= group.last.created_at.strftime("%Hh%M") %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form_for [@post, @comment], html: { class: "chat__composer", data: { chat_form: true } } do |f| %>
+    <%= f.label :body, "Votre message", class: "visually-hidden" %>
+    <%= f.text_area :body, class: "chat__input", placeholder: "Message", rows: 1, required: true,
+                    data: { chat_input: true }, autocomplete: "off" %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= button_tag type: "submit", class: "chat__send", title: "Envoyer", "aria-label": "Envoyer", data: { chat_send: true } do %>
+      <i class="fa-solid fa-arrow-up"></i>
+    <% end %>
+  <% end %>
+  <p class="chat__hint">Entrée pour envoyer · Maj + Entrée pour aller à la ligne</p>
+</div>

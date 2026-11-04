@@ -1,0 +1,184 @@
+// Fil de commentaires façon messagerie iPhone (posts/_comments)
+
+$chat-blue: #0A84FF;
+$chat-gray: #E9E9EB;
+
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__thread {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 560px;
+  margin: 0 -8px;
+  padding: 4px 8px 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+.chat__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 0 20px;
+  color: #9A9FA6;
+  text-align: center;
+
+  svg { font-size: 30px; color: #C9CCD1; }
+  p { margin: 0; font-size: 14px; }
+}
+
+.chat__day {
+  margin: 14px 0 8px;
+  color: #8E8E93;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.chat__group {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+  max-width: 100%;
+
+  &--mine { justify-content: flex-end; }
+}
+
+.chat__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 20px; // aligné sur la dernière bulle (au-dessus de l'heure)
+  border-radius: 50%;
+  background: linear-gradient(135deg, #B8BCC4, #8E939C);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.chat__bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  max-width: min(78%, 520px);
+
+  .chat__group--mine & { align-items: flex-end; }
+  .chat__group--theirs & { align-items: flex-start; }
+}
+
+.chat__author {
+  margin: 0 0 2px 12px;
+  color: #8E8E93;
+  font-size: 12px;
+}
+
+.chat__bubble {
+  max-width: 100%;
+  padding: 8px 13px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+  white-space: normal;
+
+  span { display: block; }
+  span + span { margin-top: 6px; }
+
+  .chat__group--theirs & {
+    background: $chat-gray;
+    color: #000;
+  }
+
+  .chat__group--mine & {
+    background: linear-gradient(180deg, #2A95FF, $chat-blue);
+    color: white;
+  }
+
+  // Coins resserrés entre les bulles d'un même groupe, « queue » sur la dernière
+  .chat__group--theirs &:not(:last-of-type) { border-bottom-left-radius: 6px; }
+  .chat__group--theirs & + & { border-top-left-radius: 6px; }
+  .chat__group--mine &:not(:last-of-type) { border-bottom-right-radius: 6px; }
+  .chat__group--mine & + & { border-top-right-radius: 6px; }
+  .chat__group--theirs &:last-of-type { border-bottom-left-radius: 4px; }
+  .chat__group--mine &:last-of-type { border-bottom-right-radius: 4px; }
+}
+
+.chat__time {
+  margin: 2px 8px 0;
+  color: #A1A1A6;
+  font-size: 11px;
+}
+
+// ---- Zone de saisie ----
+.chat__composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px 0 0;
+  border-top: 1px solid #F0F0F0;
+}
+
+.chat__input {
+  flex: 1;
+  min-width: 0;
+  max-height: 160px;
+  padding: 9px 16px;
+  border: 1px solid #D1D1D6;
+  border-radius: 20px;
+  background: white;
+  color: #000;
+  font-size: 15px;
+  line-height: 1.35;
+  resize: none;
+  outline: 0;
+  transition: border-color .15s ease;
+
+  &::placeholder { color: #A1A1A6; }
+  &:focus { border-color: $chat-blue; }
+}
+
+.chat__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: $chat-blue;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity .15s ease, transform .1s ease;
+
+  &:active:not(:disabled) { transform: scale(.92); }
+  &:disabled { opacity: .35; cursor: default; }
+}
+
+.chat__hint {
+  margin: 6px 0 0 16px;
+  color: #A1A1A6;
+  font-size: 12px;
+
+  @media (hover: none) { display: none; } // pas de clavier physique (mobile)
+}
+
+@media (max-width: 575.98px) {
+  .chat__thread { max-height: 70vh; }
+  .chat__bubbles { max-width: 85%; }
+  .chat__bubble { font-size: 16px; }
+  .chat__input { font-size: 16px; } // évite le zoom automatique d'iOS
+}

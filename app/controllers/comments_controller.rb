@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comment_params)
     @post = Post.find(params[:post_id])
 
-    if @comment.save
+    if @comment.body.present? && @comment.save
       # Tentative d'envoi d'email avec gestion d'erreur
       email_sent = EmailService.send_email_safe(
         ->(post, comment) { CommentMailer.creation_comment(post, comment) },
@@ -49,7 +49,7 @@ class CommentsController < ApplicationController
 
   def commentable_path(commentable)
     if Post === commentable
-      post_path(commentable.id, commentable)
+      post_path(commentable, anchor: "commentaires")
     else
       user_path(commentable)
     end
