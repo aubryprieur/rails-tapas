@@ -107,10 +107,19 @@ function initChat() {
   const input = form.querySelector("[data-chat-input]")
   const send = form.querySelector("[data-chat-send]")
 
-  // Afficher les derniers messages (comme sur un téléphone)
+  // Afficher les derniers messages (comme sur un téléphone),
+  // ou le message qu'on vient de modifier (#commentaire-12)
   thread.style.scrollBehavior = "auto"
-  thread.scrollTop = thread.scrollHeight
+  const target = window.location.hash.startsWith("#commentaire-") && document.querySelector(window.location.hash)
+  if (target) {
+    thread.scrollTop = target.offsetTop - thread.offsetTop - thread.clientHeight / 3
+    target.classList.add("is-highlighted")
+  } else {
+    thread.scrollTop = thread.scrollHeight
+  }
   thread.style.scrollBehavior = ""
+
+  initChatEditing(thread)
 
   const resize = () => {
     input.style.height = "auto"
@@ -131,6 +140,60 @@ function initChat() {
 
   // Arrivée depuis un email ou après l'envoi (#commentaires) : on place le curseur dans le champ
   if (window.location.hash === "#commentaires") input.focus({ preventScroll: true })
+}
+
+// Modifier / supprimer ses propres messages
+function initChatEditing(thread) {
+  const hasKeyboard = () => window.matchMedia("(hover: hover)").matches
+  const autoResize = (el) => { el.style.height = "auto"; el.style.height = `${Math.min(el.scrollHeight, 160)}px` }
+
+  const closeAll = (except) => thread.querySelectorAll(".chat__message.is-selected").forEach((m) => {
+    if (m !== except) m.classList.remove("is-selected")
+  })
+
+  thread.querySelectorAll("[data-chat-message]").forEach((message) => {
+    const bubble = message.querySelector("[data-chat-own]")
+    const form = message.querySelector("[data-chat-edit-form]")
+    if (!bubble || !form) return
+    const input = form.querySelector("[data-chat-edit-input]")
+    const original = input.value
+
+    // Sur mobile (pas de survol) : un appui sur sa bulle affiche les boutons
+    bubble.addEventListener("click", () => {
+      if (hasKeyboard()) return
+      closeAll(message)
+      message.classList.toggle("is-selected")
+    })
+
+    const open = () => {
+      message.classList.remove("is-selected")
+      message.classList.add("is-editing")
+      form.hidden = false
+      autoResize(input)
+      input.focus()
+      input.setSelectionRange(input.value.length, input.value.length)
+    }
+    const close = () => {
+      input.value = original
+      form.hidden = true
+      message.classList.remove("is-editing")
+    }
+
+    message.querySelector("[data-chat-edit]")?.addEventListener("click", open)
+    form.querySelector("[data-chat-edit-cancel]").addEventListener("click", close)
+    input.addEventListener("input", () => autoResize(input))
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") { event.preventDefault(); close() }
+      if (event.key === "Enter" && !event.shiftKey && !event.isComposing && hasKeyboard()) {
+        event.preventDefault()
+        if (input.value.trim() !== "") form.requestSubmit()
+      }
+    })
+  })
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest("[data-chat-message]")) closeAll()
+  })
 }
 
 function init() {

@@ -82,6 +82,17 @@ describe "Appels d'offres" do
       expect(page).to have_css(".chat__group--mine", text: "Super, merci !")
     end
 
+    it "propose Modifier / Supprimer seulement sur mes messages" do
+      other = create(:user)
+      ao.comments.create!(body: "Message d'un collègue", user: other)
+      ao.comments.create!(body: "Mon message", user: user)
+      login_as(user, scope: :user)
+      visit post_path(ao)
+
+      expect(page).to have_css(".chat__group--mine [data-chat-edit]", count: 1)
+      expect(page).to have_css(".chat__group--theirs [data-chat-edit]", count: 0)
+    end
+
     it "n'enregistre pas un message vide" do
       login_as(user, scope: :user)
       visit post_path(ao)

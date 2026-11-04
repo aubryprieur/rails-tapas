@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 
   def show
     @users = User.all
-    @comment = Comment.create
+    @comment = Comment.new
   end
 
   def edit

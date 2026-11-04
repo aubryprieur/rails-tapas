@@ -2,7 +2,8 @@
   Fil de commentaires façon messagerie (iMessage) :
   - mes messages à droite en bleu, ceux des autres à gauche en gris ;
   - messages regroupés par auteur (moins de 10 min d'écart), nom au-dessus, avatar au dernier ;
-  - séparateurs par jour, heure sous le dernier message d'un groupe.
+  - séparateurs par jour, heure sous le dernier message d'un groupe ;
+  - chacun peut modifier ou supprimer ses propres messages (et seulement les siens).
 %>
 <%
   groups = comments.chunk_while { |a, b|
@@ -45,7 +46,39 @@
             <span class="chat__author"><%= first.user.first_name %></span>
           <% end %>
           <% group.each do |comment| %>
-            <div class="chat__bubble" title="<%= I18n.l(comment.created_at, format: "%-d %B à %Hh%M") %>"><%= simple_format(comment.body, {}, wrapper_tag: "span") %></div>
+            <% edited = comment.updated_at - comment.created_at > 5.seconds %>
+            <div class="chat__message" id="commentaire-<%= comment.id %>" data-chat-message>
+              <div class="chat__row">
+                <div class="chat__bubble" title="<%= I18n.l(comment.created_at, format: "%-d %B à %Hh%M") %>" <%= "data-chat-own tabindex=0".html_safe if mine %>><%= simple_format(comment.body, {}, wrapper_tag: "span") %></div>
+
+                <% if mine %>
+                  <div class="chat__actions">
+                    <button type="button" class="chat__action" data-chat-edit title="Modifier" aria-label="Modifier ce message">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <%= link_to post_comment_path(@post, comment), method: :delete,
+                                data: { confirm: "Supprimer ce message ?" },
+                                class: "chat__action chat__action--danger", title: "Supprimer", "aria-label": "Supprimer ce message" do %>
+                      <i class="fa-solid fa-trash-can"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+
+              <% if mine %>
+                <%= form_with model: comment, url: post_comment_path(@post, comment), method: :patch,
+                              class: "chat__edit", data: { chat_edit_form: true }, html: { hidden: true } do |f| %>
+                  <%= f.text_area :body, class: "chat__input", rows: 1, required: true, data: { chat_edit_input: true },
+                                  "aria-label": "Modifier le message" %>
+                  <div class="chat__edit-actions">
+                    <button type="button" class="chat__edit-cancel" data-chat-edit-cancel>Annuler</button>
+                    <%= f.button "Enregistrer", type: "submit", class: "chat__edit-save" %>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <% if edited %><span class="chat__edited">Modifié</span><% end %>
+            </div>
           <% end %>
           <span class="chat__time"><%= group.last.created_at.strftime("%Hh%M") %></span>
         </div>
@@ -57,7 +90,6 @@
     <%= f.label :body, "Votre message", class: "visually-hidden" %>
     <%= f.text_area :body, class: "chat__input", placeholder: "Message", rows: 1, required: true,
                     data: { chat_input: true }, autocomplete: "off" %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
     <%= button_tag type: "submit", class: "chat__send", title: "Envoyer", "aria-label": "Envoyer", data: { chat_send: true } do %>
       <i class="fa-solid fa-arrow-up"></i>
     <% end %>
