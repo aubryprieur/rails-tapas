@@ -19,10 +19,13 @@ RSpec.describe "Commentaires", type: :request do
     end
 
     it "ignore un doublon envoyé dans la minute (double clic)" do
-      2.times { post post_comments_path(ao), params: { comment: { body: "Même message" } } }
+      ao # créé avant : son auteur reçoit un email de bienvenue qu'on ne veut pas compter
+
+      expect {
+        2.times { post post_comments_path(ao), params: { comment: { body: "Même message" } } }
+      }.to change { ActionMailer::Base.deliveries.size }.by(1) # un seul email « nouveau commentaire »
 
       expect(ao.comments.where(body: "Même message").count).to eq(1)
-      expect(ActionMailer::Base.deliveries.size).to eq(1)
     end
 
     it "accepte le même texte plus tard" do
