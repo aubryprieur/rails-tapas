@@ -68,6 +68,8 @@ $chat-gray: #E9E9EB;
 
 .chat__bubbles {
   display: flex;
+  &:has(.is-editing) { width: 75%; } // en modification, toute la largeur autorisée
+
   flex-direction: column;
   gap: 2px;
   min-width: 0;
@@ -182,7 +184,9 @@ $chat-gray: #E9E9EB;
 
 // Modification en place
 .chat__message.is-editing {
-  width: min(100%, 560px);
+  // Largeur fixe (et non en %) : le groupe de bulles s'élargit pour l'accueillir
+  width: 600px;
+  max-width: 100%;
 
   .chat__row, .chat__edited { display: none; }
 }
@@ -194,7 +198,15 @@ $chat-gray: #E9E9EB;
   width: 100%;
 
   &[hidden] { display: none; }
-  .chat__input { width: 100%; }
+
+  // Sans « flex: none », le champ hérite de « flex: 1 » et reste bloqué à une ligne
+  .chat__input {
+    flex: none;
+    width: 100%;
+    min-height: 42px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
 }
 
 .chat__edit-actions {
@@ -286,6 +298,7 @@ $chat-gray: #E9E9EB;
 @media (max-width: 575.98px) {
   .chat__thread { max-height: 70vh; }
   .chat__bubbles { max-width: 85%; }
+  .chat__bubbles:has(.is-editing) { width: 100%; max-width: 100%; }
   .chat__bubble { font-size: 16px; }
   .chat__input { font-size: 16px; } // évite le zoom automatique d'iOS
 }

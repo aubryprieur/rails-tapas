@@ -145,7 +145,10 @@ function initChat() {
 // Modifier / supprimer ses propres messages
 function initChatEditing(thread) {
   const hasKeyboard = () => window.matchMedia("(hover: hover)").matches
-  const autoResize = (el) => { el.style.height = "auto"; el.style.height = `${Math.min(el.scrollHeight, 160)}px` }
+  const autoResize = (el, max = 240) => {
+    el.style.height = "auto"
+    el.style.height = `${Math.min(el.scrollHeight + 2, max)}px` // + 2 : bordures
+  }
 
   const closeAll = (except) => thread.querySelectorAll(".chat__message.is-selected").forEach((m) => {
     if (m !== except) m.classList.remove("is-selected")
@@ -170,8 +173,9 @@ function initChatEditing(thread) {
       message.classList.add("is-editing")
       form.hidden = false
       autoResize(input)
-      input.focus()
+      input.focus({ preventScroll: true })
       input.setSelectionRange(input.value.length, input.value.length)
+      form.scrollIntoView({ block: "nearest", behavior: "smooth" }) // champ entièrement visible
     }
     const close = () => {
       input.value = original
